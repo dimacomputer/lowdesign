@@ -1,124 +1,142 @@
-/* Автотёмный режим по системной настройке */
+/* Auto dark admin by system setting */
 @media (prefers-color-scheme: dark) {
+
+  /* базовая модель цвета для UA */
   :root { color-scheme: dark; }
 
-  /* Общий фон и текст */
+  /* ===== БАЗА ===== */
   body.wp-admin,
   body.login {
-    background: #0d1117;
-    color: #e6edf3;
+    background: #0d1117 !important;
+    color: #e6edf3 !important;
   }
 
-  /* Лого WP на логине — оставим дефолт, но можно инвертировать при желании */
-
-  /* Левое меню, сабменю и обёртки */
-  #adminmenuback,
-  #adminmenuwrap,
-  #adminmenu,
-  #adminmenu .wp-submenu {
-    background: #0f141a;
+  /* ссылки и акцент (Bootstrap primary) */
+  body.wp-admin a,
+  body.login a {
+    color: #0d6efd !important;
   }
-  #adminmenu a,
-  #adminmenu .wp-submenu a {
-    color: #e6edf3;
-  }
-  #adminmenu .wp-submenu a:hover,
-  #adminmenu a:hover,
-  #collapse-menu:hover {
-    color: #ffffff;
+  body.wp-admin a:hover,
+  body.login a:hover {
+    filter: brightness(1.1) !important;
   }
 
-  /* Верхняя админ-панель */
-  #wpadminbar {
-    background: #0f141a;
-    color: #e6edf3;
+  /* ===== ВЕРХНЯЯ ПАНЕЛЬ ===== */
+  body.wp-admin #wpadminbar {
+    background: #0f141a !important;
+    color: #e6edf3 !important;
   }
-  #wpadminbar .ab-item,
-  #wpadminbar a.ab-item {
-    color: #e6edf3;
+  body.wp-admin #wpadminbar .ab-item,
+  body.wp-admin #wpadminbar a.ab-item {
+    color: #e6edf3 !important;
   }
-  #wpadminbar .ab-item:hover,
-  #wpadminbar a.ab-item:hover {
-    color: #ffffff;
-  }
-
-  /* Область контента, карточки, таблицы */
-  .wrap .postbox,
-  .wrap .card,
-  .widefat,
-  .wp-list-table,
-  .theme-browser .theme {
-    background: #11161d;
-    color: #e6edf3;
-    border-color: #2b3139;
-  }
-  .wrap h1, .wrap h2, .wrap h3, .wrap h4, .wrap h5 {
-    color: #e6edf3;
-  }
-  .notice,
-  .updated,
-  .update-nag,
-  .notice-alt {
-    background: #11161d;
-    color: #e6edf3;
-    border-left-color: #2b3139;
+  body.wp-admin #wpadminbar .ab-item:hover,
+  body.wp-admin #wpadminbar a.ab-item:hover {
+    color: #ffffff !important;
   }
 
-  /* Формы/инпуты */
-  input[type="text"],
-  input[type="search"],
-  input[type="email"],
-  input[type="url"],
-  input[type="password"],
-  input[type="number"],
-  textarea,
-  select {
-    background: #0f141a;
-    color: #e6edf3;
-    border-color: #2b3139;
+  /* ===== ЛЕВОЕ МЕНЮ ===== */
+  body.wp-admin #adminmenuback,
+  body.wp-admin #adminmenuwrap,
+  body.wp-admin #adminmenu,
+  body.wp-admin #adminmenu .wp-submenu {
+    background: #0f141a !important;
   }
-  input::placeholder,
-  textarea::placeholder {
-    color: #9aa4af;
+  body.wp-admin #adminmenu a,
+  body.wp-admin #adminmenu .wp-submenu a {
+    color: #e6edf3 !important;
   }
-
-  /* Кнопки: Primary = твой Bootstrap primary (#0d6efd) */
-  .wp-core-ui .button-primary {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-    color: #ffffff;
+  body.wp-admin #adminmenu .wp-has-current-submenu > a.menu-top,
+  body.wp-admin #adminmenu .current a.menu-top,
+  body.wp-admin #adminmenu a:hover,
+  body.wp-admin #adminmenu .wp-submenu a:hover {
+    color: #ffffff !important;
+    background: #11161d !important;
   }
-  .wp-core-ui .button-primary:hover {
-    filter: brightness(1.08);
-  }
-  .wp-core-ui .button,
-  .wp-core-ui .button-secondary {
-    background: #0f141a;
-    border-color: #2b3139;
-    color: #e6edf3;
-  }
-  .wp-core-ui .button:hover,
-  .wp-core-ui .button-secondary:hover {
-    background: #141a22;
+  body.wp-admin #adminmenu .awaiting-mod,
+  body.wp-admin #adminmenu .update-plugins {
+    background: #dc3545 !important; /* danger */
+    color: #fff !important;
   }
 
-  /* Ссылки */
-  a { color: #0d6efd; }
-  a:hover { filter: brightness(1.1); }
-
-  /* Таблица списков: строки зебры */
-  .wp-list-table tr:nth-child(odd) td {
-    background: #0f141a;
+  /* ===== КОНТЕНТ / КАРТОЧКИ / ТАБЛИЦЫ ===== */
+  body.wp-admin .wrap .postbox,
+  body.wp-admin .wrap .card,
+  body.wp-admin .widefat,
+  body.wp-admin .wp-list-table,
+  body.wp-admin .theme-browser .theme {
+    background: #11161d !important;
+    color: #e6edf3 !important;
+    border-color: #2b3139 !important;
+  }
+  body.wp-admin .wrap h1,
+  body.wp-admin .wrap h2,
+  body.wp-admin .wrap h3,
+  body.wp-admin .wrap h4,
+  body.wp-admin .wrap h5 {
+    color: #e6edf3 !important;
+  }
+  body.wp-admin .notice,
+  body.wp-admin .update-nag,
+  body.wp-admin .notice-alt {
+    background: #11161d !important;
+    color: #e6edf3 !important;
+    border-left-color: #2b3139 !important;
+  }
+  body.wp-admin .wp-list-table tr:nth-child(odd) td {
+    background: #0f141a !important;
   }
 
-  /* Мелкие грани */
-  .metabox-holder .postbox > h2.hndle,
-  .stuffbox > h3 {
-    border-bottom-color: #2b3139;
+  /* ===== ФОРМЫ ===== */
+  body.wp-admin input[type="text"],
+  body.wp-admin input[type="search"],
+  body.wp-admin input[type="email"],
+  body.wp-admin input[type="url"],
+  body.wp-admin input[type="password"],
+  body.wp-admin input[type="number"],
+  body.wp-admin textarea,
+  body.wp-admin select,
+  body.login input[type="text"],
+  body.login input[type="password"] {
+    background: #0f141a !important;
+    color: #e6edf3 !important;
+    border-color: #2b3139 !important;
   }
-  .tablenav .tablenav-pages .pagination-links span,
-  .theme-browser .theme .theme-actions .button {
-    background: #0f141a;
-    color: #e6edf3;
+  body.wp-admin input::placeholder,
+  body.wp-admin textarea::placeholder,
+  body.login input::placeholder {
+    color: #9aa4af !important;
+  }
+
+  /* ===== КНОПКИ ===== */
+  body.wp-admin .wp-core-ui .button-primary,
+  body.login .button-primary {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+  }
+  body.wp-admin .wp-core-ui .button-primary:hover,
+  body.login .button-primary:hover {
+    filter: brightness(1.08) !important;
+  }
+  body.wp-admin .wp-core-ui .button,
+  body.wp-admin .wp-core-ui .button-secondary {
+    background: #0f141a !important;
+    border-color: #2b3139 !important;
+    color: #e6edf3 !important;
+  }
+  body.wp-admin .wp-core-ui .button:hover,
+  body.wp-admin .wp-core-ui .button-secondary:hover {
+    background: #141a22 !important;
+  }
+
+  /* ===== ЛОГИН ===== */
+  body.login #loginform,
+  body.login .message,
+  body.login #nav,
+  body.login #backtoblog {
+    background: transparent !important;
+    color: #e6edf3 !important;
+    border-color: transparent !important;
   }
 }
