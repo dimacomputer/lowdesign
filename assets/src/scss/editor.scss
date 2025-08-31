@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Editor styles — лёгкий бандл для Gutenberg iframe
+   ========================================================================== */
+
+/* Подключаем только токены Bootstrap */
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities"; // можно оставить только utilities, без grid/forms/components
+
+/* Прокидываем токены в WP CSS Custom Properties */
+:root {
+  /* Цвета Bootstrap → WP Presets */
+  --wp--preset--color--primary:   #{$primary};
+  --wp--preset--color--secondary: #{$secondary};
+  --wp--preset--color--success:   #{$success};
+  --wp--preset--color--info:      #{$info};
+  --wp--preset--color--warning:   #{$warning};
+  --wp--preset--color--danger:    #{$danger};
+  --wp--preset--color--light:     #{$light};
+  --wp--preset--color--dark:      #{$dark};
+
+  /* Радиусы */
+  --wp--custom--radius--default:  #{$border-radius};
+  --wp--custom--radius--sm:       #{$border-radius-sm};
+  --wp--custom--radius--lg:       #{$border-radius-lg};
+  --wp--custom--radius--pill:     50rem;
+}
+
+/* Стилизация контента внутри редактора */
+.editor-styles-wrapper {
+  font-family: var(--wp--preset--font-family--system, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--wp--preset--color--dark);
+
+  a {
+    color: var(--wp--preset--color--primary);
+    text-decoration: underline;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  ul, ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  blockquote {
+    border-left: 4px solid var(--wp--preset--color--secondary);
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: var(--wp--preset--color--secondary);
+    font-style: italic;
+  }
+}

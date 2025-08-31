@@ -1,12 +1,10 @@
 /* 1) WP токены → при необходимости */
 :root {}
 
-/* 2) твой готовый bootstrap уже подключен отдельным файлом (custom.css).
-      здесь — только кастом-тема поверх */
+@import './wp-tokens';
 @import './components/hero';
-@import './site';
-@import './admin-dark';
+@import './header';
 @import './data-bs-theme-dark';
 @import './data-bs-theme-light';
-@import './header';
-@import './wp-tokens';
+
+

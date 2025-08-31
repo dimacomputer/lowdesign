@@ -5,8 +5,18 @@
     "src": "assets/src/js/main.js",
     "isEntry": true
   },
+  "assets/src/scss/admin-dark.scss": {
+    "file": "assets/assets/src/scss/admin-dark-WEh2SCGL.css",
+    "src": "assets/src/scss/admin-dark.scss",
+    "isEntry": true
+  },
+  "assets/src/scss/editor.scss": {
+    "file": "assets/assets/src/scss/editor-DKwSJut-.css",
+    "src": "assets/src/scss/editor.scss",
+    "isEntry": true
+  },
   "assets/src/scss/main.scss": {
-    "file": "assets/assets/src/scss/main-By-vEhpL.css",
+    "file": "assets/assets/src/scss/main-DcjvNg6g.css",
     "src": "assets/src/scss/main.scss",
     "isEntry": true
   }
