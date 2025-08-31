@@ -55,7 +55,7 @@ jobs:
             if [ "${NAS_FORCED_COMMAND:-false}" = "true" ]; then
               run_ssh exit 0 && break || sleep 2
             else
-              run_ssh "bash /volume1/web/margo/pull_margo.sh" && break || sleep 2
+              run_ssh "bash /volume1/web/malati/pull_malati.sh" && break || sleep 2
             fi
             echo "retry $i/3..."
           done
