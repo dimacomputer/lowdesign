@@ -1,0 +1,124 @@
+/* Автотёмный режим по системной настройке */
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: dark; }
+
+  /* Общий фон и текст */
+  body.wp-admin,
+  body.login {
+    background: #0d1117;
+    color: #e6edf3;
+  }
+
+  /* Лого WP на логине — оставим дефолт, но можно инвертировать при желании */
+
+  /* Левое меню, сабменю и обёртки */
+  #adminmenuback,
+  #adminmenuwrap,
+  #adminmenu,
+  #adminmenu .wp-submenu {
+    background: #0f141a;
+  }
+  #adminmenu a,
+  #adminmenu .wp-submenu a {
+    color: #e6edf3;
+  }
+  #adminmenu .wp-submenu a:hover,
+  #adminmenu a:hover,
+  #collapse-menu:hover {
+    color: #ffffff;
+  }
+
+  /* Верхняя админ-панель */
+  #wpadminbar {
+    background: #0f141a;
+    color: #e6edf3;
+  }
+  #wpadminbar .ab-item,
+  #wpadminbar a.ab-item {
+    color: #e6edf3;
+  }
+  #wpadminbar .ab-item:hover,
+  #wpadminbar a.ab-item:hover {
+    color: #ffffff;
+  }
+
+  /* Область контента, карточки, таблицы */
+  .wrap .postbox,
+  .wrap .card,
+  .widefat,
+  .wp-list-table,
+  .theme-browser .theme {
+    background: #11161d;
+    color: #e6edf3;
+    border-color: #2b3139;
+  }
+  .wrap h1, .wrap h2, .wrap h3, .wrap h4, .wrap h5 {
+    color: #e6edf3;
+  }
+  .notice,
+  .updated,
+  .update-nag,
+  .notice-alt {
+    background: #11161d;
+    color: #e6edf3;
+    border-left-color: #2b3139;
+  }
+
+  /* Формы/инпуты */
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  input[type="url"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  select {
+    background: #0f141a;
+    color: #e6edf3;
+    border-color: #2b3139;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: #9aa4af;
+  }
+
+  /* Кнопки: Primary = твой Bootstrap primary (#0d6efd) */
+  .wp-core-ui .button-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: #ffffff;
+  }
+  .wp-core-ui .button-primary:hover {
+    filter: brightness(1.08);
+  }
+  .wp-core-ui .button,
+  .wp-core-ui .button-secondary {
+    background: #0f141a;
+    border-color: #2b3139;
+    color: #e6edf3;
+  }
+  .wp-core-ui .button:hover,
+  .wp-core-ui .button-secondary:hover {
+    background: #141a22;
+  }
+
+  /* Ссылки */
+  a { color: #0d6efd; }
+  a:hover { filter: brightness(1.1); }
+
+  /* Таблица списков: строки зебры */
+  .wp-list-table tr:nth-child(odd) td {
+    background: #0f141a;
+  }
+
+  /* Мелкие грани */
+  .metabox-holder .postbox > h2.hndle,
+  .stuffbox > h3 {
+    border-bottom-color: #2b3139;
+  }
+  .tablenav .tablenav-pages .pagination-links span,
+  .theme-browser .theme .theme-actions .button {
+    background: #0f141a;
+    color: #e6edf3;
+  }
+}
