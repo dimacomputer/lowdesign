@@ -75,6 +75,14 @@ if (!function_exists('ld_vite_has_entry')) {
   }
 }
 
+add_action('admin_notices', function () {
+  if (!current_user_can('manage_options')) return;
+  $ok = function_exists('ld_vite_has_entry') && ld_vite_has_entry('assets/src/scss/admin-dark.scss');
+  echo '<div class="notice notice-' . ($ok ? 'success' : 'warning') . '"><p><strong>Dark Admin:</strong> manifest entry '
+    . ($ok ? 'FOUND ✅' : 'NOT FOUND ❌ (нет ключа assets/src/scss/admin-dark.scss в build/manifest.json)')
+    . '</p></div>';
+}, 1);
+
 /** Админ-уведомление: нет сборки или нет ключевых entry */
 add_action('admin_notices', function () {
   if (!current_user_can('manage_options')) return;
