@@ -1,142 +1,126 @@
-/* Auto dark admin by system setting */
+/* Lowdesign — Dark admin */
 @media (prefers-color-scheme: dark) {
 
-  /* базовая модель цвета для UA */
   :root { color-scheme: dark; }
 
-  /* ===== БАЗА ===== */
+  /* Токены */
   body.wp-admin,
   body.login {
-    background: #0d1117 !important;
-    color: #e6edf3 !important;
+    --ld-bg:       #0d1117; /* корневой фон */
+    --ld-panel:    #0f141a; /* панели, боковины */
+    --ld-surface:  #11161d; /* карточки/блоки */
+    --ld-border:   #2b3139; /* границы */
+    --ld-text:     #e6edf3; /* текст */
+    --ld-muted:    #9aa4af; /* вторичный текст */
+    --ld-primary:  #0d6efd; /* акцент */
+    --ld-hover:    #141a22; /* hover поверхностей */
   }
 
-  /* ссылки и акцент (Bootstrap primary) */
-  body.wp-admin a,
-  body.login a {
-    color: #0d6efd !important;
+  /* База */
+  body.wp-admin, body.login {
+    background: var(--ld-bg) !important;
+    color: var(--ld-text) !important;
   }
-  body.wp-admin a:hover,
-  body.login a:hover {
-    filter: brightness(1.1) !important;
+  a { color: var(--ld-primary) !important; }
+  a:hover { filter: brightness(1.08) !important; }
+
+  /* Топ-бар + левое меню */
+  #wpadminbar { background: var(--ld-panel) !important; color: var(--ld-text) !important; }
+  #wpadminbar .ab-item, #wpadminbar a.ab-item { color: var(--ld-text) !important; }
+  #wpadminbar .ab-item:hover, #wpadminbar a.ab-item:hover { color:#fff !important; }
+
+  #adminmenuback, #adminmenuwrap, #adminmenu, #adminmenu .wp-submenu {
+    background: var(--ld-panel) !important;
+  }
+  #adminmenu a, #adminmenu .wp-submenu a { color: var(--ld-text) !important; }
+  #adminmenu .current a.menu-top,
+  #adminmenu .wp-has-current-submenu > a.menu-top,
+  #adminmenu a:hover, #adminmenu .wp-submenu a:hover {
+    color:#fff !important; background: var(--ld-surface) !important;
+  }
+  #adminmenu .awaiting-mod, #adminmenu .update-plugins { background:#dc3545 !important; color:#fff !important; }
+
+  /* Таблицы/списки/таб-навигация */
+  .wrap .nav-tab-wrapper, .nav-tab { border-color: var(--ld-border) !important; }
+  .nav-tab { background: var(--ld-panel) !important; color: var(--ld-text) !important; }
+  .nav-tab.nav-tab-active { background: var(--ld-surface) !important; }
+
+  .wp-list-table, .widefat { background: var(--ld-surface) !important; color: var(--ld-text) !important; border-color: var(--ld-border) !important; }
+  .wp-list-table th, .wp-list-table td { border-color: var(--ld-border) !important; }
+  .wp-list-table thead th { background: var(--ld-panel) !important; }
+  .wp-list-table tr:nth-child(odd) td { background: var(--ld-panel) !important; }
+  .tablenav, .tablenav .actions, .search-box { background: var(--ld-panel) !important; border-color: var(--ld-border) !important; }
+
+  /* Карточки/метабоксы/уведомления */
+  .wrap .postbox, .wrap .card, .dashboard-widgets .postbox, .stuffbox,
+  .theme-browser .theme, .plugin-card,
+  .notice, .notice-alt, .update-nag {
+    background: var(--ld-surface) !important;
+    color: var(--ld-text) !important;
+    border-color: var(--ld-border) !important;
+  }
+  .welcome-panel { background: var(--ld-surface) !important; border:1px solid var(--ld-border) !important; color: var(--ld-text) !important; }
+  .welcome-panel .about-description { color: var(--ld-muted) !important; }
+
+  /* Site Health */
+  .health-check-body .site-health-issue,
+  .site-health-progress,
+  .health-check-accordion .health-check-accordion-trigger,
+  .health-check-accordion .health-check-accordion-panel {
+    background: var(--ld-surface) !important; color: var(--ld-text) !important; border-color: var(--ld-border) !important;
   }
 
-  /* ===== ВЕРХНЯЯ ПАНЕЛЬ ===== */
-  body.wp-admin #wpadminbar {
-    background: #0f141a !important;
-    color: #e6edf3 !important;
+  /* Формы */
+  input[type="text"], input[type="search"], input[type="email"], input[type="url"],
+  input[type="password"], input[type="number"], textarea, select {
+    background: var(--ld-panel) !important; color: var(--ld-text) !important; border-color: var(--ld-border) !important;
   }
-  body.wp-admin #wpadminbar .ab-item,
-  body.wp-admin #wpadminbar a.ab-item {
-    color: #e6edf3 !important;
+  input::placeholder, textarea::placeholder { color: var(--ld-muted) !important; }
+  .wp-core-ui .button, .wp-core-ui .button-secondary {
+    background: var(--ld-panel) !important; border-color: var(--ld-border) !important; color: var(--ld-text) !important;
   }
-  body.wp-admin #wpadminbar .ab-item:hover,
-  body.wp-admin #wpadminbar a.ab-item:hover {
-    color: #ffffff !important;
+  .wp-core-ui .button:hover, .wp-core-ui .button-secondary:hover { background: var(--ld-hover) !important; }
+  .wp-core-ui .button-primary { background: var(--ld-primary) !important; border-color: var(--ld-primary) !important; color:#fff !important; }
+  .wp-core-ui .button-primary:hover { filter: brightness(1.08) !important; }
+
+  /* Notices цвета (мягкие) */
+  .notice-success { background: color-mix(in srgb, #198754 20%, var(--ld-surface)) !important; border-color: var(--ld-border) !important; color: var(--ld-text) !important; }
+  .notice-warning { background: color-mix(in srgb, #ffc107 20%, var(--ld-surface)) !important; border-color: var(--ld-border) !important; color: var(--ld-text) !important; }
+  .notice-error   { background: color-mix(in srgb, #dc3545 20%, var(--ld-surface)) !important; border-color: var(--ld-border) !important; color: var(--ld-text) !important; }
+
+  /* Gutenberg chrome (НЕ контент-iframe) */
+  .interface-interface-skeleton,
+  .interface-interface-skeleton__sidebar,
+  .interface-interface-skeleton__header,
+  .interface-complementary-area,
+  .edit-post-sidebar,
+  .components-panel, .components-card,
+  .components-popover__content, .components-dropdown__content {
+    background: var(--ld-surface) !important; color: var(--ld-text) !important; border-color: var(--ld-border) !important;
+  }
+  .edit-post-header, .interface-interface-skeleton__header {
+    background: var(--ld-panel) !important; border-bottom:1px solid var(--ld-border) !important;
   }
 
-  /* ===== ЛЕВОЕ МЕНЮ ===== */
-  body.wp-admin #adminmenuback,
-  body.wp-admin #adminmenuwrap,
-  body.wp-admin #adminmenu,
-  body.wp-admin #adminmenu .wp-submenu {
-    background: #0f141a !important;
+  /* Media Modal */
+  .media-modal, .media-frame, .attachments-browser, .attachment, .media-toolbar {
+    background: var(--ld-surface) !important; color: var(--ld-text) !important; border-color: var(--ld-border) !important;
   }
-  body.wp-admin #adminmenu a,
-  body.wp-admin #adminmenu .wp-submenu a {
-    color: #e6edf3 !important;
+  .attachment.selected { outline: 2px solid var(--ld-primary) !important; }
+
+  /* ACF (если используется) */
+  .acf-field, .acf-fields, .acf-postbox {
+    background: var(--ld-surface) !important; border-color: var(--ld-border) !important; color: var(--ld-text) !important;
   }
-  body.wp-admin #adminmenu .wp-has-current-submenu > a.menu-top,
-  body.wp-admin #adminmenu .current a.menu-top,
-  body.wp-admin #adminmenu a:hover,
-  body.wp-admin #adminmenu .wp-submenu a:hover {
-    color: #ffffff !important;
-    background: #11161d !important;
-  }
-  body.wp-admin #adminmenu .awaiting-mod,
-  body.wp-admin #adminmenu .update-plugins {
-    background: #dc3545 !important; /* danger */
-    color: #fff !important;
+  .acf-label label, .acf-input, .acf-field .description { color: var(--ld-text) !important; }
+
+  /* Plugins / Themes */
+  .plugin-card, .theme-browser .theme, .update-message, .theme-overlay {
+    background: var(--ld-surface) !important; color: var(--ld-text) !important; border-color: var(--ld-border) !important;
   }
 
-  /* ===== КОНТЕНТ / КАРТОЧКИ / ТАБЛИЦЫ ===== */
-  body.wp-admin .wrap .postbox,
-  body.wp-admin .wrap .card,
-  body.wp-admin .widefat,
-  body.wp-admin .wp-list-table,
-  body.wp-admin .theme-browser .theme {
-    background: #11161d !important;
-    color: #e6edf3 !important;
-    border-color: #2b3139 !important;
-  }
-  body.wp-admin .wrap h1,
-  body.wp-admin .wrap h2,
-  body.wp-admin .wrap h3,
-  body.wp-admin .wrap h4,
-  body.wp-admin .wrap h5 {
-    color: #e6edf3 !important;
-  }
-  body.wp-admin .notice,
-  body.wp-admin .update-nag,
-  body.wp-admin .notice-alt {
-    background: #11161d !important;
-    color: #e6edf3 !important;
-    border-left-color: #2b3139 !important;
-  }
-  body.wp-admin .wp-list-table tr:nth-child(odd) td {
-    background: #0f141a !important;
-  }
-
-  /* ===== ФОРМЫ ===== */
-  body.wp-admin input[type="text"],
-  body.wp-admin input[type="search"],
-  body.wp-admin input[type="email"],
-  body.wp-admin input[type="url"],
-  body.wp-admin input[type="password"],
-  body.wp-admin input[type="number"],
-  body.wp-admin textarea,
-  body.wp-admin select,
-  body.login input[type="text"],
-  body.login input[type="password"] {
-    background: #0f141a !important;
-    color: #e6edf3 !important;
-    border-color: #2b3139 !important;
-  }
-  body.wp-admin input::placeholder,
-  body.wp-admin textarea::placeholder,
-  body.login input::placeholder {
-    color: #9aa4af !important;
-  }
-
-  /* ===== КНОПКИ ===== */
-  body.wp-admin .wp-core-ui .button-primary,
-  body.login .button-primary {
-    background-color: #0d6efd !important;
-    border-color: #0d6efd !important;
-    color: #ffffff !important;
-  }
-  body.wp-admin .wp-core-ui .button-primary:hover,
-  body.login .button-primary:hover {
-    filter: brightness(1.08) !important;
-  }
-  body.wp-admin .wp-core-ui .button,
-  body.wp-admin .wp-core-ui .button-secondary {
-    background: #0f141a !important;
-    border-color: #2b3139 !important;
-    color: #e6edf3 !important;
-  }
-  body.wp-admin .wp-core-ui .button:hover,
-  body.wp-admin .wp-core-ui .button-secondary:hover {
-    background: #141a22 !important;
-  }
-
-  /* ===== ЛОГИН ===== */
-  body.login #loginform,
-  body.login .message,
-  body.login #nav,
-  body.login #backtoblog {
-    background: transparent !important;
-    color: #e6edf3 !important;
-    border-color: transparent !important;
+  /* Логин */
+  body.login #loginform, body.login .message, body.login #nav, body.login #backtoblog {
+    background: transparent !important; color: var(--ld-text) !important; border-color: transparent !important;
   }
 }

@@ -1,49 +1,52 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-/** Инклюд одного файла, безопасно */
-function ld_require_once_safe(string $file): void {
-  if (is_file($file)) require_once $file;
-}
+/**
+ * Lowdesign bootstrap (fail-safe)
+ * Порядок:
+ * 0) core: vite, i18n, acf-json
+ * 1) helpers → cpt → taxonomies → extensions
+ * 2) theme setup (supports, logo, menus)
+ * 3) assets (frontend, editor, admin-dark)
+ * 4) nav & widgets
+ */
 
-/** Инклюд всех php в папке (кроме index.php), с поддержкой цифровых префиксов */
-function ld_require_dir(string $dir): void {
-  if (!is_dir($dir)) return;
-
-  $files = glob(trailingslashit($dir) . '*.php');
-  if (!$files) return;
-
-  // Сортируем так, чтобы префиксы "00-", "10-" шли по порядку
-  usort($files, function ($a, $b) {
-    return strcmp(basename($a), basename($b));
-  });
-
-  foreach ($files as $file) {
-    if (basename($file) === 'index.php') continue;
-    require_once $file;
+if (!function_exists('ld_require_once_safe') || !function_exists('ld_require_dir')) {
+  // страховка на случай, если файл подключили напрямую (в норме эти функции уже есть из functions.php)
+  function ld_require_once_safe(string $file): void { if (is_file($file)) require_once $file; }
+  function ld_require_dir(string $dir): void {
+    if (!is_dir($dir)) return;
+    foreach (glob(trailingslashit($dir) . '*.php') as $file) {
+      if (basename($file) === 'index.php') continue;
+      require_once $file;
+    }
   }
 }
 
-/**
- * Порядок загрузки (директории):
- * 0) core        → vite, i18n, acf-json
- * 1) helpers     → полезные функции
- * 2) cpt         → типы записей
- * 3) taxonomies  → таксономии
- * 4) extensions  → любые расширения
- * 5) setup       → supports/logo/menus/html5
- * 6) assets      → фронт-ассеты, редактор, admin-dark
- * 7) ui          → навигация, виджеты и пр.
- */
 add_action('after_setup_theme', function () {
-  $base = get_stylesheet_directory() . '/inc';
+  $base = get_stylesheet_directory();
+  $inc  = $base . '/inc';
 
-  ld_require_dir($base . '/core');
-  ld_require_dir($base . '/helpers');
-  ld_require_dir($base . '/cpt');
-  ld_require_dir($base . '/taxonomies');
-  ld_require_dir($base . '/extensions');
-  ld_require_dir($base . '/setup');
-  ld_require_dir($base . '/assets');
-  ld_require_dir($base . '/ui');
+  // 0) ядро (безопасно: если файла нет — пропустим)
+  ld_require_once_safe("$inc/core/vite.php");    // ld_vite_manifest_path(), ld_vite_asset_uri()
+  ld_require_once_safe("$inc/core/i18n.php");    // load_theme_textdomain(...)
+  ld_require_once_safe("$inc/core/acf-json.php");// ACF JSON paths
+
+  // 1) кастомные пласты
+  ld_require_dir("$inc/helpers");
+  ld_require_dir("$inc/cpt");
+  ld_require_dir("$inc/taxonomies");
+  ld_require_dir("$inc/extensions");
+
+  // 2) возможности темы (supports/logo/menus/html5)
+  ld_require_once_safe("$inc/theme-setup.php");
+
+  // 3) ассеты
+  ld_require_once_safe("$inc/assets/enqueue-frontend.php"); // фронт: bootstrap custom + Vite main.css/js
+  ld_require_once_safe("$inc/assets/editor.php");           // стили редактора
+  ld_require_once_safe("$inc/assets/admin-dark.php");       // тёмная админка
+
+  // 4) навигация и виджеты
+  ld_require_once_safe("$inc/nav.php");
+  ld_require_once_safe("$inc/widgets-footer.php");
 }, 1);
