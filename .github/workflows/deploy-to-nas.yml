@@ -1,0 +1,61 @@
+name: Deploy to NAS
+
+on:
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: deploy-to-nas
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify NAS_KEY is present (masked)
+        env:
+          NAS_KEY: ${{ secrets.NAS_KEY }}
+        run: |
+          if [ -z "${NAS_KEY}" ]; then
+            echo "❌ NAS_KEY is empty (Repo → Settings → Secrets → Actions)."; exit 1;
+          fi
+          echo "✅ NAS_KEY received."
+
+      - name: Write SSH key & known_hosts
+        env:
+          NAS_KEY: ${{ secrets.NAS_KEY }}
+          NAS_HOST: ${{ secrets.NAS_HOST }}
+          NAS_PORT: ${{ secrets.NAS_PORT }}
+        run: |
+          set -eu
+          umask 077
+          mkdir -p ~/.ssh
+          printf '%s\n' "$NAS_KEY" > ~/.ssh/id_nas
+          ssh-keyscan -p "$NAS_PORT" "$NAS_HOST" >> ~/.ssh/known_hosts
+
+      - name: Trigger pull on NAS
+        env:
+          NAS_HOST: ${{ secrets.NAS_HOST }}
+          NAS_PORT: ${{ secrets.NAS_PORT }}
+          NAS_USER: ${{ secrets.NAS_USER }}
+          NAS_FORCED_COMMAND: ${{ secrets.NAS_FORCED_COMMAND }}
+        run: |
+          set -euo pipefail
+          run_ssh() {
+            ssh -i ~/.ssh/id_nas -o ConnectTimeout=10 -o StrictHostKeyChecking=accept-new \
+                -p "$NAS_PORT" "$NAS_USER@$NAS_HOST" "$@"
+          }
+          echo "NAS_FORCED_COMMAND=${NAS_FORCED_COMMAND:-false}"
+          for i in 1 2 3; do
+            if [ "${NAS_FORCED_COMMAND:-false}" = "true" ]; then
+              run_ssh exit 0 && break || sleep 2
+            else
+              run_ssh "bash /volume1/web/margo/pull_margo.sh" && break || sleep 2
+            fi
+            echo "retry $i/3..."
+          done

@@ -1,0 +1,131 @@
+/* @ld-tags: core, header, nav, layout */
+
+/* Базовые токены (можешь связать с Bootstrap vars) */
+:root {
+  --container: 1240px;
+  --g: 16px;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+}
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: calc(var(--g) * 1.5);
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+}
+
+/* ===== Header ===== */
+.site-header {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(18,18,20,.72);
+  backdrop-filter: saturate(1.2) blur(10px);
+  transition: transform .4s ease, box-shadow .3s ease, background .3s ease;
+
+  &.scrolled { box-shadow: 0 4px 18px rgba(0,0,0,.25); }
+  &.hide { transform: translateY(-100%); }
+}
+
+.header-inner { display: flex; align-items: center; gap: 24px; min-height: 72px; }
+.brand .custom-logo { height: 36px; width: auto; }
+.site-title { font-weight: 700; text-decoration: none; color: inherit; }
+
+.primary-nav {
+  .menu { display: flex; gap: 24px; list-style: none; padding: 0; margin: 0; }
+  .menu > li { position: relative; }
+  a { text-decoration: none; padding: 10px 6px; display: inline-flex; align-items: center; }
+
+  .sub-menu {
+    position: absolute; left: 0; top: 100%; min-width: 260px;
+    background: #0f0f12; border: 1px solid rgba(255,255,255,.08);
+    padding: 12px; border-radius: var(--radius);
+    box-shadow: 0 16px 40px rgba(0,0,0,.35);
+    display: none;
+  }
+  li:hover > .sub-menu { display: block; }
+
+  /* Mega: у верхнего пункта в Меню WP класс `is-mega` */
+  .menu > li.is-mega {
+    position: static;
+
+    > .sub-menu {
+      left: 50%; transform: translateX(-50%);
+      width: min(1100px, calc(100vw - 32px));
+      display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px; padding: 20px;
+    }
+
+    > .sub-menu > li > a { font-weight: 600; margin-bottom: 6px; }
+
+    .sub-menu .sub-menu {
+      position: static; display: block; padding: 0; border: 0;
+      box-shadow: none; background: transparent;
+    }
+  }
+}
+
+.header-actions {
+  margin-left: auto; display: flex; gap: 10px;
+
+  button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 10px; padding: 8px 10px; cursor: pointer;
+  }
+}
+
+/* Search panel */
+.search-panel { background: #0e0e11; border-top: 1px solid rgba(255,255,255,.08); padding: 16px 0; }
+.searchform { display: flex; gap: 8px; }
+.searchform .input {
+  flex: 1; padding: 10px 12px; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.15); background: #131318; color: #fff;
+}
+.searchform .btn {
+  padding: 10px 14px; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.15); background: transparent; color: #fff;
+}
+
+/* ===== Mobile drawer ===== */
+.no-scroll { overflow: hidden; }
+
+.mobile-drawer {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex;
+}
+.drawer-inner {
+  margin-left: auto; width: min(92vw, 380px); background: #0f0f12;
+  height: 100%; padding: 18px; display: flex; flex-direction: column; gap: 18px;
+}
+.drawer-close {
+  align-self: flex-end;
+  background: transparent;
+  border: 0;
+  font-size: 28px;
+}
+.menu.mobile { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.menu.mobile .sub-menu { padding-left: 14px; }
+
+/* ===== Footer ===== */
+.site-footer { background: #0c0c0f; color: #cfd3d8; margin-top: 56px; }
+.footer-widgets { padding: 40px 0; }
+.footer-widgets .row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 24px; }
+.footer-bottom {
+  display: flex; gap: 24px; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,.08); padding: 14px 0 20px;
+}
+.footer-menu { list-style: none; padding: 0; margin: 0; display: flex; gap: 16px; }
+.footer-menu a { text-decoration: none; color: inherit; opacity: .85; }
+.footer-menu a:hover { opacity: 1; }
+
+@media (max-width: 980px) {
+  .primary-nav { display: none; }
+}

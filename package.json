@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "build": "vite build",
+    "ld:scan": "node tools/ldscan.mjs",
+    "ld:bake:margo": "node tools/ldbake.mjs project.margo.json"
+  }
+}
