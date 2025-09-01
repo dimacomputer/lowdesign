@@ -31,6 +31,7 @@ add_action('after_setup_theme', function () {
   ld_require_once_safe("$inc/core/vite.php");    // ld_vite_manifest_path(), ld_vite_asset_uri()
   ld_require_once_safe("$inc/core/i18n.php");    // load_theme_textdomain(...)
   ld_require_once_safe("$inc/core/acf-json.php");// ACF JSON paths
+  ld_require_once_safe("$inc/core/custom-logo-svg.php");// Site Logo in Theme
 
   // 1) кастомные пласты
   ld_require_dir("$inc/helpers");
