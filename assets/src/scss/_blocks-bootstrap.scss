@@ -1,0 +1,33 @@
+/* WP blocks styled via Bootstrap tokens (общий для фронта и редактора) */
+
+/* Кнопка-блок ≈ .btn */
+.wp-block-button .wp-block-button__link {
+  display: inline-block;
+  background: var(--bs-primary, #0d6efd);
+  color: #fff;
+  border: 1px solid var(--bs-primary, #0d6efd);
+  border-radius: var(--bs-border-radius-pill, var(--bs-border-radius, .375rem));
+  padding: .5rem 1rem;
+  line-height: 1.25;
+  text-decoration: none;
+}
+.wp-block-button.is-style-outline .wp-block-button__link {
+  background: transparent;
+  color: var(--bs-primary, #0d6efd);
+}
+.wp-block-button .wp-block-button__link:hover { filter: brightness(1.05); }
+
+/* Заголовки/текст через токены (минимально) */
+.editor-styles-wrapper h1, h1 { color: var(--bs-heading-color, var(--bs-body-color)); }
+.editor-styles-wrapper p,  p  { color: var(--bs-body-color); }
+
+/* Таблицы */
+.wp-block-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.wp-block-table td, .wp-block-table th {
+  border: 1px solid var(--bs-border-color, #dee2e6);
+  padding: .5rem .75rem;
+}
+.wp-block-table thead th { background: var(--bs-tertiary-bg, #f8f9fa); }

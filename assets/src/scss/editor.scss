@@ -6,6 +6,7 @@
 @import './wp-tokens';             // _wp-tokens.scss  → кастомные CSS-переменные проекта
 @import './data-bs-theme-light';   // _data-bs-theme-light.scss → --bs-* для светлой
 @import './data-bs-theme-dark';    // _data-bs-theme-dark.scss  → --bs-* для тёмной (если есть)
+@import './blocks-bootstrap';      //* ← новый общий маппинг блоков */
 
 /* 1) База для iframe редактора */
 .editor-styles-wrapper {
