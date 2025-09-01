@@ -47,5 +47,5 @@ jobs:
           if [ "${NAS_FORCED_COMMAND:-false}" = "true" ]; then
             run_ssh exit 0
           else
-            run_ssh "bash -lc '/volume1/web/${NAS_PROJECT}/pull.sh'"
+            run_ssh "bash -lc '/volume1/web/${NAS_PROJECT}/scripts/pull.sh'"
           fi
