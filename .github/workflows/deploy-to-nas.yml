@@ -2,7 +2,7 @@ name: Deploy all sites to NAS
 
 on:
   push:
-    branches: [ "main" ]   # автодеплой с main
+    branches: [ "main" ]
 
 concurrency:
   group: deploy-to-nas
@@ -13,8 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
+      fail-fast: false
       matrix:
-        project: [ "malati", "lowdesign" ]   # добавишь сюда новые проекты
+        project: [ "malati", "lowdesign" ]
 
     steps:
       - name: Write SSH key & known_hosts
@@ -30,16 +31,6 @@ jobs:
           chmod 600 ~/.ssh/id_nas
           ssh-keyscan -p "$NAS_PORT" "$NAS_HOST" >> ~/.ssh/known_hosts
 
-      # (опционально) быстрая проверка соединения
-      # - name: Debug SSH
-      #   env:
-      #     NAS_HOST: ${{ secrets.NAS_HOST }}
-      #     NAS_PORT: ${{ secrets.NAS_PORT }}
-      #     NAS_USER: ${{ secrets.NAS_USER }}
-      #   run: |
-      #     ssh -vvv -i ~/.ssh/id_nas -p "$NAS_PORT" -o StrictHostKeyChecking=accept-new \
-      #       "$NAS_USER@$NAS_HOST" "echo connected"
-
       - name: Trigger pull on NAS
         env:
           NAS_HOST: ${{ secrets.NAS_HOST }}
@@ -52,10 +43,22 @@ jobs:
             ssh -i ~/.ssh/id_nas -o ConnectTimeout=10 -o StrictHostKeyChecking=accept-new \
                 -p "$NAS_PORT" "$NAS_USER@$NAS_HOST" "$@"
           }
+
           echo "=== Deploying project: ${{ matrix.project }} ==="
+
           if [ "${NAS_FORCED_COMMAND:-false}" = "true" ]; then
             run_ssh exit 0
           else
-            # ВАЖНО: передаём NAS_PROJECT внутрь удалённой сессии
-            run_ssh "NAS_PROJECT=${{ matrix.project }} bash -lc '/volume1/web/${{ matrix.project }}/scripts/pull.sh'"
+            # ПЕРЕДАЁМ NAS_PROJECT внутрь удалённого процесса и вызываем /scripts/pull.sh БЕЗ bash -lc
+            run_ssh "NAS_PROJECT=${{ matrix.project }} /bin/sh /volume1/web/${{ matrix.project }}/scripts/pull.sh"
           fi
+
+      # Печатаем хвост лога проекта, чтобы видеть какой коммит применился
+      - name: Show deploy log tail
+        env:
+          NAS_HOST: ${{ secrets.NAS_HOST }}
+          NAS_PORT: ${{ secrets.NAS_PORT }}
+          NAS_USER: ${{ secrets.NAS_USER }}
+        run: |
+          ssh -i ~/.ssh/id_nas -p "$NAS_PORT" -o StrictHostKeyChecking=accept-new \
+            "$NAS_USER@$NAS_HOST" "tail -n 80 /volume1/web/${{ matrix.project }}/logs/pull_${{ matrix.project }}.log || true"
