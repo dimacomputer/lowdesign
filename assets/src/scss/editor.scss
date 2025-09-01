@@ -1,72 +1,149 @@
-/* test marker */
-.editor-styles-wrapper p::after {
-  content: "★LD★";
-  color: red;
-}
+/* Lowdesign – Gutenberg editor styles (iframe only)
+   Подключает твои токены и применяет их к .editor-styles-wrapper
+*/
 
-/* ==========================================================================
-   Editor styles — лёгкий бандл для Gutenberg iframe
-   ========================================================================== */
+/* 0) Твои токены/переменные (порядок важен: сначала WP, затем BS-темы) */
+@import './wp-tokens';             // _wp-tokens.scss  → кастомные CSS-переменные проекта
+@import './data-bs-theme-light';   // _data-bs-theme-light.scss → --bs-* для светлой
+@import './data-bs-theme-dark';    // _data-bs-theme-dark.scss  → --bs-* для тёмной (если есть)
 
-/* Подключаем только токены Bootstrap */
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities"; // можно оставить только utilities, без grid/forms/components
-
-/* Прокидываем токены в WP CSS Custom Properties */
-:root {
-  /* Цвета Bootstrap → WP Presets */
-  --wp--preset--color--primary:   #{$primary};
-  --wp--preset--color--secondary: #{$secondary};
-  --wp--preset--color--success:   #{$success};
-  --wp--preset--color--info:      #{$info};
-  --wp--preset--color--warning:   #{$warning};
-  --wp--preset--color--danger:    #{$danger};
-  --wp--preset--color--light:     #{$light};
-  --wp--preset--color--dark:      #{$dark};
-
-  /* Радиусы */
-  --wp--custom--radius--default:  #{$border-radius};
-  --wp--custom--radius--sm:       #{$border-radius-sm};
-  --wp--custom--radius--lg:       #{$border-radius-lg};
-  --wp--custom--radius--pill:     50rem;
-}
-
-/* Стилизация контента внутри редактора */
+/* 1) База для iframe редактора */
 .editor-styles-wrapper {
-  font-family: var(--wp--preset--font-family--system, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif);
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--wp--preset--color--dark);
+  /* фон/текст/шрифты из --bs-* */
+  background: var(--bs-body-bg, #fff);
+  color: var(--bs-body-color, #111);
+  font-family: var(--bs-body-font-family, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif);
+  font-size: var(--bs-body-font-size, 1rem);
+  line-height: var(--bs-body-line-height, 1.6);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 
+  /* ссылки */
   a {
-    color: var(--wp--preset--color--primary);
-    text-decoration: underline;
+    color: var(--bs-link-color, var(--bs-primary, #0d6efd));
+    text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
   }
+  a:hover { filter: brightness(1.08); }
 
+  /* заголовки */
   h1, h2, h3, h4, h5, h6 {
+    color: var(--bs-heading-color, var(--bs-body-color));
     font-weight: 600;
     line-height: 1.2;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
+    margin-top: 1.2em;
+    margin-bottom: .5em;
   }
+  h1 { font-size: clamp(2rem, 2.5vw + 1rem, 2.75rem); }
+  h2 { font-size: clamp(1.75rem, 2vw + .75rem, 2.25rem); }
+  h3 { font-size: clamp(1.5rem, 1.5vw + .5rem, 1.75rem); }
 
-  p {
-    margin-bottom: 1rem;
-  }
+  /* текстовые элементы */
+  p { margin: 0 0 1em; }
+  small, .is-small-text { font-size: .875em; color: var(--bs-secondary-color, color-mix(in srgb, var(--bs-body-color) 70%, transparent)); }
 
-  ul, ol {
-    margin-bottom: 1rem;
-    padding-left: 1.5rem;
-  }
+  /* списки */
+  ul, ol { margin: 0 0 1em 1.25em; }
+  li + li { margin-top: .25em; }
 
+  /* цитаты */
   blockquote {
-    border-left: 4px solid var(--wp--preset--color--secondary);
-    margin: 1rem 0;
+    color: var(--bs-secondary-color, color-mix(in srgb, var(--bs-body-color) 70%, transparent));
+    border-left: 4px solid var(--bs-border-color, #dee2e6);
     padding-left: 1rem;
-    color: var(--wp--preset--color--secondary);
-    font-style: italic;
+    margin: 1.2em 0;
+  }
+
+  /* код */
+  code, kbd, samp {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .9375em;
+    color: var(--bs-code-color, var(--bs-danger, #dc3545));
+  }
+  pre {
+    background: var(--bs-tertiary-bg, #f8f9fa);
+    border: 1px solid var(--bs-border-color, #dee2e6);
+    border-radius: var(--bs-border-radius, .375rem);
+    padding: 1rem;
+    overflow: auto;
+  }
+
+  /* таблицы */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+  }
+  th, td {
+    border: 1px solid var(--bs-border-color, #dee2e6);
+    padding: .5rem .75rem;
+  }
+  thead th { background: var(--bs-tertiary-bg, #f8f9fa); }
+
+  /* изображения/фигуры */
+  img, video, iframe { max-width: 100%; height: auto; }
+  figure { margin: 0 0 1rem; }
+  figcaption {
+    color: var(--bs-secondary-color, color-mix(in srgb, var(--bs-body-color) 65%, transparent));
+    font-size: .9em;
+    margin-top: .5rem;
+    text-align: center;
+  }
+
+  /* кнопки Gutenberg ≈ Bootstrap .btn */
+  .wp-block-button .wp-block-button__link {
+    display: inline-block;
+    background: var(--bs-primary, #0d6efd);
+    color: #fff;
+    border: 1px solid var(--bs-primary, #0d6efd);
+    border-radius: var(--bs-border-radius-pill, var(--bs-border-radius, .375rem));
+    padding: .5rem 1rem;
+    line-height: 1.25;
+    text-decoration: none;
+  }
+  .wp-block-button.is-style-outline .wp-block-button__link {
+    background: transparent;
+    color: var(--bs-primary, #0d6efd);
+  }
+  .wp-block-button .wp-block-button__link:hover { filter: brightness(1.05); }
+
+  /* выравнивания / ширины */
+  .alignwide { max-width: min(1200px, 92vw); margin-left: auto; margin-right: auto; }
+  .alignfull { width: 100vw; margin-left: 50%; transform: translateX(-50%); }
+
+  /* разделитель */
+  hr {
+    border: 0;
+    border-top: 1px solid var(--bs-border-color, #dee2e6);
+    margin: 2rem 0;
+  }
+
+  /* палитры WP → bootstrap var */
+  .has-primary-color            { color: var(--bs-primary) !important; }
+  .has-secondary-color          { color: var(--bs-secondary) !important; }
+  .has-success-color            { color: var(--bs-success) !important; }
+  .has-danger-color             { color: var(--bs-danger) !important; }
+  .has-warning-color            { color: var(--bs-warning) !important; }
+  .has-info-color               { color: var(--bs-info) !important; }
+  .has-light-color              { color: var(--bs-light) !important; }
+  .has-dark-color               { color: var(--bs-dark) !important; }
+
+  .has-primary-background-color { background-color: var(--bs-primary) !important; color:#fff !important; }
+  .has-secondary-background-color{ background-color: var(--bs-secondary) !important; }
+  .has-success-background-color { background-color: var(--bs-success) !important; }
+  .has-danger-background-color  { background-color: var(--bs-danger) !important; }
+  .has-warning-background-color { background-color: var(--bs-warning) !important; }
+  .has-info-background-color    { background-color: var(--bs-info) !important; }
+  .has-light-background-color   { background-color: var(--bs-light) !important; }
+  .has-dark-background-color    { background-color: var(--bs-dark) !important; color:#fff !important; }
+}
+
+/* 2) Авто-тёмный режим, если у тебя есть dark-токены */
+@media (prefers-color-scheme: dark) {
+  .editor-styles-wrapper {
+    background: var(--bs-body-bg, #0d1117);
+    color: var(--bs-body-color, #e6edf3);
+
+    pre { background: var(--bs-tertiary-bg, #11161d); }
+    thead th { background: var(--bs-tertiary-bg, #11161d); }
   }
 }
