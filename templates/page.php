@@ -7,6 +7,7 @@ get_header(); ?>
     <article <?php post_class(); ?>>
       <h1 class="mb-4"><?php the_title(); ?></h1>
       <div class="entry"><?php the_content(); ?></div>
+      <?php echo render_svg_inline_icon('brand/lowdesign_logo', 'icon icon-lg text-primary'); ?>
     </article>
   <?php endwhile; endif; ?>
 </div>
