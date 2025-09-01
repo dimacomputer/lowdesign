@@ -44,7 +44,7 @@ add_action('after_setup_theme', function () {
   // 3) ассеты
   ld_require_once_safe("$inc/assets/enqueue-frontend.php"); // фронт: bootstrap custom + Vite main.css/js
   ld_require_once_safe("$inc/assets/editor.php");           // стили редактора
-  ld_require_once_safe("$inc/assets/admin-dark.php");       // тёмная админка
+  //ld_require_once_safe("$inc/assets/admin-dark.php");       // тёмная админка
 
   // 4) навигация и виджеты
   ld_require_once_safe("$inc/nav.php");
