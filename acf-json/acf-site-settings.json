@@ -1,5 +1,5 @@
 {
-  "key": "group_ld_site_settings",
+  "key": "ld_site_config",
   "title": "Site Settings",
   "fields": [
     {
@@ -101,7 +101,7 @@
       {
         "param": "post_type",
         "operator": "==",
-        "value": "ld_config"
+        "value": "ld_site_config"
       }
     ]
   ],
