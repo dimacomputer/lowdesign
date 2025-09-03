@@ -13,9 +13,12 @@
       "key": "field_site_logo_svg",
       "label": "Site Logo (SVG)",
       "name": "site_logo_svg",
-      "type": "textarea",
-      "instructions": "Paste inline SVG",
-      "required": 0
+      "type": "image",
+      "instructions": "Upload SVG logo (preferred). If empty, raster logo or Theme custom logo will be used.",
+      "required": 0,
+      "return_format": "id",
+      "preview_size": "medium",
+      "library": "all"
     },
     {
       "key": "field_site_logo_raster",
@@ -94,6 +97,20 @@
       "type": "true_false",
       "ui": 1,
       "default_value": 1
+    },
+    {
+      "key": "field_tab_footer",
+      "label": "Footer",
+      "name": "",
+      "type": "tab",
+      "placement": "left"
+    },
+    {
+      "key": "field_site_footer_copyright",
+      "label": "Footer Copyright",
+      "name": "site_footer_copyright",
+      "type": "text",
+      "instructions": "E.g. © {Y} Malti Love Design. You can use {Y} for current year."
     }
   ],
   "location": [
