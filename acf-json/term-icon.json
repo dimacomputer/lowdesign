@@ -1,7 +1,6 @@
-[
     {
         "key": "group_68b874837e8c1",
-        "title": "Term Icon",
+        "title": "Term Icon Picker",
         "fields": [
             {
                 "key": "field_68b87483197df",
@@ -56,4 +55,3 @@
         "description": "",
         "show_in_rest": 0
     }
-]
