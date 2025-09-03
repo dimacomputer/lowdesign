@@ -41,7 +41,7 @@ add_action('after_setup_theme', function () {
   ld_require_dir("$inc/extensions");
 
   // 2) возможности темы (supports/logo/menus/html5)
-  ld_require_once_safe("$inc/theme-setup.php");
+  ld_require_dir("$inc/setup");
 
   // 3) ассеты
   ld_require_once_safe("$inc/assets/enqueue-frontend.php"); // фронт: bootstrap custom + Vite main.css/js
