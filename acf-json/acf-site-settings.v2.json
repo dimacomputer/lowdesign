@@ -1,0 +1,132 @@
+{
+  "key": "ld_site_config",
+  "title": "Site Settings",
+  "fields": [
+    {
+      "key": "field_tab_brand",
+      "label": "Brand",
+      "name": "",
+      "type": "tab",
+      "placement": "left"
+    },
+    {
+      "key": "field_site_logo_svg",
+      "label": "Site Logo (SVG)",
+      "name": "site_logo_svg",
+      "type": "image",
+      "instructions": "Upload SVG logo (preferred). If empty, raster logo or Theme custom logo will be used.",
+      "required": 0,
+      "return_format": "id",
+      "preview_size": "medium",
+      "library": "all"
+    },
+    {
+      "key": "field_site_logo_raster",
+      "label": "Site Logo (raster)",
+      "name": "site_logo_raster",
+      "type": "image",
+      "return_format": "id",
+      "preview_size": "medium",
+      "library": "all"
+    },
+    {
+      "key": "field_tab_contacts",
+      "label": "Contacts",
+      "name": "",
+      "type": "tab",
+      "placement": "left"
+    },
+    {
+      "key": "field_contacts_email",
+      "label": "Email",
+      "name": "contacts_email",
+      "type": "email"
+    },
+    {
+      "key": "field_contacts_phone",
+      "label": "Phone",
+      "name": "contacts_phone",
+      "type": "text"
+    },
+    {
+      "key": "field_tab_seo",
+      "label": "SEO Defaults",
+      "name": "",
+      "type": "tab",
+      "placement": "left"
+    },
+    {
+      "key": "field_default_meta_title",
+      "label": "Default Meta Title",
+      "name": "default_meta_title",
+      "type": "text"
+    },
+    {
+      "key": "field_default_meta_description",
+      "label": "Default Meta Description",
+      "name": "default_meta_description",
+      "type": "textarea"
+    },
+    {
+      "key": "field_tab_features",
+      "label": "Features",
+      "name": "",
+      "type": "tab",
+      "placement": "left"
+    },
+    {
+      "key": "field_enable_categories_on_pages",
+      "label": "Enable Categories on Pages/CPT",
+      "name": "enable_categories_on_pages",
+      "type": "true_false",
+      "ui": 1,
+      "default_value": 1
+    },
+    {
+      "key": "field_enable_excerpt_on_pages",
+      "label": "Enable Excerpt on Pages",
+      "name": "enable_excerpt_on_pages",
+      "type": "true_false",
+      "ui": 1,
+      "default_value": 1
+    },
+    {
+      "key": "field_enable_template_loader",
+      "label": "Enable Template Loader",
+      "name": "enable_template_loader",
+      "type": "true_false",
+      "ui": 1,
+      "default_value": 1
+    },
+    {
+      "key": "field_tab_footer",
+      "label": "Footer",
+      "name": "",
+      "type": "tab",
+      "placement": "left"
+    },
+    {
+      "key": "field_site_footer_copyright",
+      "label": "Footer Copyright",
+      "name": "site_footer_copyright",
+      "type": "text",
+      "instructions": "E.g. © {Y} Malti Love Design. You can use {Y} for current year."
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "ld_site_config"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": 1,
+  "description": "Global site settings stored on a singleton CPT (works with ACF Free)."
+}
