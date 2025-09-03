@@ -110,7 +110,7 @@
       "label": "Footer Copyright",
       "name": "site_footer_copyright",
       "type": "text",
-      "instructions": "E.g. © {Y} Malti Love Design. You can use {Y} for current year."
+      "instructions": "E.g. © {Y} Malati Lowe Design. You can use {Y} for current year."
     }
   ],
   "location": [
@@ -127,6 +127,6 @@
   "style": "default",
   "label_placement": "top",
   "instruction_placement": "label",
-  "active": 1,
+  "active": 0,
   "description": "Global site settings stored on a singleton CPT (works with ACF Free)."
 }
