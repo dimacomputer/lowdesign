@@ -17,17 +17,19 @@ add_action('init', function () {
   $on = (bool) ld_opt('enable_categories_on_pages', false);
   if (!$on) return;
 
-  // какие типы включаем под категории
-  $with_categories = ['page', 'fineart', 'modeling', 'photo'];
+  // Берём все публичные CPT + page
+  $pts = get_post_types([
+    'public' => true,
+  ], 'names');
 
-  foreach ($with_categories as $pt) {
-    // так безопаснее, даже если CPT регистрируется после нас
+  // Ядро исключаем
+  $exclude = ['attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles'];
+
+  foreach ($pts as $pt) {
+    if (in_array($pt, $exclude, true)) continue;
     register_taxonomy_for_object_type('category', $pt);
   }
-
-  // если нужна кастомная таксономия у страниц — раскомментируй:
-  // register_taxonomy_for_object_type('ui_role', 'page');
-}, 20); // после регистрации CPT
+}, 20);
 
 // 2) Excerpt у страниц
 add_action('init', function () {
