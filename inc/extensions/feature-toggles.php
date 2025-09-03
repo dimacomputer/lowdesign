@@ -1,36 +1,68 @@
 <?php
-// inc/extensions/feature-toggles.php
-// Categories on pages/CPT and Excerpt on pages — controlled by ACF fields (free) stored on ld_config.
 if (!defined('ABSPATH')) exit;
 
+/**
+ *  Feature toggles, driven by ACF fields on ld_site_config:
+ *  - enable_categories_on_pages (true/false)
+ *  - enable_excerpt_on_pages   (true/false)
+ *  - enable_template_loader    (true/false)
+ *
+ *  Требования: функция ld_opt() уже подключена.
+ */
+
+// 1) Категории к страницам и CPT
 add_action('init', function () {
-  // helper: read ACF from ld_config singleton (works without PRO)
-  $opt = function($key, $default = true) {
-    if (!function_exists('get_field')) return $default;
-    $id = 0;
-    $q = get_posts(['post_type'=>'ld_config','post_status'=>'any','numberposts'=>1,'fields'=>'ids']);
-    if (!empty($q)) $id = (int) $q[0];
-    if (!$id) return $default;
-    $v = get_field($key, $id);
-    return $v === null || $v === '' ? $default : (bool)$v;
-  };
+  if (!function_exists('ld_opt')) return;
 
-  // 1) Categories on Pages / CPT
-  if ($opt('enable_categories_on_pages', true)) {
-    $map = [
-      'category' => ['page', 'fineart', 'photo'],
-      'ui_role'  => ['page'],
-    ];
-    foreach ($map as $tax => $pts) {
-      if (!taxonomy_exists($tax)) continue;
-      foreach ($pts as $pt) {
-        register_taxonomy_for_object_type($tax, $pt);
-      }
-    }
+  $on = (bool) ld_opt('enable_categories_on_pages', false);
+  if (!$on) return;
+
+  // какие типы включаем под категории
+  $with_categories = ['page', 'fineart', 'modeling', 'photo'];
+
+  foreach ($with_categories as $pt) {
+    // так безопаснее, даже если CPT регистрируется после нас
+    register_taxonomy_for_object_type('category', $pt);
   }
 
-  // 2) Excerpt on Pages
-  if ($opt('enable_excerpt_on_pages', true)) {
+  // если нужна кастомная таксономия у страниц — раскомментируй:
+  // register_taxonomy_for_object_type('ui_role', 'page');
+}, 20); // после регистрации CPT
+
+// 2) Excerpt у страниц
+add_action('init', function () {
+  if (!function_exists('ld_opt')) return;
+
+  $on = (bool) ld_opt('enable_excerpt_on_pages', false);
+  if ($on) {
     add_post_type_support('page', 'excerpt');
+  } else {
+    // мягко выключать не будем (ядро не умеет убирать метабокс обратно аккуратно),
+    // просто не трогаем если уже включено.
   }
+}, 20);
+
+// 3) Template Loader по полю `ld_template_slug`
+add_filter('template_include', function ($template) {
+  if (!function_exists('ld_opt')) return $template;
+
+  $on = (bool) ld_opt('enable_template_loader', false);
+  if (!$on) return $template;
+
+  if (!is_singular()) return $template;
+
+  $slug = function_exists('get_field') ? get_field('ld_template_slug') : '';
+  if (!$slug) return $template;
+
+  if (is_page()) {
+    $file = locate_template("page-{$slug}.php");
+    return $file ?: $template;
+  }
+
+  $pt = get_post_type();
+  $file = locate_template("single-{$slug}.php");
+  if ($file) return $file;
+
+  // как fallback можно попытаться single-{pt}-{slug}.php (если захочешь)
+  return $template;
 }, 20);
