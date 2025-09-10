@@ -11,17 +11,7 @@ if (!defined('ABSPATH')) exit;
  * 4) nav & widgets
  */
 
-if (!function_exists('ld_require_once_safe') || !function_exists('ld_require_dir')) {
-  // страховка на случай, если файл подключили напрямую (в норме эти функции уже есть из functions.php)
-  function ld_require_once_safe(string $file): void { if (is_file($file)) require_once $file; }
-  function ld_require_dir(string $dir): void {
-    if (!is_dir($dir)) return;
-    foreach (glob(trailingslashit($dir) . '*.php') as $file) {
-      if (basename($file) === 'index.php') continue;
-      require_once $file;
-    }
-  }
-}
+require_once __DIR__ . '/core/loader.php';
 
 add_action('after_setup_theme', function () {
   $base = get_stylesheet_directory();
