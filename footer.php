@@ -21,6 +21,14 @@
     <div class="copyright">© <?php echo date('Y'); ?> <?php bloginfo('name'); ?></div>
   </div>
 </footer>
+<?php
+$sprite_path = get_theme_file_path('assets/icons/sprite.svg');
+if (file_exists($sprite_path)) {
+  $ver   = filemtime($sprite_path);
+  $svg   = file_get_contents($sprite_path);
+  echo '<div class="ld-icon-sprite" hidden data-sprite-ver="' . esc_attr($ver) . '">' . $svg . '</div>';
+}
+?>
 <?php wp_footer(); ?>
 </body>
 </html>

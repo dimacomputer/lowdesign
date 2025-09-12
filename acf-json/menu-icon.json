@@ -1,67 +1,50 @@
-    {
-        "key": "group_68b5c1af36e68",
-        "title": "Menu Icon Picker",
-        "fields": [
+{
+    "key": "group_menu_icon",
+    "title": "Menu Icon",
+    "fields": [
+        {
+            "key": "field_menu_icon_select",
+            "label": "Menu Icon",
+            "name": "menu_icon",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": [],
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        }
+    ],
+    "location": [
+        [
             {
-                "key": "field_68b5c1af326ee",
-                "label": "menu_icon",
-                "name": "menu_icon",
-                "aria-label": "",
-                "type": "select",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "choices": {
-                    "brand\/lowdesign_logo": "brand\/lowdesign_logo",
-                    "brand\/muzzon_logo": "brand\/muzzon_logo",
-                    "glyph\/gamepad": "glyph\/gamepad",
-                    "glyph\/gift": "glyph\/gift",
-                    "glyph\/giftcard": "glyph\/giftcard",
-                    "glyph\/poster": "glyph\/poster",
-                    "glyph\/record": "glyph\/record",
-                    "glyph\/shop": "glyph\/shop",
-                    "glyph\/stuff": "glyph\/stuff",
-                    "glyph\/t-shirt": "glyph\/t-shirt",
-                    "ui\/chevron_burger": "ui\/chevron_burger",
-                    "ui\/chevron_close": "ui\/chevron_close",
-                    "ui\/chevron_external_link": "ui\/chevron_external_link",
-                    "ui\/chevron_left": "ui\/chevron_left",
-                    "ui\/chevron_right": "ui\/chevron_right",
-                    "ui\/external_link": "ui\/external_link"
-                },
-                "default_value": false,
-                "return_format": "value",
-                "multiple": 0,
-                "allow_null": 0,
-                "allow_in_bindings": 0,
-                "ui": 0,
-                "ajax": 0,
-                "placeholder": "",
-                "create_options": 0,
-                "save_options": 0
+                "param": "nav_menu_item",
+                "operator": "==",
+                "value": "all"
             }
-        ],
-        "location": [
-            [
-                {
-                    "param": "post_type",
-                    "operator": "==",
-                    "value": "page"
-                }
-            ]
-        ],
-        "menu_order": 0,
-        "position": "side",
-        "style": "default",
-        "label_placement": "top",
-        "instruction_placement": "label",
-        "hide_on_screen": "",
-        "active": true,
-        "description": "",
-        "show_in_rest": 0
-    }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0
+}

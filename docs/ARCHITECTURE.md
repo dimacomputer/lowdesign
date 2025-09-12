@@ -34,7 +34,7 @@ styles/                 # theme.json variants (dark.json)
 
 ## Assets & configuration
 - SCSS/Bootstrap tokens live in `assets/src/scss`, with WordPress preset mapping in `_wp-tokens.scss`
-- Icons/SVG: stored under `assets/icons/` with inline rendering handled by `inc/helpers/helpers-icons.php`
+- Icons/SVG: source files stored under `assets/icons/src/`
 - ACF JSON exports reside in `acf-json/` (e.g., `site-settings.json`, `term-icon.json`)
 - Polylang configurations are absent; multilingual handling is likely external.
 - Theme style variants are stored in `styles/dark.json` for block theme tokens.
