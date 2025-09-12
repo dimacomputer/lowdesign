@@ -5,3 +5,16 @@ Author: Dmytro Litvinov
 Version: 0.5.1/333
 Theme through 1111 Проверячем бигмак
 */
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+.icon--sm { font-size: 14px; }
+.icon--md { font-size: 18px; }
+.icon--lg { font-size: 24px; }
+.icon--xl { font-size: 32px; }

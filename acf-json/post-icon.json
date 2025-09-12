@@ -1,11 +1,11 @@
 {
-    "key": "group_term_icon",
-    "title": "Content Icon (Term)",
+    "key": "group_post_icon",
+    "title": "Content Icon",
     "fields": [
         {
-            "key": "field_term_icon_name",
+            "key": "field_post_icon_name",
             "label": "Content Icon",
-            "name": "term_icon_name",
+            "name": "post_icon_name",
             "aria-label": "",
             "type": "select",
             "instructions": "",
@@ -27,47 +27,28 @@
             "placeholder": "",
             "create_options": 0,
             "save_options": 0
-        },
-        {
-            "key": "field_term_icon_media",
-            "label": "Fallback Image",
-            "name": "term_icon_media",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "id",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "allow_in_bindings": 0,
-            "preview_size": "medium"
         }
     ],
     "location": [
         [
             {
-                "param": "taxonomy",
+                "param": "post_type",
                 "operator": "==",
-                "value": "category"
+                "value": "post"
             }
         ],
         [
             {
-                "param": "taxonomy",
+                "param": "post_type",
                 "operator": "==",
-                "value": "post_tag"
+                "value": "fineart"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "modeling"
             }
         ]
     ],
