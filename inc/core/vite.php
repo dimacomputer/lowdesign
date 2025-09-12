@@ -8,6 +8,17 @@ if (!defined('ABSPATH')) exit;
  * - Универсально достаём asset URI по entry-ключу (ключ = исходный путь)
  */
 
+if (!function_exists('is_vite_dev')) {
+  /**
+   * Flag indicating whether Vite dev server should be used.
+   *
+   * Enabled via the LD_VITE_DEV constant.
+   */
+  function is_vite_dev(): bool {
+    return defined('LD_VITE_DEV') && LD_VITE_DEV;
+  }
+}
+
 if (!function_exists('ld_vite_manifest_path')) {
   function ld_vite_manifest_path(): ?string {
     $base = LD_THEME_DIR . '/build';
@@ -19,19 +30,40 @@ if (!function_exists('ld_vite_manifest_path')) {
 }
 
 if (!function_exists('ld_vite_manifest')) {
-  /** @return array<string,mixed>|null */
-  function ld_vite_manifest(): ?array {
+  /**
+   * Получить и закешировать содержимое Vite manifest.
+   *
+   * @return array<string,mixed> Пустой массив при ошибке.
+   */
+  function ld_vite_manifest(): array {
     static $cache = null;
     if ($cache !== null) return $cache;
 
     $path = ld_vite_manifest_path();
-    if (!$path) return $cache = null;
+    if (!$path) {
+      if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('ld_vite_manifest: manifest not found in build/ or build/.vite');
+      }
+      return $cache = [];
+    }
 
-    $json = file_get_contents($path);
-    if ($json === false) return $cache = null;
+    $json = @file_get_contents($path);
+    if ($json === false) {
+      if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('ld_vite_manifest: failed to read ' . $path);
+      }
+      return $cache = [];
+    }
 
     $data = json_decode($json, true);
-    return $cache = (is_array($data) ? $data : null);
+    if (!is_array($data)) {
+      if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('ld_vite_manifest: invalid JSON in ' . $path . ' (' . json_last_error_msg() . ')');
+      }
+      return $cache = [];
+    }
+
+    return $cache = $data;
   }
 }
 
