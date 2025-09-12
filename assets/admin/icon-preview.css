@@ -1,10 +1,13 @@
-.ld-icon-preview {
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 4px;
+.acf-field[data-name="menu_icon"] .acf-input,
+.acf-field[data-name="post_icon_name"] .acf-input,
+.acf-field[data-name="term_icon_name"] .acf-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.ld-icon-preview .icon {
-  width: 1em;
-  height: 1em;
+.icon-preview {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
 }

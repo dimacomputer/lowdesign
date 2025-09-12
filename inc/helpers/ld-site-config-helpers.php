@@ -94,10 +94,3 @@ if (!function_exists('ld_copyright')) {
   }
 }
 
-// Allow SVG upload for admins (free & safe-ish)
-add_filter('upload_mimes', function ($mimes) {
-  if (current_user_can('manage_options')) {
-    $mimes['svg'] = 'image/svg+xml';
-  }
-  return $mimes;
-});
