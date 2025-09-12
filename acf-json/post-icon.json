@@ -29,9 +29,9 @@
             "save_options": 0
         },
         {
-            "key": "field_post_icon_media",
+            "key": "field_content_icon_media",
             "label": "Custom Icon (upload)",
-            "name": "term_icon_media",
+            "name": "content_icon_media",
             "aria-label": "",
             "type": "image",
             "instructions": "SVG or PNG. Used only if no library icon selected.",
