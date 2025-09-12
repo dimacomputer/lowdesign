@@ -1,22 +1,19 @@
 (function(){
-  function init(){
-    var names=['menu_icon','post_icon_name','term_icon_name'];
-    names.forEach(function(name){
-      document.querySelectorAll('.acf-field[data-name="'+name+'"]').forEach(function(field){
-        var select=field.querySelector('select');
-        if(!select)return;
-        var preview=document.createElement('span');
-        preview.className='ld-icon-preview';
-        select.insertAdjacentElement('afterend',preview);
-        function render(){
-          var val=select.value;
-          preview.innerHTML=val?'<svg class="icon"><use href="#'+val+'"></use></svg>':'';
-        }
-        select.addEventListener('change',render);
-        render();
-      });
-    });
+  function mount(select){
+    if(!select) return;
+    const wrap = select.closest('.acf-input'); if(!wrap) return;
+    let holder = wrap.querySelector('.icon-preview');
+    if(!holder){ holder = document.createElement('span'); holder.className='icon-preview'; wrap.prepend(holder); }
+    const val = select.value; // full id, e.g. "icon-ui-menu"
+    holder.innerHTML = val ? `<svg aria-hidden="true"><use href="#${val}"></use></svg>` : '';
   }
-  if(document.readyState!=='loading')init();
-  else document.addEventListener('DOMContentLoaded',init);
+  function init(){
+    const qs = [
+      '.acf-field select[name$="[menu_icon]"]',
+      '.acf-field select[name$="[post_icon_name]"]',
+      '.acf-field select[name$="[term_icon_name]"]'
+    ].join(',');
+    document.querySelectorAll(qs).forEach(s => { mount(s); s.addEventListener('change', ()=>mount(s)); });
+  }
+  if (document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
 })();
