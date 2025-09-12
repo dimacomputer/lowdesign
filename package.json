@@ -7,18 +7,16 @@
     "preview": "vite preview",
     "test": "echo \"no tests yet\" && exit 0",
     "icons:clean": "rimraf assets/icons/sprite.svg",
-    "icons:svgo": "svgo --config=svgo.config.js --recursive assets/icons/src",
-    "icons:build": "node tools/build-sprite.mjs",
-    "icons": "npm run icons:svgo && npm run icons:build"
+    "icons:svgo": "svgo -c svgo.config.js -f assets/icons/src",
+    "icons:build": "npm run icons:svgo && svgstore \"assets/icons/src/**/*.svg\" -o assets/icons/sprite.svg --inline --symbol",
+    "icons": "npm run icons:build"
   },
   "devDependencies": {
     "bootstrap": "^5.3.8",
-    "fast-glob": "^3.3.2",
-    "fs-extra": "^11.2.0",
     "rimraf": "^5.0.5",
     "sass": "^1.77.0",
+    "svgstore-cli": "^5.0.0",
     "svgo": "^3.3.2",
-    "svgstore": "^3.0.1",
     "vite": "^5.4.0"
   },
   "version": "1.0.0",
