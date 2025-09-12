@@ -5,17 +5,19 @@ if (!defined('ABSPATH')) exit;
  * Output icon from SVG sprite.
  *
  * @param string $name  Symbol ID, e.g. "icon-ui-chevron".
- * @param string $class Additional CSS classes.
  * @param array  $attrs Extra attributes for <svg>.
  *
  * @return string SVG markup.
  */
 if (!function_exists('ld_icon')) {
-  function ld_icon(string $name, string $class = '', array $attrs = []): string {
-    $classes       = trim('icon ' . $class);
-    $attrs         = array_merge(['class' => $classes, 'aria-hidden' => 'true'], $attrs);
-    $attributes    = '';
+  function ld_icon(string $name, array $attrs = []): string {
+    $class = trim($attrs['class'] ?? '');
+    if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
+      $class = trim('icon ' . $class);
+    }
+    $attrs = array_merge(['class' => $class, 'aria-hidden' => 'true'], $attrs);
 
+    $attributes = '';
     foreach ($attrs as $key => $value) {
       $attributes .= ' ' . $key . '="' . esc_attr($value) . '"';
     }
