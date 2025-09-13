@@ -1,87 +1,88 @@
+{
+  "active": true,
+  "description": "Modeling portfolio",
+  "fields": [
     {
-        "key": "group_68a6df1aa12f4",
-        "title": "Project • Modeling",
-        "fields": [
-            {
-                "key": "field_68a6df1a077ac",
-                "label": "Agency",
-                "name": "modeling_agency",
-                "aria-label": "",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "maxlength": "",
-                "allow_in_bindings": 0,
-                "placeholder": "",
-                "prepend": "",
-                "append": ""
-            },
-            {
-                "key": "field_68a6dfb9dab05",
-                "label": "Photograph",
-                "name": "modeling_photograph",
-                "aria-label": "",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "maxlength": "",
-                "allow_in_bindings": 0,
-                "placeholder": "",
-                "prepend": "",
-                "append": ""
-            },
-            {
-                "key": "field_68a6dfd6dab06",
-                "label": "Brand",
-                "name": "modeling_brand",
-                "aria-label": "",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "maxlength": "",
-                "allow_in_bindings": 0,
-                "placeholder": "",
-                "prepend": "",
-                "append": ""
-            }
-        ],
-        "location": [
-            [
-                {
-                    "param": "post_type",
-                    "operator": "==",
-                    "value": "modeling"
-                }
-            ]
-        ],
-        "menu_order": 0,
-        "position": "normal",
-        "style": "default",
-        "label_placement": "top",
-        "instruction_placement": "label",
-        "hide_on_screen": "",
-        "active": true,
-        "description": "Modeling portfolio",
-        "show_in_rest": 0
+      "allow_in_bindings": 0,
+      "append": "",
+      "aria-label": "",
+      "conditional_logic": 0,
+      "default_value": "",
+      "instructions": "",
+      "key": "field_68a6df1a077ac",
+      "label": "Agency",
+      "maxlength": "",
+      "name": "modeling_agency",
+      "placeholder": "",
+      "prepend": "",
+      "required": 0,
+      "type": "text",
+      "wrapper": {
+        "class": "",
+        "id": "",
+        "width": ""
+      }
+    },
+    {
+      "allow_in_bindings": 0,
+      "append": "",
+      "aria-label": "",
+      "conditional_logic": 0,
+      "default_value": "",
+      "instructions": "",
+      "key": "field_68a6dfb9dab05",
+      "label": "Photograph",
+      "maxlength": "",
+      "name": "modeling_photograph",
+      "placeholder": "",
+      "prepend": "",
+      "required": 0,
+      "type": "text",
+      "wrapper": {
+        "class": "",
+        "id": "",
+        "width": ""
+      }
+    },
+    {
+      "allow_in_bindings": 0,
+      "append": "",
+      "aria-label": "",
+      "conditional_logic": 0,
+      "default_value": "",
+      "instructions": "",
+      "key": "field_68a6dfd6dab06",
+      "label": "Brand",
+      "maxlength": "",
+      "name": "modeling_brand",
+      "placeholder": "",
+      "prepend": "",
+      "required": 0,
+      "type": "text",
+      "wrapper": {
+        "class": "",
+        "id": "",
+        "width": ""
+      }
     }
+  ],
+  "hide_on_screen": "",
+  "instruction_placement": "label",
+  "key": "group_68a6df1aa12f4",
+  "label_placement": "top",
+  "location": [
+    [
+      {
+        "operator": "==",
+        "param": "post_type",
+        "value": "modeling"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "show_in_rest": 0,
+  "style": "default",
+  "title": "Project • Modeling",
+  "modified": 1757753322
+}

@@ -4,18 +4,27 @@ if (!defined('ABSPATH')) exit;
 /**
  * Output icon from SVG sprite.
  *
- * @param string $name  Symbol ID, e.g. "icon-ui-chevron".
- * @param array  $attrs Extra attributes for <svg>.
+ * @param string    $name    Symbol ID, e.g. "icon-ui-chevron".
+ * @param array     $attrs   Extra attributes for <svg>.
+ * @param int|null  $post_id Optional post ID for color context.
  *
  * @return string SVG markup.
  */
 if (!function_exists('ld_icon')) {
-  function ld_icon(string $name, array $attrs = []): string {
+  function ld_icon(string $name, array $attrs = [], $post_id = null): string {
     $class = trim($attrs['class'] ?? '');
     if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
       $class = trim('icon ' . $class);
     }
-    $attrs = array_merge(['class' => $class, 'aria-hidden' => 'true'], $attrs);
+    if (function_exists('ld_get_page_color_class')) {
+      $color_class = ld_get_page_color_class('icon', $post_id);
+      if ($color_class) {
+        $class = trim($class . ' ' . $color_class);
+      }
+    }
+    $attrs['class'] = $class;
+    $attrs['aria-hidden'] = $attrs['aria-hidden'] ?? 'true';
+    $attrs['fill'] = 'currentColor';
 
     $attributes = '';
     foreach ($attrs as $key => $value) {
@@ -48,10 +57,13 @@ if (!function_exists('ld_image_or_svg_html')) {
 
       $svg = file_get_contents($file);
       $svg = preg_replace('#<script[^>]*>.*?</script>#is', '', $svg);
+      $svg = preg_replace('/\sfill="[^"]*"/i', '', $svg);
+      $svg = preg_replace('/^<svg\b([^>]*)>/', '<svg$1 fill="currentColor">', $svg, 1);
 
       if ($attr) {
         $extra = '';
         foreach ($attr as $key => $value) {
+          if ($key === 'fill') continue;
           $extra .= ' ' . $key . '="' . esc_attr($value) . '"';
         }
         $svg = preg_replace('/^<svg\b([^>]*)>/', '<svg$1' . $extra . '>', $svg, 1);
@@ -63,3 +75,16 @@ if (!function_exists('ld_image_or_svg_html')) {
     return wp_get_attachment_image($attachment_id, $size, false, $attr);
   }
 }
+
+add_filter('post_thumbnail_html', function ($html, $post_id, $thumb_id, $size, $attr) {
+  if (!function_exists('ld_get_page_color_class') || !$html) return $html;
+  if (get_post_mime_type($thumb_id) !== 'image/svg+xml') return $html;
+
+  $class = ld_get_page_color_class('featured_svg', $post_id);
+  if (!$class) return $html;
+
+  $html = preg_replace('/\sfill="[^"]*"/i', '', $html);
+  $html = preg_replace('/^<svg\b([^>]*)>/', '<svg$1 fill="currentColor">', $html, 1);
+
+  return '<div class="' . esc_attr($class) . '">' . $html . '</div>';
+}, 10, 5);

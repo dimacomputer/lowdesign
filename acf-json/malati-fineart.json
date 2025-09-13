@@ -1,129 +1,130 @@
+{
+  "active": true,
+  "description": "Fine Art Page",
+  "fields": [
     {
-        "key": "group_66cf1b5957055",
-        "title": "Project • Fine Art",
-        "fields": [
-            {
-                "key": "field_66cf1b596b787",
-                "label": "Describtion",
-                "name": "describtion",
-                "aria-label": "",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "maxlength": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": ""
-            },
-            {
-                "key": "field_66cf1bc86b788",
-                "label": "Year",
-                "name": "year",
-                "aria-label": "",
-                "type": "date_picker",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "display_format": "Y",
-                "return_format": "Y",
-                "first_day": 1,
-                "allow_in_bindings": 1,
-                "default_to_current_date": 0
-            },
-            {
-                "key": "field_66cf1c9c6b78b",
-                "label": "Material",
-                "name": "material",
-                "aria-label": "",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "Canvas",
-                "maxlength": "",
-                "allow_in_bindings": 1,
-                "placeholder": "",
-                "prepend": "",
-                "append": ""
-            },
-            {
-                "key": "field_66cf1c0b6b789",
-                "label": "w-size",
-                "name": "w-size",
-                "aria-label": "",
-                "type": "number",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "min": "",
-                "max": "",
-                "placeholder": "",
-                "step": "",
-                "prepend": "",
-                "append": ""
-            },
-            {
-                "key": "field_66cf1c8d6b78a",
-                "label": "h-size",
-                "name": "h-size",
-                "aria-label": "",
-                "type": "number",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "min": "",
-                "max": "",
-                "placeholder": "",
-                "step": "",
-                "prepend": "",
-                "append": ""
-            }
-        ],
-        "location": [
-            [
-                {
-                    "param": "post_type",
-                    "operator": "==",
-                    "value": "fineart"
-                }
-            ]
-        ],
-        "menu_order": 0,
-        "position": "normal",
-        "style": "default",
-        "label_placement": "top",
-        "instruction_placement": "label",
-        "hide_on_screen": "",
-        "active": true,
-        "description": "Fine Art Page",
-        "show_in_rest": 1
+      "append": "",
+      "aria-label": "",
+      "conditional_logic": 0,
+      "default_value": "",
+      "instructions": "",
+      "key": "field_66cf1b596b787",
+      "label": "Describtion",
+      "maxlength": "",
+      "name": "describtion",
+      "placeholder": "",
+      "prepend": "",
+      "required": 0,
+      "type": "text",
+      "wrapper": {
+        "class": "",
+        "id": "",
+        "width": ""
+      }
+    },
+    {
+      "allow_in_bindings": 1,
+      "aria-label": "",
+      "conditional_logic": 0,
+      "default_to_current_date": 0,
+      "display_format": "Y",
+      "first_day": 1,
+      "instructions": "",
+      "key": "field_66cf1bc86b788",
+      "label": "Year",
+      "name": "year",
+      "required": 0,
+      "return_format": "Y",
+      "type": "date_picker",
+      "wrapper": {
+        "class": "",
+        "id": "",
+        "width": ""
+      }
+    },
+    {
+      "allow_in_bindings": 1,
+      "append": "",
+      "aria-label": "",
+      "conditional_logic": 0,
+      "default_value": "Canvas",
+      "instructions": "",
+      "key": "field_66cf1c9c6b78b",
+      "label": "Material",
+      "maxlength": "",
+      "name": "material",
+      "placeholder": "",
+      "prepend": "",
+      "required": 0,
+      "type": "text",
+      "wrapper": {
+        "class": "",
+        "id": "",
+        "width": ""
+      }
+    },
+    {
+      "append": "",
+      "aria-label": "",
+      "conditional_logic": 0,
+      "default_value": "",
+      "instructions": "",
+      "key": "field_66cf1c0b6b789",
+      "label": "w-size",
+      "max": "",
+      "min": "",
+      "name": "w-size",
+      "placeholder": "",
+      "prepend": "",
+      "required": 0,
+      "step": "",
+      "type": "number",
+      "wrapper": {
+        "class": "",
+        "id": "",
+        "width": ""
+      }
+    },
+    {
+      "append": "",
+      "aria-label": "",
+      "conditional_logic": 0,
+      "default_value": "",
+      "instructions": "",
+      "key": "field_66cf1c8d6b78a",
+      "label": "h-size",
+      "max": "",
+      "min": "",
+      "name": "h-size",
+      "placeholder": "",
+      "prepend": "",
+      "required": 0,
+      "step": "",
+      "type": "number",
+      "wrapper": {
+        "class": "",
+        "id": "",
+        "width": ""
+      }
     }
+  ],
+  "hide_on_screen": "",
+  "instruction_placement": "label",
+  "key": "group_66cf1b5957055",
+  "label_placement": "top",
+  "location": [
+    [
+      {
+        "operator": "==",
+        "param": "post_type",
+        "value": "fineart"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "show_in_rest": 1,
+  "style": "default",
+  "title": "Project • Fine Art",
+  "modified": 1757753322
+}
