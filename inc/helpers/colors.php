@@ -13,13 +13,13 @@ if (!function_exists('ld_get_page_color_class')) {
     if (!function_exists('get_field')) return '';
 
     $post_id = $post_id ?: get_the_ID();
-    $color   = get_field('page_color', $post_id);
+    $color = get_field('page_color', $post_id);
     $targets = get_field('page_color_targets', $post_id) ?: [];
 
     if (!$color || $color === 'default') return '';
     if (!in_array($target, $targets, true)) return '';
 
-    return 'text-' . $color;
+    $prefix = ($target === 'primary') ? 'color-' : 'text-';
+    return $prefix . $color;
   }
 }
-

@@ -1,84 +1,67 @@
 {
-  "active": true,
+  "key": "group_term_icon",
+  "title": "Content Icon (Term)",
   "description": "",
+  "active": true,
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "show_in_rest": 0,
+  "menu_order": 0,
+  "modified": 1757759999,
   "fields": [
     {
-      "ajax": 0,
-      "allow_in_bindings": 0,
-      "allow_null": 0,
-      "aria-label": "",
-      "choices": [],
-      "conditional_logic": 0,
-      "create_options": 0,
-      "default_value": false,
-      "instructions": "Choose from theme icon set. Takes priority over upload.",
       "key": "field_term_icon_name",
       "label": "Icon (library)",
-      "multiple": 0,
       "name": "term_icon_name",
-      "placeholder": "",
-      "required": 0,
-      "return_format": "value",
-      "save_options": 0,
       "type": "select",
-      "ui": 0,
-      "wrapper": {
-        "class": "",
-        "id": "",
-        "width": ""
-      }
+      "instructions": "Choose from theme icon set. Takes priority over upload.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "choices": [],
+      "default_value": "",
+      "return_format": "value",
+      "multiple": 0,
+      "allow_null": 1,
+      "allow_in_bindings": 0,
+      "ui": 1,
+      "ajax": 0,
+      "placeholder": "— No icon —",
+      "create_options": 0,
+      "save_options": 0,
+      "aria-label": ""
     },
     {
-      "allow_in_bindings": 0,
-      "aria-label": "",
-      "conditional_logic": 0,
-      "instructions": "SVG or PNG. Used only if no library icon selected.",
       "key": "field_term_icon_media",
       "label": "Custom Icon (upload)",
+      "name": "term_icon_media",
+      "type": "image",
+      "instructions": "SVG or PNG. Used only if no library icon selected.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "return_format": "id",
       "library": "all",
-      "max_height": "",
-      "max_size": "",
-      "max_width": "",
-      "mime_types": "",
+      "min_width": "",
       "min_height": "",
       "min_size": "",
-      "min_width": "",
-      "name": "term_icon_media",
+      "max_width": "",
+      "max_height": "",
+      "max_size": "",
+      "mime_types": "",
+      "allow_in_bindings": 0,
       "preview_size": "medium",
-      "required": 0,
-      "return_format": "id",
-      "type": "image",
-      "wrapper": {
-        "class": "",
-        "id": "",
-        "width": ""
-      }
+      "aria-label": ""
     }
   ],
-  "hide_on_screen": "",
-  "instruction_placement": "label",
-  "key": "group_term_icon",
-  "label_placement": "top",
   "location": [
     [
-      {
-        "operator": "==",
-        "param": "taxonomy",
-        "value": "category"
-      }
+      { "operator": "==", "param": "taxonomy", "value": "category" }
     ],
     [
-      {
-        "operator": "==",
-        "param": "taxonomy",
-        "value": "post_tag"
-      }
+      { "operator": "==", "param": "taxonomy", "value": "post_tag" }
     ]
-  ],
-  "menu_order": 0,
-  "position": "side",
-  "show_in_rest": 0,
-  "style": "default",
-  "title": "Content Icon (Term)",
-  "modified": 1757753322
+  ]
 }
