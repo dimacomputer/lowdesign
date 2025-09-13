@@ -3,6 +3,7 @@
   "title": "Content Icon",
   "description": "",
   "active": true,
+  "position": "side"
   "style": "default",
   "label_placement": "top",
   "instruction_placement": "label",
