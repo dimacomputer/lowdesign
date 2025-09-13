@@ -1,50 +1,51 @@
 {
-    "key": "group_menu_icon",
-    "title": "Menu Icon",
-    "fields": [
-        {
-            "key": "field_menu_icon_select",
-            "label": "Menu Icon",
-            "name": "menu_icon",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": [],
-            "default_value": false,
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
-            "allow_in_bindings": 0,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": "",
-            "create_options": 0,
-            "save_options": 0
-        }
-    ],
-    "location": [
-        [
-            {
-                "param": "nav_menu_item",
-                "operator": "==",
-                "value": "all"
-            }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "side",
-    "style": "default",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "show_in_rest": 0
+  "active": true,
+  "description": "",
+  "fields": [
+    {
+      "ajax": 0,
+      "allow_in_bindings": 0,
+      "allow_null": 0,
+      "aria-label": "",
+      "choices": [],
+      "conditional_logic": 0,
+      "create_options": 0,
+      "default_value": false,
+      "instructions": "",
+      "key": "field_menu_icon_select",
+      "label": "Menu Icon",
+      "multiple": 0,
+      "name": "menu_icon",
+      "placeholder": "",
+      "required": 0,
+      "return_format": "value",
+      "save_options": 0,
+      "type": "select",
+      "ui": 0,
+      "wrapper": {
+        "class": "",
+        "id": "",
+        "width": ""
+      }
+    }
+  ],
+  "hide_on_screen": "",
+  "instruction_placement": "label",
+  "key": "group_menu_icon",
+  "label_placement": "top",
+  "location": [
+    [
+      {
+        "operator": "==",
+        "param": "nav_menu_item",
+        "value": "all"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "side",
+  "show_in_rest": 0,
+  "style": "default",
+  "title": "Menu Icon",
+  "modified": 1757753322
 }
