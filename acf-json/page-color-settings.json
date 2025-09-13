@@ -1,12 +1,12 @@
 {
-  "active": true,
-  "description": "",
+  "key": "group_page_color_settings",
+  "title": "Page Color Settings",
   "fields": [
     {
-      "ajax": 0,
-      "allow_in_bindings": 0,
-      "allow_null": 0,
-      "aria-label": "",
+      "key": "field_page_color",
+      "label": "Page Color",
+      "name": "page_color",
+      "type": "select",
       "choices": {
         "default": "Default",
         "primary": "Primary",
@@ -19,92 +19,33 @@
         "pink": "Pink",
         "cyan": "Cyan"
       },
-      "conditional_logic": 0,
-      "create_options": 0,
       "default_value": "default",
-      "instructions": "Used for color override",
-      "key": "field_page_color",
-      "label": "Page Color",
-      "multiple": 0,
-      "name": "page_color",
-      "placeholder": "",
-      "required": 0,
-      "return_format": "value",
-      "save_options": 0,
-      "type": "select",
-      "ui": 0,
-      "wrapper": {
-        "class": "",
-        "id": "",
-        "width": ""
-      }
+      "ui": 1
     },
     {
-      "allow_custom": 0,
-      "allow_in_bindings": 0,
-      "aria-label": "",
+      "key": "field_page_color_targets",
+      "label": "Apply color to",
+      "name": "page_color_targets",
+      "type": "checkbox",
       "choices": {
         "featured_svg": "Featured SVG",
         "icon": "Icon",
-        "primary": "Primary"
+        "primary": "Primary color"
       },
-      "conditional_logic": 0,
-      "default_value": [],
-      "instructions": "Choose where to apply the selected color",
-      "key": "field_page_color_targets",
-      "label": "Apply color to",
-      "layout": "vertical",
-      "name": "page_color_targets",
-      "required": 0,
-      "return_format": "value",
-      "save_custom": 0,
-      "toggle": 0,
-      "type": "checkbox",
-      "wrapper": {
-        "class": "",
-        "id": "",
-        "width": ""
-      }
+      "layout": "vertical"
     }
   ],
-  "hide_on_screen": "",
-  "instruction_placement": "label",
-  "key": "group_page_color_settings",
-  "label_placement": "top",
   "location": [
-    [
-      {
-        "operator": "==",
-        "param": "post_type",
-        "value": "page"
-      }
-    ],
-    [
-      {
-        "operator": "==",
-        "param": "post_type",
-        "value": "post"
-      }
-    ],
-    [
-      {
-        "operator": "==",
-        "param": "post_type",
-        "value": "fineart"
-      }
-    ],
-    [
-      {
-        "operator": "==",
-        "param": "post_type",
-        "value": "modeling"
-      }
-    ]
+    [{ "param": "post_type", "operator": "==", "value": "page" }],
+    [{ "param": "post_type", "operator": "==", "value": "post" }],
+    [{ "param": "post_type", "operator": "==", "value": "fineart" }],
+    [{ "param": "post_type", "operator": "==", "value": "modeling" }]
   ],
   "menu_order": 0,
   "position": "side",
-  "show_in_rest": 0,
   "style": "default",
-  "title": "Page Color Settings",
-  "modified": 1757754543
+  "label_placement": "top",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
 }
