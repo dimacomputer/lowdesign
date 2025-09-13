@@ -96,6 +96,7 @@ if (!function_exists('ld_content_icon')) {
 
     $post_id = $post_id ?: get_the_ID();
     if (!$post_id) return '';
+    $color_class = function_exists('ld_get_page_color_class') ? ld_get_page_color_class('icon', $post_id) : '';
 
     // 1) sprite selection
     $name = (string) get_field('post_icon_name', $post_id);
@@ -106,7 +107,7 @@ if (!function_exists('ld_content_icon')) {
         $class = trim('icon ' . $class);
       }
       $attr['class'] = $class;
-      return ld_icon($name, $attr);
+      return ld_icon($name, $attr, $post_id);
     }
 
     // 2) uploaded media fallback
@@ -116,6 +117,9 @@ if (!function_exists('ld_content_icon')) {
       $class  = trim($attr['class'] ?? '');
       if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
         $class = trim('icon ' . $class);
+      }
+      if ($color_class) {
+        $class = trim($class . ' ' . $color_class);
       }
       $attr['class'] = $class;
       return ld_image_or_svg_html($id, 'full', $attr);

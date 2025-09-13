@@ -7,15 +7,26 @@
       "allow_in_bindings": 0,
       "allow_null": 0,
       "aria-label": "",
-      "choices": [],
+      "choices": {
+        "default": "Default",
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "tertiary": "Tertiary",
+        "blue": "Blue",
+        "red": "Red",
+        "green": "Green",
+        "yellow": "Yellow",
+        "pink": "Pink",
+        "cyan": "Cyan"
+      },
       "conditional_logic": 0,
       "create_options": 0,
-      "default_value": false,
-      "instructions": "Choose from theme icon set. Takes priority over upload.",
-      "key": "field_post_icon_name",
-      "label": "Icon (library)",
+      "default_value": "default",
+      "instructions": "Used for color override",
+      "key": "field_page_color",
+      "label": "Page Color",
       "multiple": 0,
-      "name": "post_icon_name",
+      "name": "page_color",
       "placeholder": "",
       "required": 0,
       "return_format": "value",
@@ -29,25 +40,26 @@
       }
     },
     {
+      "allow_custom": 0,
       "allow_in_bindings": 0,
       "aria-label": "",
+      "choices": {
+        "featured_svg": "Featured SVG",
+        "icon": "Icon",
+        "primary": "Primary"
+      },
       "conditional_logic": 0,
-      "instructions": "SVG or PNG. Used only if no library icon selected.",
-      "key": "field_content_icon_media",
-      "label": "Custom Icon (upload)",
-      "library": "all",
-      "max_height": "",
-      "max_size": "",
-      "max_width": "",
-      "mime_types": "",
-      "min_height": "",
-      "min_size": "",
-      "min_width": "",
-      "name": "content_icon_media",
-      "preview_size": "medium",
+      "default_value": [],
+      "instructions": "Choose where to apply the selected color",
+      "key": "field_page_color_targets",
+      "label": "Apply color to",
+      "layout": "vertical",
+      "name": "page_color_targets",
       "required": 0,
-      "return_format": "id",
-      "type": "image",
+      "return_format": "value",
+      "save_custom": 0,
+      "toggle": 0,
+      "type": "checkbox",
       "wrapper": {
         "class": "",
         "id": "",
@@ -57,9 +69,16 @@
   ],
   "hide_on_screen": "",
   "instruction_placement": "label",
-  "key": "group_post_icon",
+  "key": "group_page_color_settings",
   "label_placement": "top",
   "location": [
+    [
+      {
+        "operator": "==",
+        "param": "post_type",
+        "value": "page"
+      }
+    ],
     [
       {
         "operator": "==",
@@ -80,19 +99,12 @@
         "param": "post_type",
         "value": "modeling"
       }
-    ],
-    [
-      {
-        "operator": "==",
-        "param": "post_type",
-        "value": "page"
-      }
     ]
   ],
   "menu_order": 0,
   "position": "side",
   "show_in_rest": 0,
   "style": "default",
-  "title": "Content Icon",
-  "modified": 1757753322
+  "title": "Page Color Settings",
+  "modified": 1757754543
 }

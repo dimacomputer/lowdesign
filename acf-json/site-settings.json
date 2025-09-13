@@ -1,40 +1,40 @@
 {
-  "key": "ld_site_config",
-  "title": "Site Settings",
+  "active": 1,
+  "description": "Global site settings stored on a singleton CPT (works with ACF Free).",
   "fields": [
     {
       "key": "field_tab_brand",
       "label": "Brand",
       "name": "",
-      "type": "tab",
-      "placement": "left"
+      "placement": "left",
+      "type": "tab"
     },
     {
+      "instructions": "Upload SVG logo (preferred). If empty, raster logo or Theme custom logo will be used.",
       "key": "field_site_logo_svg",
       "label": "Site Logo (SVG)",
+      "library": "all",
       "name": "site_logo_svg",
-      "type": "image",
-      "instructions": "Upload SVG logo (preferred). If empty, raster logo or Theme custom logo will be used.",
+      "preview_size": "medium",
       "required": 0,
       "return_format": "id",
-      "preview_size": "medium",
-      "library": "all"
+      "type": "image"
     },
     {
       "key": "field_site_logo_raster",
       "label": "Site Logo (raster)",
+      "library": "all",
       "name": "site_logo_raster",
-      "type": "image",
-      "return_format": "id",
       "preview_size": "medium",
-      "library": "all"
+      "return_format": "id",
+      "type": "image"
     },
     {
       "key": "field_tab_contacts",
       "label": "Contacts",
       "name": "",
-      "type": "tab",
-      "placement": "left"
+      "placement": "left",
+      "type": "tab"
     },
     {
       "key": "field_contacts_email",
@@ -52,8 +52,8 @@
       "key": "field_tab_seo",
       "label": "SEO Defaults",
       "name": "",
-      "type": "tab",
-      "placement": "left"
+      "placement": "left",
+      "type": "tab"
     },
     {
       "key": "field_default_meta_title",
@@ -71,53 +71,56 @@
       "key": "field_tab_features",
       "label": "Features",
       "name": "",
-      "type": "tab",
-      "placement": "left"
+      "placement": "left",
+      "type": "tab"
     },
     {
+      "default_value": 1,
       "key": "field_enable_categories_on_pages",
       "label": "Enable Categories on Pages/CPT",
       "name": "enable_categories_on_pages",
       "type": "true_false",
-      "ui": 1,
-      "default_value": 1
+      "ui": 1
     },
     {
+      "default_value": 1,
       "key": "field_enable_excerpt_on_pages",
       "label": "Enable Excerpt on Pages",
       "name": "enable_excerpt_on_pages",
       "type": "true_false",
-      "ui": 1,
-      "default_value": 1
+      "ui": 1
     },
     {
+      "default_value": 1,
       "key": "field_enable_template_loader",
       "label": "Enable Template Loader",
       "name": "enable_template_loader",
       "type": "true_false",
-      "ui": 1,
-      "default_value": 1
+      "ui": 1
     },
     {
       "key": "field_tab_footer",
       "label": "Footer",
       "name": "",
-      "type": "tab",
-      "placement": "left"
+      "placement": "left",
+      "type": "tab"
     },
     {
+      "instructions": "E.g. © {Y} Malati Lowe Design. You can use {Y} for current year.",
       "key": "field_site_footer_copyright",
       "label": "Footer Copyright",
       "name": "site_footer_copyright",
-      "type": "text",
-      "instructions": "E.g. © {Y} Malati Lowe Design. You can use {Y} for current year."
+      "type": "text"
     }
   ],
+  "instruction_placement": "label",
+  "key": "ld_site_config",
+  "label_placement": "top",
   "location": [
     [
       {
-        "param": "post_type",
         "operator": "==",
+        "param": "post_type",
         "value": "ld_site_config"
       }
     ]
@@ -125,8 +128,6 @@
   "menu_order": 0,
   "position": "normal",
   "style": "default",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "active": 1,
-  "description": "Global site settings stored on a singleton CPT (works with ACF Free)."
+  "title": "Site Settings",
+  "modified": 1757753322
 }
