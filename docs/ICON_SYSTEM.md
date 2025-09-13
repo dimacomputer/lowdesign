@@ -8,9 +8,10 @@ Unified SVG icon system for the theme.
 
 - **Source of truth:** `assets/icons/src/**`  
 - **Build artifact:** `assets/icons/sprite.svg` (generated)  
-- **ACF integration:** select fields for menus, posts/pages, and terms with **live preview**  
-- **Priority rules:** **Library (sprite)** → **Upload (SVG/PNG)** → none  
+- **ACF integration:** select fields for menus, posts/pages, and terms with **live preview**
+- **Priority rules:** **Library (sprite)** → **Upload (SVG/PNG)** → none
 - **Default size:** **24×24 px** (`.icon`, `.icon--24`)
+- **No icon option:** All icon selects default to “— No icon —”. When chosen, no sprite icon is rendered; terms and posts may still display an uploaded custom icon if provided, otherwise nothing.
 
 ---
 

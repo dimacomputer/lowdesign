@@ -7,7 +7,7 @@
     "preview": "vite preview",
     "test": "echo \"no tests yet\" && exit 0",
     "icons:clean": "rimraf assets/icons/sprite.svg",
-    "icons:svgo": "svgo -c svgo.config.js -f assets/icons/src",
+    "icons:svgo": "svgo --config=svgo.config.js -r -f assets/icons/src",
     "icons:build": "npm run icons:svgo && svgstore \"assets/icons/src/**/*.svg\" -o assets/icons/sprite.svg --inline --symbol",
     "icons": "npm run icons:build"
   },

@@ -1,19 +1,32 @@
 (function(){
   function mount(select){
     if(!select) return;
-    const wrap = select.closest('.acf-input'); if(!wrap) return;
-    let holder = wrap.querySelector('.icon-preview');
-    if(!holder){ holder = document.createElement('span'); holder.className='icon-preview'; wrap.prepend(holder); }
-    const val = select.value; // full id, e.g. "icon-ui-menu"
+    const wrapper = select.closest('.acf-input');
+    if(!wrapper) return;
+    let holder = wrapper.querySelector('.icon-preview');
+    if(!holder){
+      holder = document.createElement('span');
+      holder.className = 'icon-preview';
+      wrapper.prepend(holder);
+    }
+    const val = select.value === 'none' ? '' : select.value;
     holder.innerHTML = val ? `<svg aria-hidden="true"><use href="#${val}"></use></svg>` : '';
+    holder.title = val ? '' : 'No icon';
   }
+
   function init(){
-    const qs = [
-      '.acf-field select[name$="[menu_icon]"]',
-      '.acf-field select[name$="[post_icon_name]"]',
-      '.acf-field select[name$="[term_icon_name]"]'
+    const query = [
+      '.acf-field[data-name="menu_icon"] select',
+      '.acf-field[data-name="post_icon_name"] select',
+      '.acf-field[data-name="term_icon_name"] select'
     ].join(',');
-    document.querySelectorAll(qs).forEach(s => { mount(s); s.addEventListener('change', ()=>mount(s)); });
+    document.querySelectorAll(query).forEach(sel => {
+      mount(sel);
+      sel.addEventListener('change', () => mount(sel));
+    });
   }
-  if (document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
+
+  if(document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
 })();
+

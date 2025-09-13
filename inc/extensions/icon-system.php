@@ -46,10 +46,16 @@ add_filter('acf/load_field/name=term_icon_name',  'ld__sprite_load_field_full');
 
 // Inline sprite into admin so <use href="#id"> works in previews
 add_action('admin_footer', function () {
+  static $done;
+  if ($done) return; // print once per page
+  $done = true;
+
   $file = ld_sprite_path();
   if (!is_file($file)) return;
+
   $svg = file_get_contents($file);
   if (!$svg) return;
+
   echo '<div hidden aria-hidden="true" style="display:none" class="ld-admin-sprite">'.$svg.'</div>';
 });
 
@@ -60,19 +66,65 @@ add_action('admin_enqueue_scripts', function () {
 });
 
 // Allow SVG uploads for admins (fallback images)
-add_filter('upload_mimes', function($m){
-  if (current_user_can('manage_options')) $m['svg'] = 'image/svg+xml';
-  return $m;
+add_filter('upload_mimes', function(array $mimes): array {
+  if (current_user_can('manage_options')) {
+    $mimes['svg'] = 'image/svg+xml';
+  }
+  return $mimes;
 });
 
 // Inject icon before menu label (front-end)
 add_filter('walker_nav_menu_start_el', function ($item_output, $item, $depth, $args) {
   if (!function_exists('get_field') || !function_exists('ld_icon')) return $item_output;
-  $icon = (string) get_field('menu_icon', $item);
-  if (!$icon) return $item_output;
-  $svg  = ld_icon($icon, ['class' => 'menu__icon']);
+
+  $id = (string) get_field('menu_icon', $item->ID);
+  if ($id === '' || $id === 'none') return $item_output;
+
+  $svg = ld_icon($id, ['class' => 'menu__icon']);
+
   return preg_replace('/(<a[^>]*>)/', '$1'.$svg, $item_output, 1);
 }, 10, 4);
+
+// Render a content icon, preferring sprite over uploaded image
+if (!function_exists('ld_content_icon')) {
+  /**
+   * @param int|null $post_id Post ID (defaults to current post)
+   * @param array    $attrs   Extra attributes for SVG/IMG
+   */
+  function ld_content_icon($post_id = null, array $attrs = []): string {
+    if (!function_exists('get_field')) return '';
+
+    $post_id = $post_id ?: get_the_ID();
+    if (!$post_id) return '';
+
+    // 1) sprite selection
+    $name = (string) get_field('post_icon_name', $post_id);
+    if ($name && $name !== 'none' && function_exists('ld_icon')) {
+      $attr   = $attrs;
+      $class  = trim($attr['class'] ?? '');
+      if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
+        $class = trim('icon ' . $class);
+      }
+      $attr['class'] = $class;
+      return ld_icon($name, $attr);
+    }
+
+    // 2) uploaded media fallback
+    $id = get_field('content_icon_media', $post_id);
+    $id = ($id && $id !== 'none') ? (int) $id : 0;
+    if ($id && function_exists('ld_image_or_svg_html')) {
+      $attr   = $attrs;
+      $class  = trim($attr['class'] ?? '');
+      if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
+        $class = trim('icon ' . $class);
+      }
+      $attr['class'] = $class;
+      return ld_image_or_svg_html($id, 'full', $attr);
+    }
+
+    return '';
+  }
+}
 
 // Render a term icon, preferring sprite over uploaded image
 if (!function_exists('ld_term_icon_html')) {
@@ -93,19 +145,19 @@ if (!function_exists('ld_term_icon_html')) {
 
     // 1) sprite (library)
     $icon = (string) get_field('term_icon_name', 'term_'.$term_id);
-    if ($icon && function_exists('ld_icon')) {
+    if ($icon && $icon !== 'none' && function_exists('ld_icon')) {
       $attr = $attrs;
-      // merge class
-      $attr['class'] = trim(($attr['class'] ?? 'icon').' '.$class);
+      $attr['class'] = trim('icon '.($attr['class'] ?? '').' '.$class);
       return ld_icon($icon, $attr);
     }
 
     // 2) uploaded image fallback
-    $media = (int) get_field('term_icon_media', 'term_'.$term_id);
+    $media = get_field('term_icon_media', 'term_'.$term_id);
+    $media = ($media && $media !== 'none') ? (int) $media : 0;
     if ($media && function_exists('ld_image_or_svg_html')) {
       $attr = $attrs;
       $attr['class'] = trim('icon '.($attr['class'] ?? '').' '.$class);
-      return ld_image_or_svg_html($media, $attr);
+      return ld_image_or_svg_html($media, 'full', $attr);
     }
 
     return '';
@@ -127,17 +179,35 @@ add_filter('manage_post_tag_custom_column', function($out, $col, $term_id){
   return $html ?: '—';
 }, 10, 3);
 
-/** Admin list column: Pages (uses ld_content_icon if present) */
-add_filter('manage_page_posts_columns', function($cols){
+// Admin list column: Posts and custom post types
+foreach (['post','fineart','modeling'] as $pt) {
+  add_filter("manage_{$pt}_posts_columns", function($cols) {
+    $new = ['icon' => __('Icon','ld')];
+    return array_slice($cols, 0, 1, true) + $new + array_slice($cols, 1, null, true);
+  });
+  add_action("manage_{$pt}_posts_custom_column", function($col, $post_id) {
+    if ($col !== 'icon') return;
+    if (function_exists('ld_content_icon')) {
+      echo ld_content_icon($post_id, ['class' => 'icon icon--24']);
+    }
+  }, 10, 2);
+}
+
+// Admin list column: Pages (24px default)
+add_filter('manage_page_posts_columns', function($cols) {
   $new = ['icon' => __('Icon','ld')];
   return array_slice($cols, 0, 1, true) + $new + array_slice($cols, 1, null, true);
 });
-add_action('manage_page_posts_custom_column', function($col, $post_id){
+add_action('manage_page_posts_custom_column', function($col, $post_id) {
   if ($col !== 'icon') return;
-  if (function_exists('ld_content_icon')) {
-    echo ld_content_icon($post_id, ['class'=>'icon icon--24']);
-  } else {
-    // fallback through term helper if needed
-    echo '';
-  }
+  echo ld_content_icon($post_id, ['class' => 'icon icon--24']);
 }, 10, 2);
+
+// Consistent sizing/padding for icon column in admin lists
+add_action('admin_head', function () {
+  echo '<style>
+  .wp-list-table .column-icon{width:28px}
+  .wp-list-table td.column-icon{padding-left:4px;padding-right:0;text-align:center}
+  .wp-list-table td.column-icon .icon{width:24px;height:24px;display:inline-block}
+  </style>';
+});

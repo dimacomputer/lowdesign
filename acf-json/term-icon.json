@@ -17,14 +17,14 @@
                 "id": ""
             },
             "choices": [],
-            "default_value": false,
+            "default_value": "",
             "return_format": "value",
             "multiple": 0,
-            "allow_null": 0,
+            "allow_null": 1,
             "allow_in_bindings": 0,
-            "ui": 0,
+            "ui": 1,
             "ajax": 0,
-            "placeholder": "",
+            "placeholder": "— No icon —",
             "create_options": 0,
             "save_options": 0
         },
