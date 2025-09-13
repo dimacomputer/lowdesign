@@ -1,42 +1,47 @@
 {
   "key": "group_term_icon",
   "title": "Content Icon (Term)",
+  "description": "",
+  "active": true,
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "show_in_rest": 0,
+  "menu_order": 0,
+  "modified": 1757759999,
   "fields": [
     {
       "key": "field_term_icon_name",
       "label": "Icon (library)",
       "name": "term_icon_name",
-      "aria-label": "",
       "type": "select",
       "instructions": "Choose from theme icon set. Takes priority over upload.",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": { "width": "", "class": "", "id": "" },
-
       "choices": [],
       "default_value": "",
       "return_format": "value",
       "multiple": 0,
-
       "allow_null": 1,
       "allow_in_bindings": 0,
       "ui": 1,
       "ajax": 0,
       "placeholder": "— No icon —",
       "create_options": 0,
-      "save_options": 0
+      "save_options": 0,
+      "aria-label": ""
     },
     {
       "key": "field_term_icon_media",
       "label": "Custom Icon (upload)",
       "name": "term_icon_media",
-      "aria-label": "",
       "type": "image",
       "instructions": "SVG or PNG. Used only if no library icon selected.",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": { "width": "", "class": "", "id": "" },
-
       "return_format": "id",
       "library": "all",
       "min_width": "",
@@ -47,7 +52,8 @@
       "max_size": "",
       "mime_types": "",
       "allow_in_bindings": 0,
-      "preview_size": "medium"
+      "preview_size": "medium",
+      "aria-label": ""
     }
   ],
   "location": [
@@ -57,15 +63,5 @@
     [
       { "operator": "==", "param": "taxonomy", "value": "post_tag" }
     ]
-  ],
-  "menu_order": 0,
-  "position": "side",
-  "style": "default",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "hide_on_screen": "",
-  "active": true,
-  "description": "",
-  "show_in_rest": 0,
-  "modified": 1757753322
+  ]
 }

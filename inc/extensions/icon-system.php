@@ -95,6 +95,7 @@ if (!function_exists('ld_content_icon')) {
 
     $post_id = $post_id ?: get_the_ID();
     if (!$post_id) return '';
+    $color_class = function_exists('ld_get_page_color_class') ? ld_get_page_color_class('icon', $post_id) : '';
 
     $color_class = function_exists('ld_get_page_color_class') ? ld_get_page_color_class('icon', $post_id) : '';
 

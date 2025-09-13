@@ -4,18 +4,15 @@ if (!defined('ABSPATH')) exit;
 /**
  * Output icon from SVG sprite.
  *
- * @param string   $name    Symbol ID, e.g. "icon-ui-chevron".
- * @param array    $attrs   Extra attributes for <svg>.
- * @param int|null $post_id Optional post ID for color context.
- *
- * @return string SVG markup.
+ * @param string    $name    Symbol ID, e.g. "icon-ui-chevron".
+ * @param array     $attrs   Extra attributes for <svg>.
+ * @param int|null  $post_id Optional post ID for color context.
+ * @return string   SVG markup.
  */
 if (!function_exists('ld_icon')) {
   function ld_icon(string $name, array $attrs = [], $post_id = null): string {
     // Support "no icon" (empty / 'none')
-    if ($name === '' || $name === 'none') {
-      return '';
-    }
+    if ($name === '' || $name === 'none') return '';
 
     // Ensure base class ".icon"
     $class = trim($attrs['class'] ?? '');
@@ -61,9 +58,7 @@ if (!function_exists('ld_image_or_svg_html')) {
 
     if ($mime === 'image/svg+xml') {
       $file = get_attached_file($attachment_id);
-      if (!$file || !file_exists($file)) {
-        return '';
-      }
+      if (!$file || !file_exists($file)) return '';
 
       $svg = file_get_contents($file);
 
@@ -89,7 +84,9 @@ if (!function_exists('ld_image_or_svg_html')) {
   }
 }
 
-// Wrap inline SVG featured images with color context
+/**
+ * Filter: wrap featured SVG with color class if page_color targets it
+ */
 add_filter('post_thumbnail_html', function ($html, $post_id, $thumb_id, $size, $attr) {
   if (!function_exists('ld_get_page_color_class') || !$html) return $html;
   if (get_post_mime_type($thumb_id) !== 'image/svg+xml') return $html;
