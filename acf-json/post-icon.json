@@ -3,7 +3,7 @@
   "title": "Content Icon",
   "description": "",
   "active": true,
-  "position": "side"
+  "position": "side",
   "style": "default",
   "label_placement": "top",
   "instruction_placement": "label",
@@ -58,17 +58,9 @@
     }
   ],
   "location": [
-    [
-      { "operator": "==", "param": "post_type", "value": "post" }
-    ],
-    [
-      { "operator": "==", "param": "post_type", "value": "fineart" }
-    ],
-    [
-      { "operator": "==", "param": "post_type", "value": "modeling" }
-    ],
-    [
-      { "operator": "==", "param": "post_type", "value": "page" }
-    ]
+    [{ "operator": "==", "param": "post_type", "value": "post" }],
+    [{ "operator": "==", "param": "post_type", "value": "fineart" }],
+    [{ "operator": "==", "param": "post_type", "value": "modeling" }],
+    [{ "operator": "==", "param": "post_type", "value": "page" }]
   ]
 }
