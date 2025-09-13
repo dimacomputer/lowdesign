@@ -1,97 +1,77 @@
 {
-    "key": "group_post_icon",
-    "title": "Content Icon",
-    "fields": [
-        {
-            "key": "field_post_icon_name",
-            "label": "Icon (library)",
-            "name": "post_icon_name",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "Choose from theme icon set. Takes priority over upload.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": [],
-            "default_value": "",
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 1,
-            "allow_in_bindings": 0,
-            "ui": 1,
-            "ajax": 0,
-            "placeholder": "— No icon —",
-            "create_options": 0,
-            "save_options": 0
-        },
-        {
-            "key": "field_content_icon_media",
-            "label": "Custom Icon (upload)",
-            "name": "content_icon_media",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "SVG or PNG. Used only if no library icon selected.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "id",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "allow_in_bindings": 0,
-            "preview_size": "medium"
-        }
+  "key": "group_post_icon",
+  "title": "Content Icon",
+  "fields": [
+    {
+      "key": "field_post_icon_name",
+      "label": "Icon (library)",
+      "name": "post_icon_name",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "Choose from theme icon set. Takes priority over upload.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+
+      "choices": [],
+      "default_value": "",
+      "return_format": "value",
+      "multiple": 0,
+
+      "allow_null": 1,
+      "allow_in_bindings": 0,
+      "ui": 1,
+      "ajax": 0,
+      "placeholder": "— No icon —",
+      "create_options": 0,
+      "save_options": 0
+    },
+    {
+      "key": "field_content_icon_media",
+      "label": "Custom Icon (upload)",
+      "name": "content_icon_media",
+      "aria-label": "",
+      "type": "image",
+      "instructions": "SVG or PNG. Used only if no library icon selected.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+
+      "return_format": "id",
+      "library": "all",
+      "min_width": "",
+      "min_height": "",
+      "min_size": "",
+      "max_width": "",
+      "max_height": "",
+      "max_size": "",
+      "mime_types": "",
+      "allow_in_bindings": 0,
+      "preview_size": "medium"
+    }
+  ],
+  "location": [
+    [
+      { "operator": "==", "param": "post_type", "value": "post" }
     ],
-    "location": [
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "post"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "fineart"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "modeling"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "page"
-            }
-        ]
+    [
+      { "operator": "==", "param": "post_type", "value": "fineart" }
     ],
-    "menu_order": 0,
-    "position": "side",
-    "style": "default",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "show_in_rest": 0
+    [
+      { "operator": "==", "param": "post_type", "value": "modeling" }
+    ],
+    [
+      { "operator": "==", "param": "post_type", "value": "page" }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "side",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "",
+  "show_in_rest": 0,
+  "modified": 1757753322
 }

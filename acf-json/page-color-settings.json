@@ -1,0 +1,51 @@
+{
+  "key": "group_page_color_settings",
+  "title": "Page Color Settings",
+  "fields": [
+    {
+      "key": "field_page_color",
+      "label": "Page Color",
+      "name": "page_color",
+      "type": "select",
+      "choices": {
+        "default": "Default",
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "tertiary": "Tertiary",
+        "blue": "Blue",
+        "red": "Red",
+        "green": "Green",
+        "yellow": "Yellow",
+        "pink": "Pink",
+        "cyan": "Cyan"
+      },
+      "default_value": "default",
+      "ui": 1
+    },
+    {
+      "key": "field_page_color_targets",
+      "label": "Apply color to",
+      "name": "page_color_targets",
+      "type": "checkbox",
+      "choices": {
+        "featured_svg": "Featured SVG",
+        "icon": "Icon",
+        "primary": "Primary color"
+      },
+      "layout": "vertical"
+    }
+  ],
+  "location": [
+    [{ "param": "post_type", "operator": "==", "value": "page" }],
+    [{ "param": "post_type", "operator": "==", "value": "post" }],
+    [{ "param": "post_type", "operator": "==", "value": "fineart" }],
+    [{ "param": "post_type", "operator": "==", "value": "modeling" }]
+  ],
+  "menu_order": 0,
+  "position": "side",
+  "style": "default",
+  "label_placement": "top",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}

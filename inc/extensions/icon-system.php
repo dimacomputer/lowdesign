@@ -4,14 +4,14 @@ if (!defined('ABSPATH')) exit;
 // inc/extensions/icon-system.php
 // Helpers and admin integration for SVG sprite icons.
 
-// Path to built sprite
+/** Path to built sprite */
 if (!function_exists('ld_sprite_path')) {
   function ld_sprite_path(): string {
     return get_stylesheet_directory() . '/assets/icons/sprite.svg';
   }
 }
 
-// Parse <symbol id="..."> list (full ids, e.g. "icon-ui-menu")
+/** Parse <symbol id="..."> list (full ids, e.g. "icon-ui-menu") */
 if (!function_exists('ld_sprite_choices_full')) {
   function ld_sprite_choices_full(): array {
     static $choices;
@@ -32,7 +32,7 @@ if (!function_exists('ld_sprite_choices_full')) {
   }
 }
 
-// ACF Select loader: use full ids + nice UI
+/** ACF Select loader: use full ids + nice UI */
 if (!function_exists('ld__sprite_load_field_full')) {
   function ld__sprite_load_field_full($field) {
     $field['choices'] = ld_sprite_choices_full();
@@ -44,7 +44,7 @@ add_filter('acf/load_field/name=menu_icon',       'ld__sprite_load_field_full');
 add_filter('acf/load_field/name=post_icon_name',  'ld__sprite_load_field_full');
 add_filter('acf/load_field/name=term_icon_name',  'ld__sprite_load_field_full');
 
-// Inline sprite into admin so <use href="#id"> works in previews
+/** Inline sprite into admin so <use href="#id"> works in previews */
 add_action('admin_footer', function () {
   static $done;
   if ($done) return; // print once per page
@@ -59,13 +59,13 @@ add_action('admin_footer', function () {
   echo '<div hidden aria-hidden="true" style="display:none" class="ld-admin-sprite">'.$svg.'</div>';
 });
 
-// Admin preview assets (CSS/JS)
+/** Admin preview assets (CSS/JS) */
 add_action('admin_enqueue_scripts', function () {
   wp_enqueue_style('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.css', [], null);
   wp_enqueue_script('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.js', [], null, true);
 });
 
-// Allow SVG uploads for admins (fallback images)
+/** Allow SVG uploads for admins (fallback images) */
 add_filter('upload_mimes', function(array $mimes): array {
   if (current_user_can('manage_options')) {
     $mimes['svg'] = 'image/svg+xml';
@@ -73,7 +73,7 @@ add_filter('upload_mimes', function(array $mimes): array {
   return $mimes;
 });
 
-// Inject icon before menu label (front-end)
+/** Inject icon before menu label (front-end) */
 add_filter('walker_nav_menu_start_el', function ($item_output, $item, $depth, $args) {
   if (!function_exists('get_field') || !function_exists('ld_icon')) return $item_output;
 
@@ -81,11 +81,10 @@ add_filter('walker_nav_menu_start_el', function ($item_output, $item, $depth, $a
   if ($id === '' || $id === 'none') return $item_output;
 
   $svg = ld_icon($id, ['class' => 'menu__icon']);
-
   return preg_replace('/(<a[^>]*>)/', '$1'.$svg, $item_output, 1);
 }, 10, 4);
 
-// Render a content icon, preferring sprite over uploaded image
+/** Render a content icon, preferring sprite over uploaded image */
 if (!function_exists('ld_content_icon')) {
   /**
    * @param int|null $post_id Post ID (defaults to current post)
@@ -97,6 +96,8 @@ if (!function_exists('ld_content_icon')) {
     $post_id = $post_id ?: get_the_ID();
     if (!$post_id) return '';
 
+    $color_class = function_exists('ld_get_page_color_class') ? ld_get_page_color_class('icon', $post_id) : '';
+
     // 1) sprite selection
     $name = (string) get_field('post_icon_name', $post_id);
     if ($name && $name !== 'none' && function_exists('ld_icon')) {
@@ -105,20 +106,26 @@ if (!function_exists('ld_content_icon')) {
       if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
         $class = trim('icon ' . $class);
       }
+      if ($color_class) {
+        $class = trim($class . ' ' . $color_class);
+      }
       $attr['class'] = $class;
-      return ld_icon($name, $attr);
+      return ld_icon($name, $attr, $post_id);
     }
 
     // 2) uploaded media fallback
-    $id = get_field('content_icon_media', $post_id);
-    $id = ($id && $id !== 'none') ? (int) $id : 0;
+    $id = (int) get_field('content_icon_media', $post_id);
     if ($id && function_exists('ld_image_or_svg_html')) {
       $attr   = $attrs;
       $class  = trim($attr['class'] ?? '');
       if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
         $class = trim('icon ' . $class);
       }
+      if ($color_class) {
+        $class = trim($class . ' ' . $color_class);
+      }
       $attr['class'] = $class;
+      // NB: helper signature in project accepts size 'full' then attrs
       return ld_image_or_svg_html($id, 'full', $attr);
     }
 
@@ -126,7 +133,7 @@ if (!function_exists('ld_content_icon')) {
   }
 }
 
-// Render a term icon, preferring sprite over uploaded image
+/** Render a term icon, preferring sprite over uploaded image */
 if (!function_exists('ld_term_icon_html')) {
   /**
    * @param int|WP_Term|null $term Term ID or object (defaults to queried term on term archives)
@@ -152,8 +159,7 @@ if (!function_exists('ld_term_icon_html')) {
     }
 
     // 2) uploaded image fallback
-    $media = get_field('term_icon_media', 'term_'.$term_id);
-    $media = ($media && $media !== 'none') ? (int) $media : 0;
+    $media = (int) get_field('term_icon_media', 'term_'.$term_id);
     if ($media && function_exists('ld_image_or_svg_html')) {
       $attr = $attrs;
       $attr['class'] = trim('icon '.($attr['class'] ?? '').' '.$class);
@@ -179,7 +185,7 @@ add_filter('manage_post_tag_custom_column', function($out, $col, $term_id){
   return $html ?: '—';
 }, 10, 3);
 
-// Admin list column: Posts and custom post types
+/** Admin list column: Posts and custom post types */
 foreach (['post','fineart','modeling'] as $pt) {
   add_filter("manage_{$pt}_posts_columns", function($cols) {
     $new = ['icon' => __('Icon','ld')];
@@ -193,7 +199,7 @@ foreach (['post','fineart','modeling'] as $pt) {
   }, 10, 2);
 }
 
-// Admin list column: Pages (24px default)
+/** Admin list column: Pages (24px default) */
 add_filter('manage_page_posts_columns', function($cols) {
   $new = ['icon' => __('Icon','ld')];
   return array_slice($cols, 0, 1, true) + $new + array_slice($cols, 1, null, true);
@@ -203,7 +209,7 @@ add_action('manage_page_posts_custom_column', function($col, $post_id) {
   echo ld_content_icon($post_id, ['class' => 'icon icon--24']);
 }, 10, 2);
 
-// Consistent sizing/padding for icon column in admin lists
+/** Consistent sizing/padding for icon column in admin lists (24px + 4px margin) */
 add_action('admin_head', function () {
   echo '<style>
   .wp-list-table .column-icon{width:28px}
