@@ -1,0 +1,804 @@
+{
+  "theme": "lowdesign",
+  "generatedAt": "2025-09-13T10:25:37.507Z",
+  "items": [
+    {
+      "file": "README.md",
+      "size": 200,
+      "hash": "d7ec18870a25",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "acf-json/malati-fineart.json",
+      "size": 2731,
+      "hash": "b0ad2847ff10",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "acf-json/malati-modeling.json",
+      "size": 1870,
+      "hash": "c6e0818f80fb",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "acf-json/menu-icon.json",
+      "size": 979,
+      "hash": "7f6a6dc77bed",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "acf-json/page-color-settings.json",
+      "size": 1320,
+      "hash": "5a2765dd8a7c",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "acf-json/post-icon.json",
+      "size": 1923,
+      "hash": "c51140f1fc1d",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "acf-json/site-settings.json",
+      "size": 3203,
+      "hash": "bd0cc056c36f",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "acf-json/term-icon.json",
+      "size": 1765,
+      "hash": "08a6e7a3e015",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/admin/icon-preview.css",
+      "size": 289,
+      "hash": "94066aa11a91",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/admin/icon-preview.js",
+      "size": 1117,
+      "hash": "f83ca44d414f",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/css/color.css",
+      "size": 760,
+      "hash": "28246b81ca2e",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/js/header-ui.js",
+      "size": 1699,
+      "hash": "791fee9dc22a",
+      "tags": [
+        "core",
+        "header",
+        "nav",
+        "drawer"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/js/main.js",
+      "size": 160,
+      "hash": "f121f35e3b24",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": [
+        "./modules/dark-light-theme-detection",
+        "./header-ui"
+      ]
+    },
+    {
+      "file": "assets/src/js/modules/dark-light-theme-detection.js",
+      "size": 724,
+      "hash": "d8d0678542d7",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/scss/_blocks-bootstrap.scss",
+      "size": 1183,
+      "hash": "0c1c95b696c4",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/scss/_data-bs-theme-dark.scss",
+      "size": 392,
+      "hash": "231e758de079",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/scss/_data-bs-theme-light.scss",
+      "size": 394,
+      "hash": "b110a7d384c6",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/scss/_header.scss",
+      "size": 4136,
+      "hash": "db3d63aa1af4",
+      "tags": [
+        "core",
+        "header",
+        "nav",
+        "layout"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/scss/_site-logo.scss",
+      "size": 67,
+      "hash": "8a8946b28317",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/scss/_wp-tokens.scss",
+      "size": 794,
+      "hash": "c927538c53fd",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/scss/admin-dark.scss",
+      "size": 6540,
+      "hash": "32bd5409f4a1",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/scss/components/_hero.scss",
+      "size": 53,
+      "hash": "c7293fd7803d",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "assets/src/scss/editor.scss",
+      "size": 5971,
+      "hash": "93f856b5a794",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": [
+        "./wp-tokens",
+        "./data-bs-theme-light",
+        "./data-bs-theme-dark",
+        "./blocks-bootstrap"
+      ]
+    },
+    {
+      "file": "assets/src/scss/main.scss",
+      "size": 242,
+      "hash": "d9c5b1a7c0d4",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": [
+        "./wp-tokens",
+        "./components/hero",
+        "./header",
+        "./data-bs-theme-dark",
+        "./data-bs-theme-light",
+        "./blocks-bootstrap"
+      ]
+    },
+    {
+      "file": "assets/vendor/bootstrap/custom.css",
+      "size": 275237,
+      "hash": "77c71d550eb2",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "codex/config/theme.palette.json",
+      "size": 2867,
+      "hash": "f241240a5281",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "codex/scripts/generate-palette.php",
+      "size": 930,
+      "hash": "01526b16a75f",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "docs/ARCHITECTURE.md",
+      "size": 2957,
+      "hash": "fa7941dddae9",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "docs/ICON_SYSTEM.md",
+      "size": 639,
+      "hash": "3be0370fe4c9",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "docs/INVENTORY.md",
+      "size": 63,
+      "hash": "10a55e43d267",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "docs/SETUP.md",
+      "size": 58,
+      "hash": "a4a5f54f984d",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "docs/icons/README.md",
+      "size": 358,
+      "hash": "921f3926ec04",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "footer.php",
+      "size": 1209,
+      "hash": "f12f1a681f93",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "functions.php",
+      "size": 393,
+      "hash": "95f2453ee3f2",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "header.php",
+      "size": 810,
+      "hash": "dadc043c21e1",
+      "tags": [
+        "core",
+        "header",
+        "nav",
+        "supermenu"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/assets/admin-dark.php",
+      "size": 1316,
+      "hash": "5dfeb65e17c6",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/assets/editor.php",
+      "size": 509,
+      "hash": "3f111c43325d",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/assets/enqueue-frontend.php",
+      "size": 1194,
+      "hash": "83b11a744490",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/bootstrap.php",
+      "size": 1600,
+      "hash": "f0319f17db38",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/core/acf-json.php",
+      "size": 690,
+      "hash": "227ddddabf53",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/core/custom-logo-svg.php",
+      "size": 1190,
+      "hash": "8482a95407af",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/core/i18n.php",
+      "size": 157,
+      "hash": "1220d2d3a454",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/core/loader.php",
+      "size": 1217,
+      "hash": "0cbab57cad05",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/core/vite.php",
+      "size": 4436,
+      "hash": "2cf6f9bcead2",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/cpt/10-ld-site-config.php",
+      "size": 1549,
+      "hash": "a0d8b3298594",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/cpt/20-cpt-fineart.php",
+      "size": 3746,
+      "hash": "658c8c9dad2d",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/cpt/30-cpt-modeling.php",
+      "size": 3802,
+      "hash": "974d735ec51c",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/cpt/index.php",
+      "size": 27,
+      "hash": "662bda4aaf83",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/extensions/feature-toggles.php",
+      "size": 2232,
+      "hash": "378e7b760a54",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/extensions/icon-system.php",
+      "size": 7767,
+      "hash": "5d4055e53a0a",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/extensions/index.php",
+      "size": 27,
+      "hash": "662bda4aaf83",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/extensions/template-loader.php",
+      "size": 1397,
+      "hash": "f4265465bed3",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/helpers/colors.php",
+      "size": 859,
+      "hash": "9f42606dae2d",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/helpers/icons.php",
+      "size": 3388,
+      "hash": "eadf7ea5e810",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/helpers/ld-component.php",
+      "size": 1024,
+      "hash": "828b6e3d4e68",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/helpers/ld-site-config-helpers.php",
+      "size": 3066,
+      "hash": "3f7a94dbb0ec",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/helpers/options.php",
+      "size": 244,
+      "hash": "8f6d382c5033",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/setup/index.php",
+      "size": 27,
+      "hash": "662bda4aaf83",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/setup/post-thumbnails.php",
+      "size": 353,
+      "hash": "f4914f188cdc",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/setup/theme-setup.php",
+      "size": 636,
+      "hash": "11e72a6bd38e",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/taxonomies/10-taxonomy-ui_role.php",
+      "size": 1963,
+      "hash": "d86c166d61f4",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/taxonomies/index.php",
+      "size": 27,
+      "hash": "662bda4aaf83",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/ui/nav.php",
+      "size": 186,
+      "hash": "062ff9b284de",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "inc/ui/widgets-footer.php",
+      "size": 453,
+      "hash": "7b641f4f9066",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "index.php",
+      "size": 532,
+      "hash": "7d4a72e52022",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "package-lock.json",
+      "size": 88306,
+      "hash": "beb552b929a2",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "package.json",
+      "size": 1044,
+      "hash": "5406927a8171",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "project.margo.json",
+      "size": 582,
+      "hash": "6670cf5f79a5",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "searchform.php",
+      "size": 325,
+      "hash": "7af8bec49389",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "style.css",
+      "size": 550,
+      "hash": "ce98c0b09cdb",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "styles/dark.json",
+      "size": 1864,
+      "hash": "f230ff6a10c2",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "svgo.config.js",
+      "size": 309,
+      "hash": "f5115a903106",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "templates/front-page.php",
+      "size": 231,
+      "hash": "0b30e14b9543",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "templates/hero/hero.php",
+      "size": 364,
+      "hash": "178b9638f562",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "templates/page.php",
+      "size": 1392,
+      "hash": "81756db680e8",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": [
+        "partials/header/supermenu"
+      ]
+    },
+    {
+      "file": "theme.json",
+      "size": 2292,
+      "hash": "ebd37205f35c",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": []
+    },
+    {
+      "file": "vite.config.js",
+      "size": 881,
+      "hash": "7d617c177e27",
+      "tags": [
+        "untagged"
+      ],
+      "id": null,
+      "deps": [
+        "path"
+      ]
+    }
+  ]
+}
