@@ -94,3 +94,27 @@ if (!function_exists('ld_copyright')) {
   }
 }
 
+if (!function_exists('ld_site_feature')) {
+  function ld_site_feature(string $key, $default = false) {
+    if (function_exists('ld_get_site_config_field')) {
+      $v = ld_get_site_config_field($key);
+    } elseif (function_exists('get_field')) {
+      $post = get_page_by_title('Site Settings', OBJECT, 'ld_site_config');
+      $v = $post ? get_field($key, $post->ID) : null;
+    } else {
+      $v = null;
+    }
+    return $v !== null ? (bool) $v : (bool) $default;
+  }
+}
+
+if (!function_exists('ld_icons_features')) {
+  function ld_icons_features(): array {
+    return [
+      'content' => ld_site_feature('enable_content_icons', true),
+      'terms'   => ld_site_feature('enable_term_icons', true),
+      'menu'    => ld_site_feature('enable_menu_icons', true),
+    ];
+  }
+}
+

@@ -15,6 +15,17 @@ Unified SVG icon system for the theme.
 
 ---
 
+## Site Config toggles
+
+- **Path:** Dashboard → Site Config → Features → Icons
+- **Toggles:**
+  - **Content** — enables content icon rendering + admin columns for posts/pages.
+  - **Terms** — enables taxonomy icon rendering + admin columns.
+  - **Menu** — enables injecting icons into nav menu labels on front-end.
+- **Note:** Admin sprite inline + preview assets load if any toggle is on.
+
+---
+
 ## Content Icon (Posts & Pages)
 
 1. **Icon source:** Choose "No icon," "Theme icon," or "Media Library."
