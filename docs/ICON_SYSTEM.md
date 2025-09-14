@@ -6,12 +6,24 @@ Unified SVG icon system for the theme.
 
 ## Overview
 
-- **Source of truth:** `assets/icons/src/**`  
-- **Build artifact:** `assets/icons/sprite.svg` (generated)  
+- **Source of truth:** `assets/icons/src/**`
+- **Build artifact:** `assets/icons/sprite.svg` (generated)
+- `npm run check:icons` — verifies the sprite exists and contains `<symbol>` definitions
 - **ACF integration:** select fields for menus, posts/pages, and terms with **live preview**
 - **Priority rules:** **Library (sprite)** → **Upload (SVG/PNG)** → none
 - **Default size:** **24×24 px** (`.icon`, `.icon--24`)
 - **Content icons:** Editors choose a source ("No icon," "Theme icon," or "Media Library") before picking a sprite or uploading media.
+
+---
+
+## Site Config toggles
+
+- **Path:** Dashboard → Site Config → Features → Icons
+- **Toggles:**
+  - **Content** — enables content icon rendering + admin columns for posts/pages.
+  - **Terms** — enables taxonomy icon rendering + admin columns.
+  - **Menu** — enables injecting icons into nav menu labels on front-end.
+- **Note:** Admin sprite inline + preview assets load if any toggle is on.
 
 ---
 

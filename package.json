@@ -9,7 +9,8 @@
     "icons:clean": "rimraf assets/icons/sprite.svg",
     "icons:svgo": "svgo --config=svgo.config.js --recursive assets/icons/src",
     "icons:build": "node tools/build-sprite.mjs",
-    "icons": "npm run icons:svgo && npm run icons:build"
+    "icons": "npm run icons:svgo && npm run icons:build",
+    "check:icons": "node -e \"const fs=require('fs');const p='assets/icons/sprite.svg';if(!fs.existsSync(p))process.exit(2);const s=fs.readFileSync(p,'utf8');if(!/<symbol[^>]+id=/.test(s))process.exit(3);console.log('sprite: ok')\""
   },
   "devDependencies": {
     "bootstrap": "^5.3.8",
