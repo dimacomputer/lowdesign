@@ -8,3 +8,7 @@ WordPress theme codebase for Lowdesign projects.
 - [Setup guide](docs/SETUP.md)
 - [Inventory](docs/INVENTORY.md)
 
+## Development
+
+Run `npm run check:icons` to verify the sprite exists and defines symbols.
+

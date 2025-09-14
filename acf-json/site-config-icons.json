@@ -7,6 +7,7 @@
       "label": "Enable Content Icons (posts/pages)",
       "name": "enable_content_icons",
       "type": "true_false",
+      "instructions": "Show Content Icon meta box and render icons for posts & pages.",
       "ui": 1,
       "default_value": 1
     },
@@ -15,6 +16,7 @@
       "label": "Enable Taxonomy Icons (categories/tags)",
       "name": "enable_term_icons",
       "type": "true_false",
+      "instructions": "Enable icons for categories & tags (admin list preview + templates).",
       "ui": 1,
       "default_value": 1
     },
@@ -23,6 +25,7 @@
       "label": "Enable Menu Item Icons",
       "name": "enable_menu_icons",
       "type": "true_false",
+      "instructions": "Inject selected icons before menu labels on the front-end.",
       "ui": 1,
       "default_value": 1
     }
@@ -45,5 +48,5 @@
   "active": true,
   "description": "",
   "show_in_rest": 0,
-  "modified": 1757753322
+  "modified": 1757753323
 }
