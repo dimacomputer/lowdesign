@@ -1,4 +1,6 @@
 .acf-field .acf-input{display:flex;align-items:center;gap:8px}
+.acf-field .icon-preview{display:inline-flex;width:20px;height:20px}
+.acf-field .icon-preview svg{width:100%;height:100%}
 .select2-container--default .ld-icon-sel,
 .select2-container--default .ld-icon-opt{display:inline-flex;width:20px;height:20px;margin-right:6px;vertical-align:middle}
 .select2-container--default .ld-icon-sel svg,
