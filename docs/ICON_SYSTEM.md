@@ -20,10 +20,10 @@ Unified SVG icon system for the theme.
 
 - **Path:** Dashboard → Site Config → Features → Icons
 - **Toggles:**
-  - **Content** — enables content icon rendering + admin columns for posts/pages.
-  - **Terms** — enables taxonomy icon rendering + admin columns.
-  - **Menu** — enables injecting icons into nav menu labels on front-end.
-- **Note:** Admin sprite inline + preview assets load if any toggle is on.
+  - **Content** — intended to control content icon rendering + admin columns.
+  - **Terms** — intended to control taxonomy icon rendering + admin columns.
+  - **Menu** — intended to inject icons into nav menu labels on front-end.
+- **Note:** Toggle values are exposed via `ld_icons_features()` but are not enforced; icon UI remains governed by `LD_ICONS_GATING` / `LD_ICONS_BYPASS`.
 
 ---
 

@@ -2,25 +2,33 @@
 if (!defined('ABSPATH')) exit;
 
 /**
- * Icon System — admin/front integration with Site Config toggles.
+ * Icon System — admin/front integration with optional gating.
  */
 
-// ---- Site Config feature flags ---------------------------------------------
+$ld_acf_available = function_exists('acf_add_local_field_group');
+$ld_gating       = defined('LD_ICONS_GATING') && LD_ICONS_GATING;
+$ld_bypass       = defined('LD_ICONS_BYPASS') && LD_ICONS_BYPASS;
 
-$ld_icons_cfg = function_exists('ld_icons_features')
-  ? ld_icons_features()
-  : ['content'=>true,'terms'=>true,'menu'=>true];
+if ($ld_gating && !$ld_bypass) {
+  add_action('admin_enqueue_scripts', function(){
+    wp_enqueue_style('ld-icon-gating', get_stylesheet_directory_uri().'/assets/admin/icon-gating.css', [], null);
+    wp_enqueue_script('ld-icon-gating', get_stylesheet_directory_uri().'/assets/admin/icon-gating.js', [], null, true);
+  });
+}
 
-// Скрываем целые метабоксы ACF по тумблерам (ключи групп group_*)
-add_filter('acf/prepare_field/key=group_post_icon', function($field) use ($ld_icons_cfg){
-  return $ld_icons_cfg['content'] ? $field : false;
-});
-add_filter('acf/prepare_field/key=group_term_icon', function($field) use ($ld_icons_cfg){
-  return $ld_icons_cfg['terms'] ? $field : false;
-});
-add_filter('acf/prepare_field/key=group_menu_icon', function($field) use ($ld_icons_cfg){
-  return $ld_icons_cfg['menu'] ? $field : false;
-});
+if ($ld_acf_available && $ld_gating && !$ld_bypass) {
+  add_filter('acf/prepare_field/key=group_post_icon', fn() => false);
+  add_filter('acf/prepare_field/key=group_term_icon', fn() => false);
+  add_filter('acf/prepare_field/key=group_menu_icon', fn() => false);
+
+  add_filter('acf/prepare_field/name=post_icon', fn() => false);
+  add_filter('acf/prepare_field/name=term_icon', fn() => false);
+  add_filter('acf/prepare_field/name=menu_icon', fn() => false);
+}
+
+$ld_content_on = true;
+$ld_terms_on   = true;
+$ld_menu_on    = true;
 
 // ---- Sprite helpers ---------------------------------------------------------
 
@@ -57,18 +65,18 @@ if (!function_exists('ld_sprite_choices_full')) {
 
 // ---- ACF field wiring (choices + wrappers for JS) ---------------------------
 
-if ($ld_icons_cfg['menu'] || $ld_icons_cfg['content'] || $ld_icons_cfg['terms']) {
+if ($ld_menu_on || $ld_content_on || $ld_terms_on) {
   $load = function($f){
     $f['choices'] = ld_sprite_choices_full();
     $f['ui'] = 1;
     return $f;
   };
 
-  if ($ld_icons_cfg['menu']) {
+  if ($ld_menu_on) {
     add_filter('acf/load_field/name=menu_icon', $load);
   }
 
-  if ($ld_icons_cfg['content']) {
+  if ($ld_content_on) {
     add_filter('acf/load_field/name=post_icon_name', function($f) use ($load){
       $f = $load($f);
       // обёртка селекта «Theme icon» для JS-тоггла
@@ -83,7 +91,7 @@ if ($ld_icons_cfg['menu'] || $ld_icons_cfg['content'] || $ld_icons_cfg['terms'])
     });
   }
 
-  if ($ld_icons_cfg['terms']) {
+  if ($ld_terms_on) {
     add_filter('acf/load_field/name=term_icon_name', $load);
   }
 
@@ -105,18 +113,20 @@ if ($ld_icons_cfg['menu'] || $ld_icons_cfg['content'] || $ld_icons_cfg['terms'])
 
 // ---- Backfill radio (BC for old posts) --------------------------------------
 
-add_filter('acf/load_value/name=content_icon_source', function($value, $post_id){
-  if ($value) return $value;
-  if (function_exists('get_field')) {
-    if (get_field('post_icon_name', $post_id))   return 'sprite';
-    if (get_field('content_icon_media', $post_id)) return 'media';
-  }
-  return 'none';
-}, 10, 2);
+if ($ld_content_on) {
+  add_filter('acf/load_value/name=content_icon_source', function($value, $post_id){
+    if ($value) return $value;
+    if (function_exists('get_field')) {
+      if (get_field('post_icon_name', $post_id))   return 'sprite';
+      if (get_field('content_icon_media', $post_id)) return 'media';
+    }
+    return 'none';
+  }, 10, 2);
+}
 
 // ---- Upload permissions ------------------------------------------------------
 
-if ($ld_icons_cfg['content'] || $ld_icons_cfg['terms']) {
+if ($ld_content_on || $ld_terms_on) {
   add_filter('upload_mimes', function($m){
     if(current_user_can('manage_options')) $m['svg'] = 'image/svg+xml';
     return $m;
@@ -125,7 +135,7 @@ if ($ld_icons_cfg['content'] || $ld_icons_cfg['terms']) {
 
 // ---- Front-end: menu icons ---------------------------------------------------
 
-if ($ld_icons_cfg['menu']) {
+if ($ld_menu_on) {
   add_filter('walker_nav_menu_start_el', function($out, $item){
     if(!function_exists('get_field') || !function_exists('ld_icon')) return $out;
     $id = (string) get_field('menu_icon', $item->ID);
@@ -212,7 +222,7 @@ if (!function_exists('ld_term_icon_html')) {
 
 // ---- Admin list columns (24px) ----------------------------------------------
 
-if ($ld_icons_cfg['terms']) {
+if ($ld_terms_on) {
   add_filter('manage_edit-category_columns', fn($c) => ['icon' => __('Icon','ld')] + $c);
   add_filter('manage_category_custom_column', function($out, $col, $term_id){
     if ($col !== 'icon') return $out;
@@ -228,7 +238,7 @@ if ($ld_icons_cfg['terms']) {
   }, 10, 3);
 }
 
-if ($ld_icons_cfg['content']) {
+if ($ld_content_on) {
   foreach (['post','fineart','modeling'] as $pt) {
     add_filter("manage_{$pt}_posts_columns", function($cols) {
       $new = ['icon' => __('Icon','ld')];
@@ -250,7 +260,7 @@ if ($ld_icons_cfg['content']) {
 }
 
 // 24px + 4px margin layout for admin tables (if any icon feature is on)
-if ($ld_icons_cfg['content'] || $ld_icons_cfg['terms']) {
+if ($ld_content_on || $ld_terms_on) {
   add_action('admin_head', function(){
     echo '<style>
       .wp-list-table .column-icon{width:28px}

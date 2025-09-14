@@ -1,6 +1,9 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
+if (!defined('LD_ICONS_GATING')) define('LD_ICONS_GATING', false); // feature gating OFF by default
+if (!defined('LD_ICONS_BYPASS')) define('LD_ICONS_BYPASS', true);  // always show icons/fields
+
 /**
  * Lowdesign bootstrap (fail-safe)
  * Порядок:
@@ -12,6 +15,9 @@ if (!defined('ABSPATH')) exit;
  */
 
 require_once __DIR__ . '/core/loader.php';
+require_once __DIR__ . '/helpers/icons-features.php';
+require_once __DIR__ . '/admin/notices-icons.php';
+require_once __DIR__ . '/admin/ld-debug.php';
 
 add_action('after_setup_theme', function () {
   $base = get_stylesheet_directory();
