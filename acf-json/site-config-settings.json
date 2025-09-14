@@ -1,0 +1,63 @@
+{
+  "key": "group_site_config_settings",
+  "title": "Site Config — Site Settings",
+  "fields": [
+    {
+      "key": "field_tab_site_settings",
+      "label": "Site Settings",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_group_features",
+      "label": "Features",
+      "name": "features",
+      "type": "group",
+      "layout": "block",
+      "sub_fields": [
+        {
+          "key": "field_enable_content_icons",
+          "label": "Enable Content Icons (posts/pages)",
+          "name": "enable_content_icons",
+          "type": "true_false",
+          "ui": 1,
+          "default_value": 1,
+          "instructions": "Show Content Icon meta box and render icons for posts & pages."
+        },
+        {
+          "key": "field_enable_term_icons",
+          "label": "Enable Taxonomy Icons (categories/tags)",
+          "name": "enable_term_icons",
+          "type": "true_false",
+          "ui": 1,
+          "default_value": 1,
+          "instructions": "Enable icons for categories & tags (admin list preview + templates)."
+        },
+        {
+          "key": "field_enable_menu_icons",
+          "label": "Enable Menu Item Icons",
+          "name": "enable_menu_icons",
+          "type": "true_false",
+          "ui": 1,
+          "default_value": 1,
+          "instructions": "Inject selected icons before menu labels on the front-end."
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      { "param": "post_type", "operator": "==", "value": "ld_site_config" }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "acf_after_title",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true,
+  "show_in_rest": 0,
+  "modified": 1757853533
+}

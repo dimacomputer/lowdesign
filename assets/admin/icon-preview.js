@@ -2,9 +2,9 @@
   function $all(s, r=document){ return Array.from(r.querySelectorAll(s)); }
   function toggleBlock(block, show){
     if(!block) return;
+    block.classList.toggle('ld-hidden', !show);
     const inputs=$all('input, select, textarea, button, [tabindex]', block);
     if(show){
-      block.classList.remove('ld-hidden');
       block.removeAttribute('aria-hidden');
       inputs.forEach(el=>{
         el.disabled=false;
@@ -18,7 +18,6 @@
       if(block.contains(document.activeElement)){
         try{ document.activeElement.blur(); }catch(e){}
       }
-      block.classList.add('ld-hidden');
       block.setAttribute('aria-hidden','true');
       inputs.forEach(el=>{
         if(!el.hasAttribute('data-tabindex-prev')) el.setAttribute('data-tabindex-prev', el.tabIndex || 0);
@@ -34,9 +33,8 @@
     const themeWrap=root.querySelector('[data-ld="icon-theme-wrap"]');
     const mediaWrap=root.querySelector('[data-ld="icon-media-wrap"]');
     const val=e.target && e.target.value;
-    if(val==='none'){ toggleBlock(themeWrap,false); toggleBlock(mediaWrap,false); return; }
-    if(val==='sprite'){ toggleBlock(themeWrap,true); toggleBlock(mediaWrap,false); return; }
-    if(val==='media'){ toggleBlock(themeWrap,false); toggleBlock(mediaWrap,true); return; }
+    toggleBlock(themeWrap, val==='sprite');
+    toggleBlock(mediaWrap, val==='media');
   }
   function svgUse(id, cls){
     if(!id||id==='__custom__') return '';
@@ -131,8 +129,8 @@
   }
 
   function init(){
-    $all('.acf-field[data-name="post_icon_name"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-theme-wrap'); });
-    $all('.acf-field[data-name="content_icon_media"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-media-wrap'); });
+    $all('.acf-field[data-name="post_icon_name"], .acf-field[data-name="term_icon_name"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-theme-wrap'); });
+    $all('.acf-field[data-name="content_icon_media"], .acf-field[data-name="term_icon_media"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-media-wrap'); });
     const q=[
       '.acf-field[data-name="menu_icon"] select',
       '.acf-field[data-name="post_icon_name"] select',
@@ -168,14 +166,14 @@
       const themeWrap=group.querySelector('[data-ld="icon-theme-wrap"]');
       const mediaWrap=group.querySelector('[data-ld="icon-media-wrap"]');
       const val=checked.value;
-      const toggle=(b,s)=>{ if(typeof window.toggleBlock==='function') window.toggleBlock(b,s); };
-      if(val==='none'){ toggle(themeWrap,false); toggle(mediaWrap,false); }
-      if(val==='sprite'){ toggle(themeWrap,true); toggle(mediaWrap,false); }
-      if(val==='media'){ toggle(themeWrap,false); toggle(mediaWrap,true); }
-    });
-    if(document.activeElement && document.activeElement.closest('.ld-hidden')){
-      try{ document.activeElement.blur(); }catch(e){}
+      if(window.toggleBlock){
+        window.toggleBlock(themeWrap, val==='sprite');
+        window.toggleBlock(mediaWrap, val==='media');
+      }
+      });
+      if(document.activeElement && document.activeElement.closest('.ld-hidden')){
+        try{ document.activeElement.blur(); }catch(e){}
+      }
     }
-  }
   if(document.readyState!=='loading') boot(); else document.addEventListener('DOMContentLoaded', boot);
 })();
