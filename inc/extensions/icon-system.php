@@ -24,7 +24,8 @@ if (!function_exists('ld_sprite_choices_full')) {
     if (!$svg) return [];
 
     if (preg_match_all('~<symbol[^>]+id="([^"]+)"~i', $svg, $m)) {
-      $choices = array_combine($m[1], $m[1]);
+      $ids = array_filter($m[1] ?? [], fn($id) => str_starts_with($id, 'brand/') || str_starts_with($id, 'glyph/'));
+      $choices = $ids ? array_combine($ids, $ids) : [];
     } else {
       $choices = [];
     }
@@ -32,57 +33,37 @@ if (!function_exists('ld_sprite_choices_full')) {
   }
 }
 
-/** ACF Select loader: use full ids + nice UI */
-if (!function_exists('ld__sprite_load_field_full')) {
-  function ld__sprite_load_field_full($field) {
-    $field['choices'] = ld_sprite_choices_full();
-    $field['ui'] = 1;
-    return $field;
-  }
-}
-add_filter('acf/load_field/name=menu_icon',       'ld__sprite_load_field_full');
-add_filter('acf/load_field/name=post_icon_name',  'ld__sprite_load_field_full');
-add_filter('acf/load_field/name=term_icon_name',  'ld__sprite_load_field_full');
+/** Hook ACF selects with full sprite ids */
+add_filter('acf/load_field/name=menu_icon', fn($f)=>($f['choices']=ld_sprite_choices_full())&&($f['ui']=1)?$f:$f);
+add_filter('acf/load_field/name=post_icon_name', fn($f)=>($f['choices']=ld_sprite_choices_full())&&($f['ui']=1)?$f:$f);
+add_filter('acf/load_field/name=term_icon_name', fn($f)=>($f['choices']=ld_sprite_choices_full())&&($f['ui']=1)?$f:$f);
 
-/** Inline sprite into admin so <use href="#id"> works in previews */
-add_action('admin_footer', function () {
-  static $done;
-  if ($done) return; // print once per page
-  $done = true;
-
-  $file = ld_sprite_path();
-  if (!is_file($file)) return;
-
-  $svg = file_get_contents($file);
-  if (!$svg) return;
-
-  echo '<div hidden aria-hidden="true" style="display:none" class="ld-admin-sprite">'.$svg.'</div>';
+/** Inline sprite once per admin page */
+add_action('admin_footer', function(){
+  static $done; if($done) return; $done = true;
+  $p = ld_sprite_path();
+  if (is_file($p)) echo '<div hidden style="display:none">', file_get_contents($p), '</div>';
 });
 
 /** Admin preview assets (CSS/JS) */
-add_action('admin_enqueue_scripts', function () {
+add_action('admin_enqueue_scripts', function(){
   wp_enqueue_style('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.css', [], null);
-  wp_enqueue_script('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.js', [], null, true);
+  wp_enqueue_script('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.js', ['jquery','select2'], null, true);
 });
 
 /** Allow SVG uploads for admins (fallback images) */
-add_filter('upload_mimes', function(array $mimes): array {
-  if (current_user_can('manage_options')) {
-    $mimes['svg'] = 'image/svg+xml';
-  }
-  return $mimes;
+add_filter('upload_mimes', function($m){
+  if(current_user_can('manage_options')) $m['svg'] = 'image/svg+xml';
+  return $m;
 });
 
 /** Inject icon before menu label (front-end) */
-add_filter('walker_nav_menu_start_el', function ($item_output, $item, $depth, $args) {
-  if (!function_exists('get_field') || !function_exists('ld_icon')) return $item_output;
-
+add_filter('walker_nav_menu_start_el', function($out,$item){
+  if(!function_exists('get_field') || !function_exists('ld_icon')) return $out;
   $id = (string) get_field('menu_icon', $item->ID);
-  if ($id === '' || $id === 'none') return $item_output;
-
-  $svg = ld_icon($id, ['class' => 'menu__icon']);
-  return preg_replace('/(<a[^>]*>)/', '$1'.$svg, $item_output, 1);
-}, 10, 4);
+  if(!$id || $id==='none') return $out;
+  return preg_replace('~(<a[^>]*>)~', '$1'.ld_icon($id, ['class'=>'menu__icon']), $out, 1);
+},10,2);
 
 /** Render a content icon, preferring sprite over uploaded image */
 if (!function_exists('ld_content_icon')) {
@@ -211,10 +192,10 @@ add_action('manage_page_posts_custom_column', function($col, $post_id) {
 }, 10, 2);
 
 /** Consistent sizing/padding for icon column in admin lists (24px + 4px margin) */
-add_action('admin_head', function () {
+add_action('admin_head', function(){
   echo '<style>
-  .wp-list-table .column-icon{width:28px}
-  .wp-list-table td.column-icon{padding-left:4px;padding-right:0;text-align:center}
-  .wp-list-table td.column-icon .icon{width:24px;height:24px;display:inline-block}
+    .wp-list-table .column-icon{width:28px}
+    .wp-list-table td.column-icon{padding-left:4px;padding-right:0;text-align:center}
+    .wp-list-table td.column-icon .icon{width:24px;height:24px;display:inline-block}
   </style>';
 });
