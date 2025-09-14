@@ -11,7 +11,7 @@ if (!function_exists('ld_sprite_path')) {
   }
 }
 
-/** Parse <symbol id="..."> list (full ids, e.g. "icon-ui-menu") */
+/** Parse <symbol id="..."> list (full ids, e.g. "glyph-gamepad") */
 if (!function_exists('ld_sprite_choices_full')) {
   function ld_sprite_choices_full(): array {
     static $choices;
@@ -24,7 +24,9 @@ if (!function_exists('ld_sprite_choices_full')) {
     if (!$svg) return [];
 
     if (preg_match_all('~<symbol[^>]+id="([^"]+)"~i', $svg, $m)) {
-      $ids = array_filter($m[1] ?? [], fn($id) => str_starts_with($id, 'brand/') || str_starts_with($id, 'glyph/'));
+      $ids = array_filter($m[1] ?? [], function ($id) {
+        return str_starts_with($id, 'glyph-') || str_starts_with($id, 'brand-');
+      });
       $choices = $ids ? array_combine($ids, $ids) : [];
     } else {
       $choices = [];
@@ -35,8 +37,25 @@ if (!function_exists('ld_sprite_choices_full')) {
 
 /** Hook ACF selects with full sprite ids */
 add_filter('acf/load_field/name=menu_icon', fn($f)=>($f['choices']=ld_sprite_choices_full())&&($f['ui']=1)?$f:$f);
-add_filter('acf/load_field/name=post_icon_name', fn($f)=>($f['choices']=ld_sprite_choices_full())&&($f['ui']=1)?$f:$f);
 add_filter('acf/load_field/name=term_icon_name', fn($f)=>($f['choices']=ld_sprite_choices_full())&&($f['ui']=1)?$f:$f);
+add_filter('acf/load_field/name=post_icon_name', function($f){
+  $f['choices'] = ld_sprite_choices_full();
+  $f['ui'] = 1;
+  $f['wrapper']['data-ld'] = 'icon-theme-wrap';
+  return $f;
+});
+add_filter('acf/load_field/name=content_icon_media', function($f){
+  $f['wrapper']['data-ld'] = 'icon-media-wrap';
+  return $f;
+});
+
+// Backfill icon source radio based on existing fields (for older posts)
+add_filter('acf/load_value/name=content_icon_source', function($value, $post_id){
+  if ($value) return $value;
+  if (get_field('post_icon_name', $post_id)) return 'sprite';
+  if (get_field('content_icon_media', $post_id)) return 'media';
+  return 'none';
+}, 10, 2);
 
 /** Inline sprite once per admin page */
 add_action('admin_footer', function(){
@@ -65,7 +84,7 @@ add_filter('walker_nav_menu_start_el', function($out,$item){
   return preg_replace('~(<a[^>]*>)~', '$1'.ld_icon($id, ['class'=>'menu__icon']), $out, 1);
 },10,2);
 
-/** Render a content icon, preferring sprite over uploaded image */
+/** Render a content icon based on source selection */
 if (!function_exists('ld_content_icon')) {
   /**
    * @param int|null $post_id Post ID (defaults to current post)
@@ -76,39 +95,42 @@ if (!function_exists('ld_content_icon')) {
 
     $post_id = $post_id ?: get_the_ID();
     if (!$post_id) return '';
-    $color_class = function_exists('ld_get_page_color_class') ? ld_get_page_color_class('icon', $post_id) : '';
 
     $color_class = function_exists('ld_get_page_color_class') ? ld_get_page_color_class('icon', $post_id) : '';
 
-    // 1) sprite selection
-    $name = (string) get_field('post_icon_name', $post_id);
-    if ($name && $name !== 'none' && function_exists('ld_icon')) {
-      $attr   = $attrs;
-      $class  = trim($attr['class'] ?? '');
-      if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
-        $class = trim('icon ' . $class);
-      }
-      if ($color_class) {
-        $class = trim($class . ' ' . $color_class);
-      }
-      $attr['class'] = $class;
-      return ld_icon($name, $attr, $post_id);
+    $src = (string) get_field('content_icon_source', $post_id);
+    if (!$src) { // backward compat
+      $src = get_field('post_icon_name', $post_id) ? 'sprite' :
+             (get_field('content_icon_media', $post_id) ? 'media' : 'none');
     }
 
-    // 2) uploaded media fallback
-    $id = (int) get_field('content_icon_media', $post_id);
-    if ($id && function_exists('ld_image_or_svg_html')) {
-      $attr   = $attrs;
-      $class  = trim($attr['class'] ?? '');
-      if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
-        $class = trim('icon ' . $class);
-      }
-      if ($color_class) {
-        $class = trim($class . ' ' . $color_class);
-      }
-      $attr['class'] = $class;
-      // NB: helper signature in project accepts size 'full' then attrs
-      return ld_image_or_svg_html($id, 'full', $attr);
+    $attr  = $attrs;
+    $class = trim($attr['class'] ?? '');
+    if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
+      $class = trim('icon ' . $class);
+    }
+    if ($color_class) {
+      $class = trim($class . ' ' . $color_class);
+    }
+    $attr['class'] = $class;
+
+    switch ($src) {
+      case 'sprite':
+        $name = (string) get_field('post_icon_name', $post_id);
+        if ($name && function_exists('ld_icon')) {
+          return ld_icon($name, $attr);
+        }
+        break;
+
+      case 'media':
+        $id = (int) get_field('content_icon_media', $post_id);
+        if ($id && function_exists('ld_image_or_svg_html')) {
+          return ld_image_or_svg_html($id, 'full', $attr);
+        }
+        break;
+
+      default:
+        return '';
     }
 
     return '';
