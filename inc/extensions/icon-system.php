@@ -10,17 +10,17 @@ if (!defined('ABSPATH')) exit;
 $ld_icons_cfg = function_exists('ld_icons_features')
   ? ld_icons_features()
   : ['content'=>true,'terms'=>true,'menu'=>true];
+$ld_acf_available = function_exists('acf_add_local_field_group');
 
-// Скрываем целые метабоксы ACF по тумблерам (ключи групп group_*)
-add_filter('acf/prepare_field/key=group_post_icon', function($field) use ($ld_icons_cfg){
-  return $ld_icons_cfg['content'] ? $field : false;
-});
-add_filter('acf/prepare_field/key=group_term_icon', function($field) use ($ld_icons_cfg){
-  return $ld_icons_cfg['terms'] ? $field : false;
-});
-add_filter('acf/prepare_field/key=group_menu_icon', function($field) use ($ld_icons_cfg){
-  return $ld_icons_cfg['menu'] ? $field : false;
-});
+if ($ld_acf_available) {
+  add_filter('acf/prepare_field/key=group_post_icon', fn($f)=>$ld_icons_cfg['content']?$f:false);
+  add_filter('acf/prepare_field/key=group_term_icon', fn($f)=>$ld_icons_cfg['terms']?$f:false);
+  add_filter('acf/prepare_field/key=group_menu_icon', fn($f)=>$ld_icons_cfg['menu']?$f:false);
+
+  add_filter('acf/prepare_field/name=post_icon', fn($f)=>$ld_icons_cfg['content']?$f:false);
+  add_filter('acf/prepare_field/name=term_icon', fn($f)=>$ld_icons_cfg['terms']?$f:false);
+  add_filter('acf/prepare_field/name=menu_icon', fn($f)=>$ld_icons_cfg['menu']?$f:false);
+}
 
 // ---- Sprite helpers ---------------------------------------------------------
 
@@ -105,14 +105,16 @@ if ($ld_icons_cfg['menu'] || $ld_icons_cfg['content'] || $ld_icons_cfg['terms'])
 
 // ---- Backfill radio (BC for old posts) --------------------------------------
 
-add_filter('acf/load_value/name=content_icon_source', function($value, $post_id){
-  if ($value) return $value;
-  if (function_exists('get_field')) {
-    if (get_field('post_icon_name', $post_id))   return 'sprite';
-    if (get_field('content_icon_media', $post_id)) return 'media';
-  }
-  return 'none';
-}, 10, 2);
+if ($ld_icons_cfg['content']) {
+  add_filter('acf/load_value/name=content_icon_source', function($value, $post_id){
+    if ($value) return $value;
+    if (function_exists('get_field')) {
+      if (get_field('post_icon_name', $post_id))   return 'sprite';
+      if (get_field('content_icon_media', $post_id)) return 'media';
+    }
+    return 'none';
+  }, 10, 2);
+}
 
 // ---- Upload permissions ------------------------------------------------------
 
@@ -125,14 +127,13 @@ if ($ld_icons_cfg['content'] || $ld_icons_cfg['terms']) {
 
 // ---- Front-end: menu icons ---------------------------------------------------
 
-if ($ld_icons_cfg['menu']) {
-  add_filter('walker_nav_menu_start_el', function($out, $item){
-    if(!function_exists('get_field') || !function_exists('ld_icon')) return $out;
-    $id = (string) get_field('menu_icon', $item->ID);
-    if(!$id || $id === 'none') return $out;
-    return preg_replace('~(<a[^>]*>)~', '$1' . ld_icon($id, ['class'=>'menu__icon']), $out, 1);
-  }, 10, 2);
-}
+add_filter('walker_nav_menu_start_el', function($out, $item) use ($ld_icons_cfg){
+  if (empty($ld_icons_cfg['menu'])) return $out;
+  if(!function_exists('get_field') || !function_exists('ld_icon')) return $out;
+  $id = (string) get_field('menu_icon', $item->ID);
+  if(!$id || $id === 'none') return $out;
+  return preg_replace('~(<a[^>]*>)~', '$1' . ld_icon($id, ['class'=>'menu__icon']), $out, 1);
+}, 10, 2);
 
 // ---- Content icon (posts/pages) ---------------------------------------------
 

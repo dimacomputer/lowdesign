@@ -108,13 +108,3 @@ if (!function_exists('ld_site_feature')) {
   }
 }
 
-if (!function_exists('ld_icons_features')) {
-  function ld_icons_features(): array {
-    return [
-      'content' => ld_site_feature('enable_content_icons', true),
-      'terms'   => ld_site_feature('enable_term_icons', true),
-      'menu'    => ld_site_feature('enable_menu_icons', true),
-    ];
-  }
-}
-

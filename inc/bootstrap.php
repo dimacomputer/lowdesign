@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) exit;
  */
 
 require_once __DIR__ . '/core/loader.php';
+require_once __DIR__ . '/helpers/icons-features.php';
 
 add_action('after_setup_theme', function () {
   $base = get_stylesheet_directory();
