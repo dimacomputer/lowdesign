@@ -11,7 +11,7 @@ if (!function_exists('ld_sprite_path')) {
   }
 }
 
-/** Parse <symbol id="..."> list (full ids, e.g. "glyph-gamepad") */
+/** Parse <symbol id="..."> list (full ids, only glyph-* / brand-*) */
 if (!function_exists('ld_sprite_choices_full')) {
   function ld_sprite_choices_full(): array {
     static $choices;
@@ -35,20 +35,41 @@ if (!function_exists('ld_sprite_choices_full')) {
   }
 }
 
-/** Hook ACF selects with full sprite ids */
-add_filter('acf/load_field/name=menu_icon', fn($f)=>($f['choices']=ld_sprite_choices_full())&&($f['ui']=1)?$f:$f);
-add_filter('acf/load_field/name=term_icon_name', fn($f)=>($f['choices']=ld_sprite_choices_full())&&($f['ui']=1)?$f:$f);
-add_filter('acf/load_field/name=post_icon_name', function($f){
+/** Hook ACF selects with full sprite ids (and mark wrappers for JS) */
+add_filter('acf/load_field/name=menu_icon', function($f){
   $f['choices'] = ld_sprite_choices_full();
   $f['ui'] = 1;
   return $f;
 });
 
-// Backfill icon source radio based on existing fields (for older posts)
+add_filter('acf/load_field/name=term_icon_name', function($f){
+  $f['choices'] = ld_sprite_choices_full();
+  $f['ui'] = 1;
+  return $f;
+});
+
+add_filter('acf/load_field/name=post_icon_name', function($f){
+  $f['choices'] = ld_sprite_choices_full();
+  $f['ui'] = 1;
+  // помечаем обёртку селекта иконок тем для JS-тоггла
+  $f['wrapper']['data-ld'] = 'icon-theme-wrap';
+  return $f;
+});
+
+add_filter('acf/load_field/name=content_icon_media', function($f){
+  // помечаем обёртку медиа-аплоада для JS-тоггла
+  if (!isset($f['wrapper']) || !is_array($f['wrapper'])) $f['wrapper'] = [];
+  $f['wrapper']['data-ld'] = 'icon-media-wrap';
+  return $f;
+});
+
+/** Backfill icon source radio based on existing fields (for older posts) */
 add_filter('acf/load_value/name=content_icon_source', function($value, $post_id){
   if ($value) return $value;
-  if (get_field('post_icon_name', $post_id)) return 'sprite';
-  if (get_field('content_icon_media', $post_id)) return 'media';
+  if (function_exists('get_field')) {
+    if (get_field('post_icon_name', $post_id))  return 'sprite';
+    if (get_field('content_icon_media', $post_id)) return 'media';
+  }
   return 'none';
 }, 10, 2);
 
@@ -56,12 +77,18 @@ add_filter('acf/load_value/name=content_icon_source', function($value, $post_id)
 add_action('admin_footer', function(){
   static $done; if($done) return; $done = true;
   $p = ld_sprite_path();
-  if (is_file($p)) echo '<div hidden style="display:none">', file_get_contents($p), '</div>';
+  if (is_file($p)) {
+    $svg = @file_get_contents($p);
+    if ($svg) {
+      echo '<div hidden style="display:none" class="ld-admin-sprite">', $svg, '</div>';
+    }
+  }
 });
 
 /** Admin preview assets (CSS/JS) */
 add_action('admin_enqueue_scripts', function(){
   wp_enqueue_style('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.css', [], null);
+  // указываем зависимости, чтобы Select2 был готов
   wp_enqueue_script('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.js', ['jquery','select2'], null, true);
 });
 
@@ -72,12 +99,12 @@ add_filter('upload_mimes', function($m){
 });
 
 /** Inject icon before menu label (front-end) */
-add_filter('walker_nav_menu_start_el', function($out,$item){
+add_filter('walker_nav_menu_start_el', function($out, $item){
   if(!function_exists('get_field') || !function_exists('ld_icon')) return $out;
   $id = (string) get_field('menu_icon', $item->ID);
-  if(!$id || $id==='none') return $out;
-  return preg_replace('~(<a[^>]*>)~', '$1'.ld_icon($id, ['class'=>'menu__icon']), $out, 1);
-},10,2);
+  if(!$id || $id === 'none') return $out;
+  return preg_replace('~(<a[^>]*>)~', '$1' . ld_icon($id, ['class'=>'menu__icon']), $out, 1);
+}, 10, 2);
 
 /** Render a content icon based on source selection */
 if (!function_exists('ld_content_icon')) {

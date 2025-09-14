@@ -1,4 +1,43 @@
 (function(){
+  function $all(s, r=document){ return Array.from(r.querySelectorAll(s)); }
+  function toggleBlock(block, show){
+    if(!block) return;
+    const inputs=$all('input, select, textarea, button, [tabindex]', block);
+    if(show){
+      block.classList.remove('ld-hidden');
+      block.removeAttribute('aria-hidden');
+      inputs.forEach(el=>{
+        el.disabled=false;
+        if(el.hasAttribute('data-tabindex-prev')){
+          el.tabIndex=+el.getAttribute('data-tabindex-prev');
+          el.removeAttribute('data-tabindex-prev');
+        }
+      });
+    }else{
+      $all('.select2-container--focus', block).forEach(n=>n.classList.remove('select2-container--focus'));
+      if(block.contains(document.activeElement)){
+        try{ document.activeElement.blur(); }catch(e){}
+      }
+      block.classList.add('ld-hidden');
+      block.setAttribute('aria-hidden','true');
+      inputs.forEach(el=>{
+        if(!el.hasAttribute('data-tabindex-prev')) el.setAttribute('data-tabindex-prev', el.tabIndex || 0);
+        el.tabIndex=-1;
+        el.disabled=true;
+      });
+    }
+  }
+  window.toggleBlock = toggleBlock;
+  function onChange(e){
+    const root=e.target.closest('.acf-fields');
+    if(!root) return;
+    const themeWrap=root.querySelector('[data-ld="icon-theme-wrap"]');
+    const mediaWrap=root.querySelector('[data-ld="icon-media-wrap"]');
+    const val=e.target && e.target.value;
+    if(val==='none'){ toggleBlock(themeWrap,false); toggleBlock(mediaWrap,false); return; }
+    if(val==='sprite'){ toggleBlock(themeWrap,true); toggleBlock(mediaWrap,false); return; }
+    if(val==='media'){ toggleBlock(themeWrap,false); toggleBlock(mediaWrap,true); return; }
+  }
   function svgUse(id, cls){
     if(!id||id==='__custom__') return '';
     return '<span class="'+cls+'"><svg aria-hidden="true"><use href="#'+id+'"></use></svg></span>';
@@ -92,6 +131,8 @@
   }
 
   function init(){
+    $all('.acf-field[data-name="post_icon_name"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-theme-wrap'); });
+    $all('.acf-field[data-name="content_icon_media"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-media-wrap'); });
     const q=[
       '.acf-field[data-name="menu_icon"] select',
       '.acf-field[data-name="post_icon_name"] select',
@@ -103,6 +144,38 @@
     }else if(typeof jQuery!=='undefined'){
       jQuery(()=>{ jQuery(q).each(function(){ enhance(this); }); });
     }
+    document.addEventListener('change',function(ev){
+      if(ev.target && ev.target.matches('input[type="radio"][name$="[icon_source]"], input[type="radio"][name="icon_source"]')){
+        onChange(ev);
+        setTimeout(()=>{
+          const el=document.activeElement;
+          if(el && el.closest('.ld-hidden')){ try{ el.blur(); }catch(e){} }
+        },0);
+      }
+    });
   }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
+})();
+
+;(function(){
+  function $all(s,r=document){return Array.from(r.querySelectorAll(s));}
+  function boot(){
+    $all('.acf-field').forEach(group=>{
+      const radios=$all('input[type="radio"][name$="[icon_source]"], input[type="radio"][name="icon_source"]',group);
+      if(!radios.length) return;
+      const checked=radios.find(r=>r.checked);
+      if(!checked) return;
+      const themeWrap=group.querySelector('[data-ld="icon-theme-wrap"]');
+      const mediaWrap=group.querySelector('[data-ld="icon-media-wrap"]');
+      const val=checked.value;
+      const toggle=(b,s)=>{ if(typeof window.toggleBlock==='function') window.toggleBlock(b,s); };
+      if(val==='none'){ toggle(themeWrap,false); toggle(mediaWrap,false); }
+      if(val==='sprite'){ toggle(themeWrap,true); toggle(mediaWrap,false); }
+      if(val==='media'){ toggle(themeWrap,false); toggle(mediaWrap,true); }
+    });
+    if(document.activeElement && document.activeElement.closest('.ld-hidden')){
+      try{ document.activeElement.blur(); }catch(e){}
+    }
+  }
+  if(document.readyState!=='loading') boot(); else document.addEventListener('DOMContentLoaded', boot);
 })();
