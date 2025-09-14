@@ -1,26 +1,28 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
+/**
+ * Icon System — admin/front integration with Site Config toggles.
+ */
+
+// ---- Site Config feature flags ---------------------------------------------
+
 $ld_icons_cfg = function_exists('ld_icons_features')
   ? ld_icons_features()
   : ['content'=>true,'terms'=>true,'menu'=>true];
 
-// hide icon meta boxes when feature toggles are off
-// используем ключи групп (group_*), чтобы целиком скрывать метабоксы
+// Скрываем целые метабоксы ACF по тумблерам (ключи групп group_*)
 add_filter('acf/prepare_field/key=group_post_icon', function($field) use ($ld_icons_cfg){
   return $ld_icons_cfg['content'] ? $field : false;
 });
-
 add_filter('acf/prepare_field/key=group_term_icon', function($field) use ($ld_icons_cfg){
   return $ld_icons_cfg['terms'] ? $field : false;
 });
-
 add_filter('acf/prepare_field/key=group_menu_icon', function($field) use ($ld_icons_cfg){
   return $ld_icons_cfg['menu'] ? $field : false;
 });
 
-// inc/extensions/icon-system.php
-// Helpers and admin integration for SVG sprite icons.
+// ---- Sprite helpers ---------------------------------------------------------
 
 /** Path to built sprite */
 if (!function_exists('ld_sprite_path')) {
@@ -29,7 +31,7 @@ if (!function_exists('ld_sprite_path')) {
   }
 }
 
-/** Parse <symbol id="..."> list (full ids, only glyph-* / brand-*) */
+/** Parse <symbol id="..."> list (keep only glyph-* / brand-*) */
 if (!function_exists('ld_sprite_choices_full')) {
   function ld_sprite_choices_full(): array {
     static $choices;
@@ -42,9 +44,9 @@ if (!function_exists('ld_sprite_choices_full')) {
     if (!$svg) return [];
 
     if (preg_match_all('~<symbol[^>]+id="([^"]+)"~i', $svg, $m)) {
-      $ids = array_filter($m[1] ?? [], function ($id) {
-        return str_starts_with($id, 'glyph-') || str_starts_with($id, 'brand-');
-      });
+      $ids = array_filter($m[1] ?? [], fn($id) =>
+        str_starts_with($id, 'glyph-') || str_starts_with($id, 'brand-')
+      );
       $choices = $ids ? array_combine($ids, $ids) : [];
     } else {
       $choices = [];
@@ -53,7 +55,8 @@ if (!function_exists('ld_sprite_choices_full')) {
   }
 }
 
-/** Hook ACF selects with full sprite ids (and mark wrappers for JS) */
+// ---- ACF field wiring (choices + wrappers for JS) ---------------------------
+
 if ($ld_icons_cfg['menu'] || $ld_icons_cfg['content'] || $ld_icons_cfg['terms']) {
   $load = function($f){
     $f['choices'] = ld_sprite_choices_full();
@@ -68,11 +71,12 @@ if ($ld_icons_cfg['menu'] || $ld_icons_cfg['content'] || $ld_icons_cfg['terms'])
   if ($ld_icons_cfg['content']) {
     add_filter('acf/load_field/name=post_icon_name', function($f) use ($load){
       $f = $load($f);
+      // обёртка селекта «Theme icon» для JS-тоггла
       $f['wrapper']['data-ld'] = 'icon-theme-wrap';
       return $f;
     });
-
     add_filter('acf/load_field/name=content_icon_media', function($f){
+      // обёртка блока «Media Library» для JS-тоггла
       if (!isset($f['wrapper']) || !is_array($f['wrapper'])) $f['wrapper'] = [];
       $f['wrapper']['data-ld'] = 'icon-media-wrap';
       return $f;
@@ -83,36 +87,35 @@ if ($ld_icons_cfg['menu'] || $ld_icons_cfg['content'] || $ld_icons_cfg['terms'])
     add_filter('acf/load_field/name=term_icon_name', $load);
   }
 
-  /** Inline sprite and preview assets */
+  // Inline sprite + admin assets
   add_action('admin_footer', function(){
     static $done; if($done) return; $done = true;
     $p = ld_sprite_path();
     if (is_file($p)) {
       $svg = @file_get_contents($p);
-      if ($svg) {
-        echo '<div hidden style="display:none" class="ld-admin-sprite">', $svg, '</div>';
-      }
+      if ($svg) echo '<div hidden style="display:none" class="ld-admin-sprite">', $svg, '</div>';
     }
   });
 
   add_action('admin_enqueue_scripts', function(){
     wp_enqueue_style('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.css', [], null);
-    // указываем зависимости, чтобы Select2 был готов
     wp_enqueue_script('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.js', ['jquery','select2'], null, true);
   });
 }
 
-/** Backfill icon source radio based on existing fields (for older posts) */
+// ---- Backfill radio (BC for old posts) --------------------------------------
+
 add_filter('acf/load_value/name=content_icon_source', function($value, $post_id){
   if ($value) return $value;
   if (function_exists('get_field')) {
-    if (get_field('post_icon_name', $post_id))  return 'sprite';
+    if (get_field('post_icon_name', $post_id))   return 'sprite';
     if (get_field('content_icon_media', $post_id)) return 'media';
   }
   return 'none';
 }, 10, 2);
 
-/** Allow SVG uploads for admins (fallback images) */
+// ---- Upload permissions ------------------------------------------------------
+
 if ($ld_icons_cfg['content'] || $ld_icons_cfg['terms']) {
   add_filter('upload_mimes', function($m){
     if(current_user_can('manage_options')) $m['svg'] = 'image/svg+xml';
@@ -120,7 +123,8 @@ if ($ld_icons_cfg['content'] || $ld_icons_cfg['terms']) {
   });
 }
 
-/** Inject icon before menu label (front-end) */
+// ---- Front-end: menu icons ---------------------------------------------------
+
 if ($ld_icons_cfg['menu']) {
   add_filter('walker_nav_menu_start_el', function($out, $item){
     if(!function_exists('get_field') || !function_exists('ld_icon')) return $out;
@@ -130,7 +134,8 @@ if ($ld_icons_cfg['menu']) {
   }, 10, 2);
 }
 
-/** Render a content icon based on source selection */
+// ---- Content icon (posts/pages) ---------------------------------------------
+
 if (!function_exists('ld_content_icon')) {
   /**
    * @param int|null $post_id Post ID (defaults to current post)
@@ -152,67 +157,52 @@ if (!function_exists('ld_content_icon')) {
 
     $attr  = $attrs;
     $class = trim($attr['class'] ?? '');
-    if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
-      $class = trim('icon ' . $class);
-    }
-    if ($color_class) {
-      $class = trim($class . ' ' . $color_class);
-    }
+    if (!preg_match('/(^|\s)icon(\s|$)/', $class)) $class = trim('icon ' . $class);
+    if ($color_class) $class = trim($class . ' ' . $color_class);
     $attr['class'] = $class;
 
     switch ($src) {
       case 'sprite':
         $name = (string) get_field('post_icon_name', $post_id);
-        if ($name && function_exists('ld_icon')) {
-          return ld_icon($name, $attr);
-        }
+        if ($name && function_exists('ld_icon')) return ld_icon($name, $attr);
         break;
-
       case 'media':
         $id = (int) get_field('content_icon_media', $post_id);
-        if ($id && function_exists('ld_image_or_svg_html')) {
-          return ld_image_or_svg_html($id, 'full', $attr);
-        }
+        if ($id && function_exists('ld_image_or_svg_html')) return ld_image_or_svg_html($id, 'full', $attr);
         break;
-
       default:
         return '';
     }
-
     return '';
   }
 }
 
-/** Render a term icon, preferring sprite over uploaded image */
+// ---- Term icon (categories/tags) --------------------------------------------
+
 if (!function_exists('ld_term_icon_html')) {
   /**
-   * @param int|WP_Term|null $term Term ID or object (defaults to queried term on term archives)
-   * @param string           $class Extra class names for SVG/IMG (default size is 24px via CSS)
-   * @param array            $attrs Extra attributes for the rendered tag
+   * @param int|WP_Term|null $term
+   * @param string           $class
+   * @param array            $attrs
    */
   function ld_term_icon_html($term = null, string $class = '', array $attrs = []): string {
     if (!function_exists('get_field')) return '';
 
-    if (!$term && (is_tax() || is_category() || is_tag())) {
-      $term = get_queried_object();
-    }
-
+    if (!$term && (is_tax() || is_category() || is_tag())) $term = get_queried_object();
     $term_id = ($term instanceof WP_Term) ? (int) $term->term_id : (int) $term;
     if (!$term_id) return '';
 
-    // 1) sprite (library)
+    // 1) sprite
     $icon = (string) get_field('term_icon_name', 'term_'.$term_id);
     if ($icon && $icon !== 'none' && function_exists('ld_icon')) {
-      $attr = $attrs;
-      $attr['class'] = trim('icon '.($attr['class'] ?? '').' '.$class);
+      $attr = $attrs; $attr['class'] = trim('icon '.($attr['class'] ?? '').' '.$class);
       return ld_icon($icon, $attr);
     }
 
-    // 2) uploaded image fallback
+    // 2) media fallback
     $media = (int) get_field('term_icon_media', 'term_'.$term_id);
     if ($media && function_exists('ld_image_or_svg_html')) {
-      $attr = $attrs;
-      $attr['class'] = trim('icon '.($attr['class'] ?? '').' '.$class);
+      $attr = $attrs; $attr['class'] = trim('icon '.($attr['class'] ?? '').' '.$class);
       return ld_image_or_svg_html($media, 'full', $attr);
     }
 
@@ -220,12 +210,13 @@ if (!function_exists('ld_term_icon_html')) {
   }
 }
 
-/** Admin list columns: Category & Tag (24px default) */
+// ---- Admin list columns (24px) ----------------------------------------------
+
 if ($ld_icons_cfg['terms']) {
   add_filter('manage_edit-category_columns', fn($c) => ['icon' => __('Icon','ld')] + $c);
   add_filter('manage_category_custom_column', function($out, $col, $term_id){
     if ($col !== 'icon') return $out;
-    $html = ld_term_icon_html($term_id, 'icon--24'); // 24px utility
+    $html = ld_term_icon_html($term_id, 'icon--24');
     return $html ?: '—';
   }, 10, 3);
 
@@ -237,7 +228,6 @@ if ($ld_icons_cfg['terms']) {
   }, 10, 3);
 }
 
-/** Admin list column: Posts and custom post types */
 if ($ld_icons_cfg['content']) {
   foreach (['post','fineart','modeling'] as $pt) {
     add_filter("manage_{$pt}_posts_columns", function($cols) {
@@ -246,13 +236,9 @@ if ($ld_icons_cfg['content']) {
     });
     add_action("manage_{$pt}_posts_custom_column", function($col, $post_id) {
       if ($col !== 'icon') return;
-      if (function_exists('ld_content_icon')) {
-        echo ld_content_icon($post_id, ['class' => 'icon icon--24']);
-      }
+      if (function_exists('ld_content_icon')) echo ld_content_icon($post_id, ['class' => 'icon icon--24']);
     }, 10, 2);
   }
-
-  /** Admin list column: Pages (24px default) */
   add_filter('manage_page_posts_columns', function($cols) {
     $new = ['icon' => __('Icon','ld')];
     return array_slice($cols, 0, 1, true) + $new + array_slice($cols, 1, null, true);
@@ -263,7 +249,7 @@ if ($ld_icons_cfg['content']) {
   }, 10, 2);
 }
 
-/** Consistent sizing/padding for icon column in admin lists (24px + 4px margin) */
+// 24px + 4px margin layout for admin tables (if any icon feature is on)
 if ($ld_icons_cfg['content'] || $ld_icons_cfg['terms']) {
   add_action('admin_head', function(){
     echo '<style>

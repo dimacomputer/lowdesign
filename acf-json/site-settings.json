@@ -99,6 +99,16 @@
       "ui": 1
     },
     {
+      "key": "field_enable_page_color",
+      "label": "Enable Page Color UI",
+      "name": "enable_page_color_ui",
+      "type": "true_false",
+      "ui": 1,
+      "default_value": 1,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "parent_layout": "layout_features"
+    },
+    {
       "key": "field_tab_footer",
       "label": "Footer",
       "name": "",
@@ -129,5 +139,5 @@
   "position": "normal",
   "style": "default",
   "title": "Site Settings",
-  "modified": 1757753322
+  "modified": 1757850662
 }
