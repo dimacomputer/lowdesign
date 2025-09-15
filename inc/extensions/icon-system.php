@@ -306,17 +306,19 @@ add_action("admin_footer", function () {
 });
 
 add_action("admin_enqueue_scripts", function () {
-    // CSS/JS для превью и select2
+    // CSS
     wp_enqueue_style(
         "ld-icon-preview",
         get_stylesheet_directory_uri() . "/assets/admin/icon-preview.css",
         [],
         null,
     );
+
+    // JS — завязываемся на ACF, а не на глобальный 'select2'
     wp_enqueue_script(
         "ld-icon-preview",
         get_stylesheet_directory_uri() . "/assets/admin/icon-preview.js",
-        ["jquery", "select2"],
+        ["jquery", "acf-input"], // <<< ключевой момент
         null,
         true,
     );
