@@ -1,6 +1,11 @@
 // assets/admin/icon-preview.js
 (function () {
-  // ---- Select2 с иконками --------------------------------------------------
+  // === настройки ============================================================
+  // false = показываем стандартный превью ACF (img), инлайн SVG отключён
+  // true  = инлайн SVG (recolor currentColor), стандартный img скрыт
+  const USE_INLINE_MEDIA_PREVIEW = false;
+
+  // === select2 с иконками (спрайт) ==========================================
   function ensureSelect2WithIcons(sel) {
     if (!sel) return;
     const $ = window.jQuery;
@@ -9,16 +14,16 @@
     const renderIcon = (id) =>
       id ? `<svg aria-hidden="true"><use href="#${id}"></use></svg>` : "";
 
-    const templateResult = (data) => {
-      if (!data.id) return data.text;
-      return `<span class="ld-icon-opt">${renderIcon(data.id)}${data.text}</span>`;
-    };
-    const templateSelection = (data) => {
-      if (!data.id) return data.text || "";
-      return `<span class="ld-icon-sel">${renderIcon(data.id)}${data.text}</span>`;
-    };
+    const templateResult = (d) =>
+      d.id
+        ? `<span class="ld-icon-opt">${renderIcon(d.id)}${d.text}</span>`
+        : d.text;
 
-    // (пере)инициализация
+    const templateSelection = (d) =>
+      d.id
+        ? `<span class="ld-icon-sel">${renderIcon(d.id)}${d.text}</span>`
+        : d.text || "";
+
     if ($el.data("select2")) $el.select2("destroy");
     $el.select2({
       width: "100%",
@@ -29,8 +34,7 @@
   }
 
   function initSelects(root) {
-    const scope = root || document;
-    scope
+    (root || document)
       .querySelectorAll(
         '.acf-field[data-name="menu_icon"] select, ' +
           '.acf-field[data-name="post_icon_name"] select, ' +
@@ -39,7 +43,7 @@
       .forEach(ensureSelect2WithIcons);
   }
 
-  // ---- Переключение источника (radio) --------------------------------------
+  // === radio переключатель источника =======================================
   function wireSourceRadios(root) {
     const scope = root || document;
     const wrapTheme = scope.querySelector('[data-ld="icon-theme-wrap"]');
@@ -53,8 +57,9 @@
       const val = [...radios].find((r) => r.checked)?.value || "none";
       if (wrapTheme) wrapTheme.classList.toggle("ld-hidden", val !== "sprite");
       if (wrapMedia) wrapMedia.classList.toggle("ld-hidden", val !== "media");
+
+      // при уходе с media гарантируем, что виден нативный img и нет нашего инлайна
       if (val !== "media" && wrapMedia) {
-        // очистка инлайна при уходе с media
         const iw = wrapMedia.querySelector(".acf-image-uploader .image-wrap");
         iw?.querySelector(".ld-media-inline")?.remove();
         iw?.querySelector("img")?.classList.remove("ld-hide-img");
@@ -65,18 +70,18 @@
     apply();
   }
 
-  // ---- Инлайн превью для загруженного SVG ----------------------------------
+  // === превью Media Library =================================================
   function enhanceMediaSvgPreview(root) {
     const scope = root || document;
-    const mediaWrap = scope.querySelector(
+    const uploader = scope.querySelector(
       '[data-ld="icon-media-wrap"] .acf-image-uploader',
     );
-    if (!mediaWrap) return;
+    if (!uploader) return;
 
-    const imageWrap = mediaWrap.querySelector(".image-wrap");
+    const imageWrap = uploader.querySelector(".image-wrap");
     if (!imageWrap) return;
 
-    const innerActions =
+    const actions =
       imageWrap.querySelector(".acf-actions") || imageWrap.lastElementChild;
 
     const holder =
@@ -86,7 +91,6 @@
 
     const renderInlineFromUrl = (url) => {
       if (!/\.svg(\?|#|$)/i.test(url)) {
-        // не SVG — убираем инлайн, показываем стандартную картинку
         holder.remove();
         imageWrap.querySelector("img")?.classList.remove("ld-hide-img");
         return;
@@ -94,41 +98,43 @@
       fetch(url)
         .then((r) => r.text())
         .then((txt) => {
-          // убрать <script>, любые fill и проставить currentColor
           let svg = txt
             .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/\sfill="[^"]*"/gi, "")
             .replace(/^<svg\b([^>]*)>/i, '<svg$1 fill="currentColor">');
           holder.innerHTML = svg;
-
           if (!holder.parentNode) {
-            // вставляем ПЕРЕД actions, чтобы был один аккуратный превью
-            if (innerActions) imageWrap.insertBefore(holder, innerActions);
+            if (actions) imageWrap.insertBefore(holder, actions);
             else imageWrap.appendChild(holder);
           }
           const img = imageWrap.querySelector("img");
-          if (img) img.classList.add("ld-hide-img"); // прячем только <img>, не кнопки
+          if (img) img.classList.add("ld-hide-img");
         })
         .catch(() => {});
     };
 
-    const sync = () => {
+    const showNativeOnly = () => {
+      holder.remove();
       const img = imageWrap.querySelector("img");
-      if (img && img.src) renderInlineFromUrl(img.src);
-      else {
-        holder.remove();
-        imageWrap.querySelector("img")?.classList.remove("ld-hide-img");
-      }
+      if (img) img.classList.remove("ld-hide-img");
     };
 
-    // первичный запуск
-    sync();
+    const sync = () => {
+      const img = imageWrap.querySelector("img");
+      if (!USE_INLINE_MEDIA_PREVIEW) {
+        showNativeOnly();
+        return;
+      }
+      if (img && img.src) renderInlineFromUrl(img.src);
+      else showNativeOnly();
+    };
 
-    // реакция на клики в аплоадере (Add/Replace/Remove)
-    mediaWrap.addEventListener("click", () => setTimeout(sync, 200));
+    // первичная отрисовка + реакция на клики Add/Replace/Remove
+    sync();
+    uploader.addEventListener("click", () => setTimeout(sync, 200));
   }
 
-  // ---- boot ---------------------------------------------------------------
+  // === boot ================================================================
   function boot(root) {
     initSelects(root);
     wireSourceRadios(root);
@@ -138,13 +144,9 @@
   if (document.readyState !== "loading") boot();
   else document.addEventListener("DOMContentLoaded", boot);
 
-  // ACF перерисовывает поля динамически — цепляемся к его событиям
+  // пересоздание при динамических рендерах ACF
   if (window.acf && typeof window.acf.addAction === "function") {
-    window.acf.addAction("ready", function ($el) {
-      boot($el ? $el[0] : document);
-    });
-    window.acf.addAction("append", function ($el) {
-      boot($el ? $el[0] : document);
-    });
+    window.acf.addAction("ready", ($el) => boot($el ? $el[0] : document));
+    window.acf.addAction("append", ($el) => boot($el ? $el[0] : document));
   }
 })();
