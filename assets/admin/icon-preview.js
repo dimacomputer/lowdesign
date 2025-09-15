@@ -1,152 +1,123 @@
-// assets/admin/icon-preview.js
 (function () {
-  // === настройки ============================================================
-  // false = показываем стандартный превью ACF (img), инлайн SVG отключён
-  // true  = инлайн SVG (recolor currentColor), стандартный img скрыт
-  const USE_INLINE_MEDIA_PREVIEW = false;
-
-  // === select2 с иконками (спрайт) ==========================================
-  function ensureSelect2WithIcons(sel) {
-    if (!sel) return;
-    const $ = window.jQuery;
-    const $el = $(sel);
-
-    const renderIcon = (id) =>
-      id ? `<svg aria-hidden="true"><use href="#${id}"></use></svg>` : "";
-
-    const templateResult = (d) =>
-      d.id
-        ? `<span class="ld-icon-opt">${renderIcon(d.id)}${d.text}</span>`
-        : d.text;
-
-    const templateSelection = (d) =>
-      d.id
-        ? `<span class="ld-icon-sel">${renderIcon(d.id)}${d.text}</span>`
-        : d.text || "";
-
-    if ($el.data("select2")) $el.select2("destroy");
-    $el.select2({
-      width: "100%",
-      templateResult,
-      templateSelection,
-      escapeMarkup: (m) => m,
-    });
+  // --- utils ---------------------------------------------------------------
+  function $$(sel, root) {
+    return Array.from((root || document).querySelectorAll(sel));
+  }
+  function on(el, ev, cb) {
+    el && el.addEventListener(ev, cb, { passive: true });
   }
 
-  function initSelects(root) {
-    (root || document)
-      .querySelectorAll(
-        '.acf-field[data-name="menu_icon"] select, ' +
-          '.acf-field[data-name="post_icon_name"] select, ' +
-          '.acf-field[data-name="term_icon_name"] select',
-      )
-      .forEach(ensureSelect2WithIcons);
+  // select2: простой дропдаун с поиском, БЕЗ картинок
+  function initPlainSelect2(select) {
+    if (!select || !window.jQuery || !jQuery.fn.select2) return;
+    const $el = jQuery(select);
+    if ($el.data("select2")) {
+      $el.select2("destroy");
+    }
+    $el.select2({ width: "100%" });
   }
 
-  // === radio переключатель источника =======================================
-  function wireSourceRadios(root) {
-    const scope = root || document;
-    const wrapTheme = scope.querySelector('[data-ld="icon-theme-wrap"]');
-    const wrapMedia = scope.querySelector('[data-ld="icon-media-wrap"]');
-    const radios = scope.querySelectorAll(
-      '.acf-field[data-name="content_icon_source"] input[type="radio"]',
+  // переключатель источника
+  function wireSourceRadios(scope) {
+    const wrapTheme = (scope || document).querySelector(
+      '[data-ld="icon-theme-wrap"]',
     );
-    if (!radios.length) return;
+    const wrapMedia = (scope || document).querySelector(
+      '[data-ld="icon-media-wrap"]',
+    );
+    const radios = $$(
+      '.acf-field[data-name="content_icon_source"] input[type="radio"]',
+      scope,
+    );
 
     const apply = () => {
-      const val = [...radios].find((r) => r.checked)?.value || "none";
+      const val = radios.find((r) => r.checked)?.value || "none";
       if (wrapTheme) wrapTheme.classList.toggle("ld-hidden", val !== "sprite");
       if (wrapMedia) wrapMedia.classList.toggle("ld-hidden", val !== "media");
-
-      // при уходе с media гарантируем, что виден нативный img и нет нашего инлайна
-      if (val !== "media" && wrapMedia) {
-        const iw = wrapMedia.querySelector(".acf-image-uploader .image-wrap");
-        iw?.querySelector(".ld-media-inline")?.remove();
-        iw?.querySelector("img")?.classList.remove("ld-hide-img");
-      }
     };
 
-    radios.forEach((r) => r.addEventListener("change", apply));
+    radios.forEach((r) => on(r, "change", apply));
     apply();
   }
 
-  // === превью Media Library =================================================
-  function enhanceMediaSvgPreview(root) {
-    const scope = root || document;
-    const uploader = scope.querySelector(
+  // инлайн превью SVG для поля аплоада
+  function enhanceMediaSvgPreview(scope) {
+    const mediaWrap = (scope || document).querySelector(
       '[data-ld="icon-media-wrap"] .acf-image-uploader',
     );
-    if (!uploader) return;
+    if (!mediaWrap) return;
 
-    const imageWrap = uploader.querySelector(".image-wrap");
-    if (!imageWrap) return;
-
-    const actions =
-      imageWrap.querySelector(".acf-actions") || imageWrap.lastElementChild;
-
-    const holder =
-      imageWrap.querySelector(".ld-media-inline") ||
-      document.createElement("div");
-    holder.className = "ld-media-inline";
-
-    const renderInlineFromUrl = (url) => {
-      if (!/\.svg(\?|#|$)/i.test(url)) {
-        holder.remove();
-        imageWrap.querySelector("img")?.classList.remove("ld-hide-img");
-        return;
-      }
+    function renderInline(url) {
       fetch(url)
         .then((r) => r.text())
         .then((txt) => {
+          // прибираемся: выкинуть скрипты, убрать fill, принудить currentColor
           let svg = txt
             .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/\sfill="[^"]*"/gi, "")
-            .replace(/^<svg\b([^>]*)>/i, '<svg$1 fill="currentColor">');
-          holder.innerHTML = svg;
-          if (!holder.parentNode) {
-            if (actions) imageWrap.insertBefore(holder, actions);
-            else imageWrap.appendChild(holder);
+            .replace(/<svg\b/i, '<svg fill="currentColor"');
+
+          // контейнер для инлайн-превью
+          let holder = mediaWrap.querySelector(".ld-media-inline");
+          if (!holder) {
+            holder = document.createElement("div");
+            holder.className = "ld-media-inline";
+            mediaWrap.appendChild(holder);
           }
-          const img = imageWrap.querySelector("img");
-          if (img) img.classList.add("ld-hide-img");
+          holder.innerHTML = svg;
+
+          // спрятать штатную миниатюру IMG, оставить одну превью
+          const imgWrap = mediaWrap.querySelector(".image-wrap");
+          if (imgWrap) imgWrap.classList.add("ld-hide");
         })
         .catch(() => {});
-    };
+    }
 
-    const showNativeOnly = () => {
-      holder.remove();
-      const img = imageWrap.querySelector("img");
-      if (img) img.classList.remove("ld-hide-img");
-    };
+    // если уже выбрано svg — показать
+    const currentImg = mediaWrap.querySelector(".image-wrap img");
+    if (currentImg && /\.svg(\?|#|$)/i.test(currentImg.src)) {
+      renderInline(currentImg.src);
+    }
 
-    const sync = () => {
-      const img = imageWrap.querySelector("img");
-      if (!USE_INLINE_MEDIA_PREVIEW) {
-        showNativeOnly();
-        return;
-      }
-      if (img && img.src) renderInlineFromUrl(img.src);
-      else showNativeOnly();
-    };
+    // слушаем клики по полю (Select/Remove)
+    on(mediaWrap, "click", () => {
+      setTimeout(() => {
+        const img = mediaWrap.querySelector(".image-wrap img");
+        const holder = mediaWrap.querySelector(".ld-media-inline");
 
-    // первичная отрисовка + реакция на клики Add/Replace/Remove
-    sync();
-    uploader.addEventListener("click", () => setTimeout(sync, 200));
+        if (img && /\.svg(\?|#|$)/i.test(img.src)) {
+          renderInline(img.src);
+        } else {
+          // не SVG или очищено — вернуть штатный IMG, прибрать inline
+          mediaWrap.querySelector(".image-wrap")?.classList.remove("ld-hide");
+          holder && holder.remove();
+        }
+      }, 60);
+    });
   }
 
-  // === boot ================================================================
-  function boot(root) {
-    initSelects(root);
-    wireSourceRadios(root);
-    enhanceMediaSvgPreview(root);
+  function init(scope) {
+    // простой select2 на нужных селектах
+    $$('.acf-field[data-name="menu_icon"] select', scope).forEach(
+      initPlainSelect2,
+    );
+    $$('.acf-field[data-name="post_icon_name"] select', scope).forEach(
+      initPlainSelect2,
+    );
+    $$('.acf-field[data-name="term_icon_name"] select', scope).forEach(
+      initPlainSelect2,
+    );
+
+    wireSourceRadios(scope);
+    enhanceMediaSvgPreview(scope);
   }
 
-  if (document.readyState !== "loading") boot();
-  else document.addEventListener("DOMContentLoaded", boot);
-
-  // пересоздание при динамических рендерах ACF
-  if (window.acf && typeof window.acf.addAction === "function") {
-    window.acf.addAction("ready", ($el) => boot($el ? $el[0] : document));
-    window.acf.addAction("append", ($el) => boot($el ? $el[0] : document));
+  // ACF хуки + DOM ready
+  if (window.acf && acf.addAction) {
+    acf.addAction("ready", init);
+    acf.addAction("append", init);
+  } else {
+    if (document.readyState !== "loading") init();
+    else document.addEventListener("DOMContentLoaded", () => init());
   }
 })();
