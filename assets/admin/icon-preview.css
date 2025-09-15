@@ -1,52 +1,54 @@
+/* скрытый блок */
 .ld-hidden {
-  display: none !important;
+    display: none !important;
 }
 
+/* единый размер для всех админ-превью */
 .icon {
-  width: 24px;
-  height: 24px;
-  display: inline-block;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
 }
-
 .icon--24 {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
-.acf-field .icon-preview {
-  display: inline-flex;
-  width: 24px;
-  height: 24px;
-}
-
-.acf-field .icon-preview svg {
-  width: 100%;
-  height: 100%;
-}
-
+/* select2 иконки (dropdown + выбранное значение) */
 .select2-container--default .ld-icon-sel,
 .select2-container--default .ld-icon-opt {
-  display: inline-flex;
-  width: 24px;
-  height: 24px;
-  margin-right: 6px;
-  vertical-align: middle;
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    margin-right: 6px;
+    vertical-align: middle;
 }
-
 .select2-container--default .ld-icon-sel svg,
 .select2-container--default .ld-icon-opt svg {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
-/* убрать дерганье фокуса на переключателях */
+/* инлайновая SVG-превью для медиа (см. JS) */
+[data-ld="icon-media-wrap"] .ld-media-inline svg {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}
+
+/* стандартный focus-ring у радиокнопок убираем, чтобы не прыгала обводка */
 .acf-fields [data-ld="icon-theme-wrap"],
 .acf-fields [data-ld="icon-media-wrap"] {
-  outline: 0 !important;
+    outline: 0 !important;
+}
+.acf-field[data-name="content_icon_source"] input[type="radio"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
-/* радиокнопки источника иконки без жирной подсветки */
-.acf-field[data-name="content_icon_source"] input[type="radio"]:focus {
-  outline: none !important;
-  box-shadow: none !important;
+/* на всякий случай — если остался IMG (PNG/JPG), уменьшаем до 24px */
+[data-ld="icon-media-wrap"] .image-wrap img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
 }
