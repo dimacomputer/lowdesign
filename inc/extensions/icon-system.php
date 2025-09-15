@@ -229,8 +229,8 @@ if (!function_exists("ld_content_icon")) {
             if ($id) {
                 $inline = ld_inline_svg_from_attachment($id, $attrs);
                 if ($inline) {
-                    return $inline;
-                } // SVG → inline, currentColor
+                    return $inline; // SVG → inline, currentColor + 24px
+                }
                 if (function_exists("ld_image_or_svg_html")) {
                     // fallback (PNG/JPG) — просто 24px img
                     $attrs = ld_icon_merge_class_24($attrs);
@@ -306,7 +306,7 @@ add_action("admin_footer", function () {
 });
 
 add_action("admin_enqueue_scripts", function () {
-    // маленький css для размеров/фокусов + select2-иконки
+    // CSS/JS для превью и select2
     wp_enqueue_style(
         "ld-icon-preview",
         get_stylesheet_directory_uri() . "/assets/admin/icon-preview.css",

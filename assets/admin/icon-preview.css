@@ -1,57 +1,46 @@
-/* скрытия блоков */
+/* FILE: assets/admin/icon-preview.css */
+
+/* скрывалка для блоков по радио */
 .ld-hidden {
     display: none !important;
 }
 
-/* единый размер + currentColor-пайплайн */
-.icon {
+/* унифицированные размеры */
+.icon,
+.icon--24 {
     width: 24px;
     height: 24px;
     display: inline-block;
 }
-.icon--24 {
-    width: 24px;
-    height: 24px;
-}
 
-/* select2 превью слева и в выбранном значении */
-.select2-container--default .ld-icon-sel,
-.select2-container--default .ld-icon-opt {
+/* внешний превью-блок рядом с select */
+.acf-field .icon-preview {
     display: inline-flex;
     width: 24px;
     height: 24px;
     margin-right: 6px;
-    vertical-align: middle;
 }
-.select2-container--default .ld-icon-sel svg,
-.select2-container--default .ld-icon-opt svg {
+.acf-field .icon-preview svg {
     width: 100%;
     height: 100%;
 }
 
-/* инлайн превью загруженного SVG */
-.ld-media-inline {
-    display: inline-flex;
-    width: 24px;
-    height: 24px;
-}
+/* инлайн-превью SVG из медиа */
 .ld-media-inline svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-}
-
-/* убираем «жирный» фокус у радио при переключении */
-.acf-field[data-name="content_icon_source"] input[type="radio"]:focus {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* список записей: гарантировать 24px */
-.wp-list-table td.column-icon .icon,
-.wp-list-table td.column-icon svg,
-.wp-list-table td.column-icon img {
     width: 24px;
     height: 24px;
     display: inline-block;
+    fill: currentColor;
+}
+
+/* убираем внезапные толстые outline при скрытии/показе */
+.acf-fields [data-ld="icon-theme-wrap"],
+.acf-fields [data-ld="icon-media-wrap"] {
+    outline: 0 !important;
+}
+
+/* не даём radio рисовать тень при фокусе (визуально дёргается) */
+.acf-field[data-name="content_icon_source"] input[type="radio"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
