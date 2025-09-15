@@ -70,7 +70,7 @@ add_filter('acf/load_field/name=term_icon_media', function($f){
   return $f;
 });
 
-/** Backfill icon source radio based on existing fields (for older posts) */
+/** Backfill icon source radio based on existing fields (for older posts/terms) */
 add_filter('acf/load_value/name=content_icon_source', function($value, $post_id){
   if ($value) return $value;
   if (!function_exists('get_field')) return 'none';
@@ -138,6 +138,7 @@ if (!function_exists('ld_content_icon')) {
   }
 }
 
+/** Admin list columns: Posts & custom post types */
 foreach (['post','fineart','modeling'] as $pt) {
   add_filter("manage_{$pt}_posts_columns", function($cols) {
     $new = ['icon' => __('Icon','ld')];
@@ -175,7 +176,9 @@ add_action('admin_footer', function(){
 
 /** Admin preview assets (CSS/JS) */
 add_action('admin_enqueue_scripts', function(){
+  // общий css для иконок в админке собран в пайплайне
   wp_enqueue_style('ld-admin-icons', get_stylesheet_directory_uri().'/assets/css/admin-icons.css', [], null);
+  // вспомогательные стили превью/селектов
   wp_enqueue_style('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.css', [], null);
   // ensure Select2 is loaded before initializing previews
   wp_enqueue_script('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.js', ['jquery','select2'], null, true);
