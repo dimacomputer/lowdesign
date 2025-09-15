@@ -1,25 +1,20 @@
-/* hidden state for icon sub-blocks */
+/* скрытия блоков */
 .ld-hidden {
     display: none !important;
 }
 
-/* === ЕДИНЫЙ РАЗМЕР 24px ДЛЯ ВСЕХ ПРЕВЬЮ === */
+/* единый размер + currentColor-пайплайн */
 .icon {
     width: 24px;
     height: 24px;
     display: inline-block;
-}
-.icon svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
 }
 .icon--24 {
     width: 24px;
     height: 24px;
 }
 
-/* Select2: иконка слева в списке и в выбранном значении */
+/* select2 превью слева и в выбранном значении */
 .select2-container--default .ld-icon-sel,
 .select2-container--default .ld-icon-opt {
     display: inline-flex;
@@ -32,15 +27,13 @@
 .select2-container--default .ld-icon-opt svg {
     width: 100%;
     height: 100%;
-    fill: currentColor;
 }
 
-/* Инлайн превью для Media Library (SVG) */
+/* инлайн превью загруженного SVG */
 .ld-media-inline {
     display: inline-flex;
     width: 24px;
     height: 24px;
-    align-items: center;
 }
 .ld-media-inline svg {
     width: 100%;
@@ -48,31 +41,16 @@
     fill: currentColor;
 }
 
-/* скрыть стандартную картинку, если показан наш inline */
-.acf-image-uploader .image-wrap.ld-hidden {
-    display: none !important;
-}
-
-/* аккуратный фокус: убираем “толстый” ринг при скрытии блоков */
-.acf-fields [data-ld="icon-theme-wrap"],
-.acf-fields [data-ld="icon-media-wrap"] {
-    outline: 0 !important;
-}
+/* убираем «жирный» фокус у радио при переключении */
 .acf-field[data-name="content_icon_source"] input[type="radio"]:focus {
     outline: none !important;
     box-shadow: none !important;
 }
 
-/* Админ-списки: ширина/центрирование колонки Icon */
-.wp-list-table .column-icon {
-    width: 28px;
-}
-.wp-list-table td.column-icon {
-    padding-left: 4px;
-    padding-right: 0;
-    text-align: center;
-}
-.wp-list-table td.column-icon .icon {
+/* список записей: гарантировать 24px */
+.wp-list-table td.column-icon .icon,
+.wp-list-table td.column-icon svg,
+.wp-list-table td.column-icon img {
     width: 24px;
     height: 24px;
     display: inline-block;
