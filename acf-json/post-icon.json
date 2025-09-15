@@ -10,7 +10,7 @@
   "hide_on_screen": "",
   "show_in_rest": 0,
   "menu_order": 0,
-  "modified": 1757760001,
+  "modified": 1757760002,
   "fields": [
     {
       "key": "field_content_icon_source",
@@ -62,7 +62,7 @@
       "label": "Custom Icon (upload)",
       "name": "content_icon_media",
       "type": "image",
-      "instructions": "SVG or PNG. Used only if no library icon selected.",
+      "instructions": "SVG only. Used only if no library icon selected.",
       "required": 0,
       "conditional_logic": [
         [
@@ -78,7 +78,7 @@
       "max_width": "",
       "max_height": "",
       "max_size": "",
-      "mime_types": "",
+      "mime_types": "svg",
       "allow_in_bindings": 0,
       "preview_size": "medium",
       "aria-label": ""

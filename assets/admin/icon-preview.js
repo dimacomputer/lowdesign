@@ -40,7 +40,7 @@
   }
   function svgUse(id, cls){
     if(!id) return '';
-    return '<span class="'+cls+'"><svg aria-hidden="true"><use href="#'+id+'"></use></svg></span>';
+    return '<span class="'+cls+'"><svg class="icon icon--24" aria-hidden="true"><use href="#'+id+'"></use></svg></span>';
   }
   function tplResult(s){
     if(!s.id) return s.text;
@@ -91,7 +91,7 @@
       const id=$sel.val();
       if((!$rad||src==='sprite') && id){
         if(!$prev) $prev=jQuery('<span class="icon-preview"></span>').insertAfter($sel);
-        $prev.html('<svg aria-hidden="true"><use href="#'+id+'"></use></svg>');
+        $prev.html('<svg class="icon icon--24" aria-hidden="true"><use href="#'+id+'"></use></svg>');
       }else if($prev){
         $prev.remove();
         $prev=null;
@@ -114,11 +114,40 @@
       '.acf-field[data-name="post_icon_name"] select',
       '.acf-field[data-name="term_icon_name"] select'
     ].join(',');
+    const mq = '.acf-field[data-name="content_icon_media"], .acf-field[data-name="term_icon_media"]';
+    function initMedia(field){
+      const $field=jQuery(field);
+      const $upl=$field.find('.acf-image-uploader');
+      let $prev=null;
+      function render(){
+        const $img=$upl.find('.image-wrap img, .image-wrap svg').first();
+        if($img.length){
+          if(!$prev) $prev=jQuery('<span class="icon-preview"></span>').insertAfter($upl);
+          const $clone=$img.clone().addClass('icon icon--24');
+          $clone.removeAttr('width').removeAttr('height');
+          $prev.html($clone);
+        }else if($prev){
+          $prev.remove();
+          $prev=null;
+        }
+      }
+      render();
+      $field.on('change', 'input[type="hidden"]', render);
+    }
     if(window.acf && typeof acf.add_action==='function'){
-      acf.add_action('ready',()=>{ jQuery(q).each(function(){ enhance(this); }); });
-      acf.add_action('append',($el)=>{ jQuery($el).find(q).each(function(){ enhance(this); }); });
+      acf.add_action('ready',()=>{
+        jQuery(q).each(function(){ enhance(this); });
+        jQuery(mq).each(function(){ initMedia(this); });
+      });
+      acf.add_action('append',($el)=>{
+        jQuery($el).find(q).each(function(){ enhance(this); });
+        jQuery($el).find(mq).each(function(){ initMedia(this); });
+      });
     }else if(typeof jQuery!=='undefined'){
-      jQuery(()=>{ jQuery(q).each(function(){ enhance(this); }); });
+      jQuery(()=>{
+        jQuery(q).each(function(){ enhance(this); });
+        jQuery(mq).each(function(){ initMedia(this); });
+      });
     }
     document.addEventListener('change',function(ev){
       const radio = ev.target;

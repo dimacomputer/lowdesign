@@ -70,7 +70,7 @@ add_filter('acf/load_field/name=term_icon_media', function($f){
   return $f;
 });
 
-/** Backfill icon source radio based on existing fields (for older posts) */
+/** Backfill icon source radio based on existing fields (for older posts/terms) */
 add_filter('acf/load_value/name=content_icon_source', function($value, $post_id){
   if ($value) return $value;
   if (!function_exists('get_field')) return 'none';
@@ -96,6 +96,23 @@ if (!function_exists('ld_content_icon')) {
     $post_id = $post_id ?: get_the_ID();
     if (!$post_id) return '';
 
+    // Base classes + optional color context
+    $attr  = $attrs;
+    $class = trim($attr['class'] ?? '');
+    if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
+      $class = trim('icon ' . $class);
+    }
+    if (!preg_match('/(^|\s)icon--24(\s|$)/', $class)) {
+      $class = trim('icon--24 ' . $class);
+    }
+    if (function_exists('ld_get_page_color_class')) {
+      $color_class = ld_get_page_color_class('icon', $post_id);
+      if ($color_class) {
+        $class = trim($class . ' ' . $color_class);
+      }
+    }
+    $attr['class'] = $class;
+
     $src = (string) get_field('content_icon_source', $post_id);
     if (!$src) { // backward compat
       $src = get_field('post_icon_name', $post_id) ? 'sprite' :
@@ -106,27 +123,14 @@ if (!function_exists('ld_content_icon')) {
       case 'sprite':
         $name = (string) get_field('post_icon_name', $post_id);
         return $name && function_exists('ld_icon')
-          ? ld_icon($name, $attrs, $post_id)
+          ? ld_icon($name, $attr, $post_id)
           : '';
 
       case 'media':
         $id = (int) get_field('content_icon_media', $post_id);
-        if ($id && function_exists('ld_image_or_svg_html')) {
-          $attr  = $attrs;
-          $class = trim($attr['class'] ?? '');
-          if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
-            $class = trim('icon ' . $class);
-          }
-          if (function_exists('ld_get_page_color_class')) {
-            $color_class = ld_get_page_color_class('icon', $post_id);
-            if ($color_class) {
-              $class = trim($class . ' ' . $color_class);
-            }
-          }
-          $attr['class'] = $class;
-          return ld_image_or_svg_html($id, 'full', $attr);
-        }
-        return '';
+        return ($id && function_exists('ld_image_or_svg_html'))
+          ? ld_image_or_svg_html($id, 'full', $attr)
+          : '';
 
       default:
         return '';
@@ -134,6 +138,7 @@ if (!function_exists('ld_content_icon')) {
   }
 }
 
+/** Admin list columns: Posts & custom post types */
 foreach (['post','fineart','modeling'] as $pt) {
   add_filter("manage_{$pt}_posts_columns", function($cols) {
     $new = ['icon' => __('Icon','ld')];
@@ -171,7 +176,9 @@ add_action('admin_footer', function(){
 
 /** Admin preview assets (CSS/JS) */
 add_action('admin_enqueue_scripts', function(){
+  // общий css для иконок в админке собран в пайплайне
   wp_enqueue_style('ld-admin-icons', get_stylesheet_directory_uri().'/assets/css/admin-icons.css', [], null);
+  // вспомогательные стили превью/селектов
   wp_enqueue_style('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.css', [], null);
   // ensure Select2 is loaded before initializing previews
   wp_enqueue_script('ld-icon-preview', get_stylesheet_directory_uri().'/assets/admin/icon-preview.js', ['jquery','select2'], null, true);
@@ -212,7 +219,14 @@ if (!function_exists('ld_term_icon_html')) {
     $icon = (string) get_field('term_icon_name', 'term_'.$term_id);
     if ($icon && $icon !== 'none' && function_exists('ld_icon')) {
       $attr = $attrs;
-      $attr['class'] = trim('icon '.($attr['class'] ?? '').' '.$class);
+      $cls = trim(($attr['class'] ?? '') . ' ' . $class);
+      if (!preg_match('/(^|\s)icon(\s|$)/', $cls)) {
+        $cls = trim('icon ' . $cls);
+      }
+      if (!preg_match('/(^|\s)icon--24(\s|$)/', $cls)) {
+        $cls = trim('icon--24 ' . $cls);
+      }
+      $attr['class'] = $cls;
       return ld_icon($icon, $attr);
     }
 
@@ -220,7 +234,14 @@ if (!function_exists('ld_term_icon_html')) {
     $media = (int) get_field('term_icon_media', 'term_'.$term_id);
     if ($media && function_exists('ld_image_or_svg_html')) {
       $attr = $attrs;
-      $attr['class'] = trim('icon '.($attr['class'] ?? '').' '.$class);
+      $cls = trim(($attr['class'] ?? '') . ' ' . $class);
+      if (!preg_match('/(^|\s)icon(\s|$)/', $cls)) {
+        $cls = trim('icon ' . $cls);
+      }
+      if (!preg_match('/(^|\s)icon--24(\s|$)/', $cls)) {
+        $cls = trim('icon--24 ' . $cls);
+      }
+      $attr['class'] = $cls;
       return ld_image_or_svg_html($media, 'full', $attr);
     }
 
@@ -232,14 +253,14 @@ if (!function_exists('ld_term_icon_html')) {
 add_filter('manage_edit-category_columns', fn($c) => ['icon' => __('Icon','ld')] + $c);
 add_filter('manage_category_custom_column', function($out, $col, $term_id){
   if ($col !== 'icon') return $out;
-  $html = ld_term_icon_html($term_id, 'icon--24'); // 24px utility
+  $html = ld_term_icon_html($term_id, '', ['class' => 'icon icon--24']);
   return $html ?: '—';
 }, 10, 3);
 
 add_filter('manage_edit-post_tag_columns', fn($c) => ['icon' => __('Icon','ld')] + $c);
 add_filter('manage_post_tag_custom_column', function($out, $col, $term_id){
   if ($col !== 'icon') return $out;
-  $html = ld_term_icon_html($term_id, 'icon--24');
+  $html = ld_term_icon_html($term_id, '', ['class' => 'icon icon--24']);
   return $html ?: '—';
 }, 10, 3);
 
