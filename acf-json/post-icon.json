@@ -10,7 +10,7 @@
   "hide_on_screen": "",
   "show_in_rest": 0,
   "menu_order": 0,
-  "modified": 1757759999,
+  "modified": 1757760002,
   "fields": [
     {
       "key": "field_content_icon_source",
@@ -52,7 +52,7 @@
       "allow_in_bindings": 0,
       "ui": 1,
       "ajax": 0,
-      "placeholder": "— Select icon —",
+      "placeholder": "— No icon —",
       "create_options": 0,
       "save_options": 0,
       "aria-label": ""
@@ -62,7 +62,7 @@
       "label": "Custom Icon (upload)",
       "name": "content_icon_media",
       "type": "image",
-      "instructions": "SVG or PNG. Used only if no library icon selected.",
+      "instructions": "SVG only. Used only if no library icon selected.",
       "required": 0,
       "conditional_logic": [
         [
@@ -78,7 +78,7 @@
       "max_width": "",
       "max_height": "",
       "max_size": "",
-      "mime_types": "",
+      "mime_types": "svg",
       "allow_in_bindings": 0,
       "preview_size": "medium",
       "aria-label": ""
@@ -86,8 +86,8 @@
   ],
   "location": [
     [{ "operator": "==", "param": "post_type", "value": "post" }],
+    [{ "operator": "==", "param": "post_type", "value": "page" }],
     [{ "operator": "==", "param": "post_type", "value": "fineart" }],
-    [{ "operator": "==", "param": "post_type", "value": "modeling" }],
-    [{ "operator": "==", "param": "post_type", "value": "page" }]
+    [{ "operator": "==", "param": "post_type", "value": "modeling" }]
   ]
 }
