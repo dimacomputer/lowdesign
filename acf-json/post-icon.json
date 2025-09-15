@@ -10,7 +10,7 @@
   "hide_on_screen": "",
   "show_in_rest": 0,
   "menu_order": 0,
-  "modified": 1757759999,
+  "modified": 1757760001,
   "fields": [
     {
       "key": "field_content_icon_source",
@@ -52,7 +52,7 @@
       "allow_in_bindings": 0,
       "ui": 1,
       "ajax": 0,
-      "placeholder": "— Select icon —",
+      "placeholder": "— No icon —",
       "create_options": 0,
       "save_options": 0,
       "aria-label": ""
@@ -86,8 +86,8 @@
   ],
   "location": [
     [{ "operator": "==", "param": "post_type", "value": "post" }],
+    [{ "operator": "==", "param": "post_type", "value": "page" }],
     [{ "operator": "==", "param": "post_type", "value": "fineart" }],
-    [{ "operator": "==", "param": "post_type", "value": "modeling" }],
-    [{ "operator": "==", "param": "post_type", "value": "page" }]
+    [{ "operator": "==", "param": "post_type", "value": "modeling" }]
   ]
 }

@@ -31,7 +31,7 @@ if (!function_exists('ld_icon')) {
     // Finalize attributes
     $attrs['class'] = $class;
     $attrs['aria-hidden'] = $attrs['aria-hidden'] ?? 'true';
-    unset($attrs['fill']); // color via CSS
+    $attrs['fill'] = 'currentColor';
 
     $attributes = '';
     foreach ($attrs as $key => $value) {

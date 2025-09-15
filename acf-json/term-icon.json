@@ -9,8 +9,27 @@
   "hide_on_screen": "",
   "show_in_rest": 0,
   "menu_order": 0,
-  "modified": 1757759999,
+  "modified": 1757760002,
   "fields": [
+    {
+      "key": "field_term_content_icon_source",
+      "label": "Icon source",
+      "name": "content_icon_source",
+      "type": "radio",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "choices": { "none": "No icon", "sprite": "Theme icon", "media": "Media Library" },
+      "default_value": "none",
+      "allow_null": 0,
+      "other_choice": 0,
+      "save_other_choice": 0,
+      "layout": "horizontal",
+      "return_format": "value",
+      "allow_in_bindings": 0,
+      "aria-label": ""
+    },
     {
       "key": "field_term_icon_name",
       "label": "Icon (library)",
@@ -18,7 +37,11 @@
       "type": "select",
       "instructions": "Choose from theme icon set. Takes priority over upload.",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          { "field": "field_term_content_icon_source", "operator": "==", "value": "sprite" }
+        ]
+      ],
       "wrapper": { "width": "", "class": "", "id": "" },
       "choices": [],
       "default_value": "",
@@ -40,7 +63,11 @@
       "type": "image",
       "instructions": "SVG or PNG. Used only if no library icon selected.",
       "required": 0,
-      "conditional_logic": 0,
+      "conditional_logic": [
+        [
+          { "field": "field_term_content_icon_source", "operator": "==", "value": "media" }
+        ]
+      ],
       "wrapper": { "width": "", "class": "", "id": "" },
       "return_format": "id",
       "library": "all",
