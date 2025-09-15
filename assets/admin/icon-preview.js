@@ -103,8 +103,12 @@
   }
 
   function init(){
-    $all('.acf-field[data-name="post_icon_name"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-theme-wrap'); });
-    $all('.acf-field[data-name="content_icon_media"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-media-wrap'); });
+    $all('.acf-field[data-name="post_icon_name"], .acf-field[data-name="term_icon_name"]').forEach(n=>{
+      if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-theme-wrap');
+    });
+    $all('.acf-field[data-name="content_icon_media"], .acf-field[data-name="term_icon_media"]').forEach(n=>{
+      if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-media-wrap');
+    });
     const q = [
       '.acf-field[data-name="menu_icon"] select',
       '.acf-field[data-name="post_icon_name"] select',
