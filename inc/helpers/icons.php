@@ -14,10 +14,13 @@ if (!function_exists('ld_icon')) {
     // Support "no icon" (empty / 'none')
     if ($name === '' || $name === 'none') return '';
 
-    // Ensure base class ".icon"
+    // Ensure base classes
     $class = trim($attrs['class'] ?? '');
     if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
       $class = trim('icon ' . $class);
+    }
+    if (!preg_match('/(^|\s)icon--24(\s|$)/', $class)) {
+      $class = trim('icon--24 ' . $class);
     }
 
     // Optional color context from page
@@ -31,7 +34,7 @@ if (!function_exists('ld_icon')) {
     // Finalize attributes
     $attrs['class'] = $class;
     $attrs['aria-hidden'] = $attrs['aria-hidden'] ?? 'true';
-    unset($attrs['fill']); // color via CSS
+    $attrs['fill'] = 'currentColor';
 
     $attributes = '';
     foreach ($attrs as $key => $value) {
@@ -67,6 +70,16 @@ if (!function_exists('ld_image_or_svg_html')) {
       $svg = preg_replace('/\sfill=["\'][^"\']*["\']/i', '', $svg);
       $svg = preg_replace('/^<svg\b([^>]*)>/', '<svg$1 fill="currentColor">', $svg, 1);
 
+      // Ensure base classes
+      $class = trim($attr['class'] ?? '');
+      if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
+        $class = trim('icon ' . $class);
+      }
+      if (!preg_match('/(^|\s)icon--24(\s|$)/', $class)) {
+        $class = trim('icon--24 ' . $class);
+      }
+      $attr['class'] = $class;
+
       // merge extra attributes (except 'fill', already set)
       if ($attr) {
         $extra = '';
@@ -79,6 +92,16 @@ if (!function_exists('ld_image_or_svg_html')) {
 
       return $svg;
     }
+
+    // raster image fallback: ensure classes but no recolor
+    $class = trim($attr['class'] ?? '');
+    if (!preg_match('/(^|\s)icon(\s|$)/', $class)) {
+      $class = trim('icon ' . $class);
+    }
+    if (!preg_match('/(^|\s)icon--24(\s|$)/', $class)) {
+      $class = trim('icon--24 ' . $class);
+    }
+    $attr['class'] = $class;
 
     return wp_get_attachment_image($attachment_id, $size, false, $attr);
   }

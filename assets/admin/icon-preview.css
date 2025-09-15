@@ -1,0 +1,11 @@
+.ld-hidden{display:none!important}
+.icon{width:24px;height:24px;display:inline-block}
+.icon--24{width:24px;height:24px}
+.acf-field .icon-preview{display:inline-flex;width:24px;height:24px}
+.acf-field .icon-preview svg{width:100%;height:100%}
+.select2-container--default .ld-icon-sel,
+.select2-container--default .ld-icon-opt{display:inline-flex;width:24px;height:24px;margin-right:6px;vertical-align:middle}
+.select2-container--default .ld-icon-sel svg,
+.select2-container--default .ld-icon-opt svg{width:100%;height:100%}
+.acf-fields [data-ld="icon-theme-wrap"], .acf-fields [data-ld="icon-media-wrap"]{outline:0!important}
+.acf-field[data-name="content_icon_source"] input[type="radio"]:focus{outline:none!important;box-shadow:none!important}
