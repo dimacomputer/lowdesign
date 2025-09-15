@@ -1,73 +1,32 @@
-/* assets/admin/icon-preview.css */
+/* hide helper */
 .ld-hidden {
     display: none !important;
 }
 
-/* 24px иконки */
-.icon {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-}
-.icon--24 {
-    width: 24px;
-    height: 24px;
-}
-
-/* мини-превью в Select2 (и в выпадающем списке, и в выбранном значении) */
-.select2-container--default .ld-icon-opt,
-.select2-container--default .ld-icon-sel {
+/* единый вид превью */
+.acf-field .ld-icon-preview,
+.acf-field .ld-media-inline {
     display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-.select2-container--default .ld-icon-opt svg,
-.select2-container--default .ld-icon-sel svg {
     width: 24px;
     height: 24px;
-    display: inline-block;
-    flex: 0 0 24px;
+    vertical-align: middle;
+    margin-left: 8px;
+    line-height: 0;
 }
-
-/* фокус на радио не подсвечиваем */
-.acf-field[data-name="content_icon_source"] input[type="radio"]:focus {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* inline превью для медиа SVG */
-.ld-media-inline {
-    display: inline-flex;
-    width: 96px;
-    height: 96px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 4px;
-    background: #0002;
-}
-.ld-media-inline svg {
+.acf-field .ld-icon-preview svg,
+.acf-field .ld-media-inline svg {
     width: 100%;
     height: 100%;
-    display: block;
+    fill: currentColor;
 }
 
-/* когда показываем inline SVG — прячем штатную картинку ACF */
-.acf-image-uploader .image-wrap.ld-hide-img {
+/* стандартную картинку ACF прячем когда есть inline */
+.acf-image-uploader .image-wrap.ld-hide {
     display: none !important;
 }
 
-/* колонка Icon в списках */
-.wp-list-table .column-icon {
-    width: 28px;
-}
-.wp-list-table td.column-icon {
-    padding-left: 4px;
-    padding-right: 0;
-    text-align: center;
-}
-.wp-list-table td.column-icon .icon {
-    width: 24px;
-    height: 24px;
-    display: inline-block;
+/* фокусы на радио без синих обводок */
+.acf-field[data-name="content_icon_source"] input[type="radio"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }

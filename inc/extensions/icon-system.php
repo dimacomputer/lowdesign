@@ -306,20 +306,21 @@ add_action("admin_footer", function () {
 });
 
 add_action("admin_enqueue_scripts", function () {
-    // CSS
+    $base = get_stylesheet_directory_uri();
+    $dir = get_stylesheet_directory();
+
     wp_enqueue_style(
         "ld-icon-preview",
-        get_stylesheet_directory_uri() . "/assets/admin/icon-preview.css",
+        $base . "/assets/admin/icon-preview.css",
         [],
-        null,
+        @filemtime($dir . "/assets/admin/icon-preview.css") ?: null,
     );
 
-    // JS — завязываемся на ACF, а не на глобальный 'select2'
     wp_enqueue_script(
         "ld-icon-preview",
-        get_stylesheet_directory_uri() . "/assets/admin/icon-preview.js",
-        ["jquery", "acf-input"], // <<< ключевой момент
-        null,
+        $base . "/assets/admin/icon-preview.js",
+        ["jquery"], // select2 больше не нужен
+        @filemtime($dir . "/assets/admin/icon-preview.js") ?: null,
         true,
     );
 });
