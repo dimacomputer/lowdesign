@@ -31,7 +31,7 @@ if (!function_exists('ld_icon')) {
     // Finalize attributes
     $attrs['class'] = $class;
     $attrs['aria-hidden'] = $attrs['aria-hidden'] ?? 'true';
-    $attrs['fill'] = $attrs['fill'] ?? 'currentColor';
+    unset($attrs['fill']); // color via CSS
 
     $attributes = '';
     foreach ($attrs as $key => $value) {
@@ -64,7 +64,7 @@ if (!function_exists('ld_image_or_svg_html')) {
 
       // sanitize + unify fill
       $svg = preg_replace('#<script[^>]*>.*?</script>#is', '', $svg);
-      $svg = preg_replace('/\sfill="[^"]*"/i', '', $svg);
+      $svg = preg_replace('/\sfill=["\'][^"\']*["\']/i', '', $svg);
       $svg = preg_replace('/^<svg\b([^>]*)>/', '<svg$1 fill="currentColor">', $svg, 1);
 
       // merge extra attributes (except 'fill', already set)
@@ -94,7 +94,7 @@ add_filter('post_thumbnail_html', function ($html, $post_id, $thumb_id, $size, $
   $class = ld_get_page_color_class('featured_svg', $post_id);
   if (!$class) return $html;
 
-  $html = preg_replace('/\sfill="[^"]*"/i', '', $html);
+  $html = preg_replace('/\sfill=["\'][^"\']*["\']/i', '', $html);
   $html = preg_replace('/^<svg\b([^>]*)>/', '<svg$1 fill="currentColor">', $html, 1);
 
   return '<div class="' . esc_attr($class) . '">' . $html . '</div>';

@@ -1,0 +1,47 @@
+.icon {
+  display: inline-block;
+  fill: currentColor;
+}
+
+.ld-hidden {
+  display: none !important;
+}
+
+.acf-field .acf-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.acf-field .icon-preview {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+.acf-field .icon-preview svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wp-list-table .column-icon {
+  width: 28px;
+}
+
+.wp-list-table td.column-icon {
+  padding-left: 4px;
+  padding-right: 0;
+  text-align: center;
+}
+
+.wp-list-table td.column-icon .icon {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+/* fix focus ring jump when radios hide/show blocks */
+.acf-field[data-name=content_icon_source] .acf-input input[type=radio]:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+}

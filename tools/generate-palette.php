@@ -1,6 +1,6 @@
 <?php
-$input = __DIR__ . '/../../assets/css/color.css'; // путь к твоему файлу с :root
-$output = __DIR__ . '/../config/theme.palette.json';
+$input = __DIR__ . '/../assets/css/color.css'; // путь к твоему файлу с :root
+$output = __DIR__ . '/../docs/theme.palette.json';
 
 if (!file_exists($input)) {
   fwrite(STDERR, "⚠️  Missing CSS file: $input\n");

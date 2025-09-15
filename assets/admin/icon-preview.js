@@ -28,38 +28,31 @@
     }
   }
   window.toggleBlock = toggleBlock;
-  function onChange(e){
-    const root=e.target.closest('.acf-fields');
+  function onChange(radio){
+    const root=radio.closest('.acf-fields, .acf-row, body');
     if(!root) return;
     const themeWrap=root.querySelector('[data-ld="icon-theme-wrap"]');
     const mediaWrap=root.querySelector('[data-ld="icon-media-wrap"]');
-    const val=e.target && e.target.value;
+    const val=radio.value;
     if(val==='none'){ toggleBlock(themeWrap,false); toggleBlock(mediaWrap,false); return; }
     if(val==='sprite'){ toggleBlock(themeWrap,true); toggleBlock(mediaWrap,false); return; }
     if(val==='media'){ toggleBlock(themeWrap,false); toggleBlock(mediaWrap,true); return; }
   }
   function svgUse(id, cls){
-    if(!id||id==='__custom__') return '';
+    if(!id) return '';
     return '<span class="'+cls+'"><svg aria-hidden="true"><use href="#'+id+'"></use></svg></span>';
   }
   function tplResult(s){
-    if(!s.id||s.id==='__custom__') return s.text;
+    if(!s.id) return s.text;
     return svgUse(s.id,'ld-icon-opt')+'<span>'+s.text+'</span>';
   }
   function tplSelection(s){
-    if(!s.id||s.id==='__custom__') return s.text||'';
+    if(!s.id) return s.text||'';
     return svgUse(s.id,'ld-icon-sel')+'<span>'+s.text+'</span>';
   }
 
-  function findUploadField($root){
-    let $img=$root.closest('.acf-fields, .acf-row, body').find('.acf-field[data-name="content_icon_media"]');
-    if($img.length) return $img;
-    $img=$root.closest('.acf-fields, .acf-row, body').find('.acf-field[data-name="term_icon_media"]');
-    return $img.length?$img:null;
-  }
-
-  function findSourceRadio($root){
-    const $rad=$root.closest('.acf-fields, .acf-row, body')
+  function findSourceRadio($field){
+    const $rad=$field.closest('.acf-fields, .acf-row, body')
       .find('.acf-field[data-name="content_icon_source"] input[type="radio"]');
     return $rad.length?$rad:null;
   }
@@ -76,11 +69,8 @@
 
   function enhance(raw){
     if(typeof jQuery==='undefined'||!jQuery.fn.select2) return;
-    const $sel=jQuery(raw), $upload=findUploadField($sel);
+    const $sel=jQuery(raw);
     const data=[];
-    if($upload && $sel.closest('.acf-field').data('name')!=='menu_icon'){
-      data.push({id:'__custom__',text:'Custom Icon (upload)'});
-    }
     const g=buildGroupsFromOptions($sel);
     if(g.glyph.length) data.push({text:'Glyph',children:g.glyph});
     if(g.brand.length) data.push({text:'Brand',children:g.brand});
@@ -89,51 +79,33 @@
       width:'100%',data,allowClear:true,placeholder:'— Select icon —',
       templateResult:tplResult,templateSelection:tplSelection,escapeMarkup:m=>m
     });
-    $sel.on('select2:select',e=>{
-      const val=e.params&&e.params.data&&e.params.data.id;
-      if(val==='__custom__' && $upload){
-        const btn=$upload.find('button, .acf-button').get(0);
-        $upload.get(0).scrollIntoView({behavior:'smooth',block:'center'});
-        if(btn) btn.focus();
-      }
-    });
-
-    if($sel.closest('.acf-field').data('name')==='post_icon_name') initPreview($sel);
+    initPreview($sel);
   }
 
   function initPreview($sel){
-    const $rad=findSourceRadio($sel); if(!$rad) return;
+    const $field=$sel.closest('.acf-field');
+    const $rad=findSourceRadio($field);
     let $prev=null;
-    function ensure(){
-      if(!$prev){
-        $prev=jQuery('<span class="icon-preview"><svg aria-hidden="true"><use href=""></use></svg></span>')
-          .insertAfter($sel).hide();
-      }
-      return $prev;
-    }
-    function refresh(){
-      const src=$rad.filter(':checked').val();
-      if(src==='sprite'){
-        const val=$sel.val();
-        const $p=ensure();
-        if(val){
-          $p.show().find('use').attr('href','#'+val);
-        }else{
-          $p.hide().find('use').attr('href','');
-        }
+    function render(){
+      const src=$rad&&$rad.filter(':checked').val();
+      const id=$sel.val();
+      if((!$rad||src==='sprite') && id){
+        if(!$prev) $prev=jQuery('<span class="icon-preview"></span>').insertAfter($sel);
+        $prev.html('<svg aria-hidden="true"><use href="#'+id+'"></use></svg>');
       }else if($prev){
-        $prev.hide().find('use').attr('href','');
+        $prev.remove();
+        $prev=null;
       }
     }
-    $rad.on('change',refresh);
-    $sel.on('change',refresh);
-    refresh();
+    if($rad) $rad.on('change',render);
+    $sel.on('change',render);
+    render();
   }
 
   function init(){
     $all('.acf-field[data-name="post_icon_name"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-theme-wrap'); });
     $all('.acf-field[data-name="content_icon_media"]').forEach(n=>{ if(!n.hasAttribute('data-ld')) n.setAttribute('data-ld','icon-media-wrap'); });
-    const q=[
+    const q = [
       '.acf-field[data-name="menu_icon"] select',
       '.acf-field[data-name="post_icon_name"] select',
       '.acf-field[data-name="term_icon_name"] select'
@@ -145,8 +117,9 @@
       jQuery(()=>{ jQuery(q).each(function(){ enhance(this); }); });
     }
     document.addEventListener('change',function(ev){
-      if(ev.target && ev.target.matches('input[type="radio"][name$="[icon_source]"], input[type="radio"][name="icon_source"]')){
-        onChange(ev);
+      const radio = ev.target;
+      if(radio && radio.matches('.acf-field[data-name="content_icon_source"] input[type="radio"]')){
+        onChange(radio);
         setTimeout(()=>{
           const el=document.activeElement;
           if(el && el.closest('.ld-hidden')){ try{ el.blur(); }catch(e){} }
@@ -160,13 +133,13 @@
 ;(function(){
   function $all(s,r=document){return Array.from(r.querySelectorAll(s));}
   function boot(){
-    $all('.acf-field').forEach(group=>{
-      const radios=$all('input[type="radio"][name$="[icon_source]"], input[type="radio"][name="icon_source"]',group);
-      if(!radios.length) return;
+    $all('.acf-field[data-name="content_icon_source"]').forEach(field=>{
+      const radios=$all('input[type="radio"]',field);
       const checked=radios.find(r=>r.checked);
       if(!checked) return;
-      const themeWrap=group.querySelector('[data-ld="icon-theme-wrap"]');
-      const mediaWrap=group.querySelector('[data-ld="icon-media-wrap"]');
+      const root=field.closest('.acf-fields, .acf-row, body');
+      const themeWrap=root.querySelector('[data-ld="icon-theme-wrap"]');
+      const mediaWrap=root.querySelector('[data-ld="icon-media-wrap"]');
       const val=checked.value;
       const toggle=(b,s)=>{ if(typeof window.toggleBlock==='function') window.toggleBlock(b,s); };
       if(val==='none'){ toggle(themeWrap,false); toggle(mediaWrap,false); }
