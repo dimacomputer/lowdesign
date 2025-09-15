@@ -1,8 +1,19 @@
+TITLE: Admin icons: unify color & size (24px)
+
+SUMMARY:
+- В админке привести иконки (sprite + media SVG inline) к единому цвету через currentColor и размеру 24px.
+- Исправить отсутствие перекраски у <use>-иконок из спрайта (добавить fill: currentColor).
+- Зафиксировать размер инлайн-превью SVG из Media Library (иногда «улетает» размер).
+
+CHANGES:
+1) Overwrite file: assets/admin/icon-preview.css  (full content below)
+
+/* hidden state for icon sub-blocks */
 .ld-hidden {
     display: none !important;
 }
 
-/* Унифицированная коробка иконки 24px */
+/* base 24px icon box + color */
 .icon {
     display: inline-block;
     width: 24px;
@@ -17,7 +28,7 @@
     fill: currentColor;
 }
 
-/* Превью в ACF полях (sprite/media) */
+/* ACF field preview box */
 .acf-field .icon-preview {
     display: inline-flex;
     width: 24px;
@@ -28,7 +39,7 @@
     height: 100%;
 }
 
-/* select2: иконка слева в опциях и в выбранном значении */
+/* select2: icon at left in dropdown & in selection (24px) */
 .select2-container--default .ld-icon-sel,
 .select2-container--default .ld-icon-opt {
     display: inline-flex;
@@ -44,22 +55,15 @@
     fill: currentColor;
 }
 
-/* Inline SVG-превью при выборе SVG в медиа */
-[data-ld="icon-media-wrap"] .acf-image-uploader .ld-media-inline svg {
+/* inline preview when Media Library SVG is selected */
+.acf-image-uploader .ld-media-inline svg {
     display: inline-block;
     width: 24px;
     height: 24px;
     fill: currentColor;
 }
 
-/* Если выбрано изображение (не SVG) — делаем стандартный img маленьким (24px) */
-[data-ld="icon-media-wrap"] .acf-image-uploader .image-wrap img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    display: inline-block;
-}
-
+/* smoother focus handling for radio and wrappers */
 .acf-fields [data-ld="icon-theme-wrap"],
 .acf-fields [data-ld="icon-media-wrap"] {
     outline: 0 !important;
@@ -69,7 +73,7 @@
     box-shadow: none !important;
 }
 
-/* Колонка Icon в списках админки */
+/* Admin list column: keep 24px box */
 .wp-list-table .column-icon {
     width: 28px;
 }
