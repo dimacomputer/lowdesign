@@ -6,6 +6,20 @@
     margin-left: 0.25rem;
 } /* spacer-1 */
 
+/* (опционально) если где-то помечаешь секции как disabled */
+.ld-theme-select.is-disabled,
+.ld-icon-upload.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* описание под полями – чуть компактнее и ровнее */
+.ld-field-help {
+    margin: 0.25rem 0 0;
+    color: #666;
+    font-size: 12px;
+}
+
 /* ========== radio group (Icon source) ========== */
 .acf-field .ld-icon-scope fieldset {
     border: none; /* убираем лишнюю рамку WP */
@@ -25,6 +39,7 @@
 }
 
 /* ========== previews (sprite + media inline) ========== */
+/* общий контейнер превью */
 .acf-field .ld-icon-preview,
 .acf-field .ld-media-inline {
     display: inline-flex;
@@ -34,15 +49,15 @@
 
     width: 24px;
     height: 24px;
-    margin-top: 8px; /* отступ от select */
+    margin-left: 8px; /* аккуратный отступ от select/контрола */
     line-height: 0;
 
-    border: 1px solid #dcdcdc; /* аккуратная рамка */
+    border: 1px solid #dcdcdc; /* единая тонкая рамка */
     border-radius: 4px;
-    background: #fff; /* чтобы не терялось на сером фоне */
+    background: #fff;
 }
 
-/* уменьшаем саму пиктограмму для «визуального паддинга» внутри 24×24 */
+/* внутренняя пиктограмма меньше — «визуальный паддинг» */
 .acf-field .ld-icon-preview svg,
 .acf-field .ld-media-inline svg {
     width: 18px;
@@ -50,22 +65,20 @@
     fill: currentColor;
 }
 
-/* ========== media uploader tweaks ========== */
-/* скрываем только IMG, оставляя .image-wrap и ACF-кнопки видимыми */
+/* корректно скрываем только IMG, оставляя .image-wrap и ACF-кнопки видимыми */
 .acf-image-uploader .ld-hide-img {
     display: none !important;
 }
 
-/* (опционально) если где-то помечаешь секции как disabled */
-.ld-theme-select.is-disabled,
-.ld-icon-upload.is-disabled {
-    opacity: 0.5;
-    pointer-events: none;
+/* ========== бейдж-иконка перед label поля ========== */
+.ld-field-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    vertical-align: -2px;
 }
-
-/* описание под полями – чуть компактнее и ровнее */
-.ld-field-help {
-    margin: 0.25rem 0 0;
-    color: #666;
-    font-size: 12px;
+.acf-field .acf-label label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
