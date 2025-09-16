@@ -13,7 +13,7 @@
     let holder = field.querySelector(".ld-icon-preview");
     if (!holder) {
       holder = document.createElement("span");
-      holder.className = "ld-icon-preview";
+      holder.className = "ld-icon-preview ld-ml-1"; // небольшой spacer
       select.after(holder);
     }
 
@@ -43,32 +43,36 @@
     apply();
   }
 
-  // инлайн превью для SVG из Медиа (внутри поля image)
+  // инлайн превью для SVG из Медиа (внутри поля image), не ломая ACF-кнопки
   function enhanceMediaSvgPreview() {
     const wrap = document.querySelector(
       '[data-ld="icon-media-wrap"] .acf-image-uploader',
     );
     if (!wrap) return;
 
+    const getImg = () => wrap.querySelector(".image-wrap img");
+
     const renderInline = (url) => {
+      if (!url) return clearInline();
       fetch(url)
         .then((r) => r.text())
         .then((txt) => {
-          // вычищаем, ставим currentColor
+          // sanitize + currentColor
           let svg = txt
             .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/\sfill="[^"]*"/gi, "")
             .replace(/<svg\b([^>]*)>/i, '<svg$1 fill="currentColor">');
 
-          // прячем дефолтный IMG
-          const imgWrap = wrap.querySelector(".image-wrap");
-          if (imgWrap) imgWrap.classList.add("ld-hide");
+          // прячем ТОЛЬКО <img>, оставляя .image-wrap и acf-actions видимыми
+          const img = getImg();
+          if (img) img.classList.add("ld-hide-img");
 
-          let holder = wrap.querySelector(".ld-media-inline");
+          let holder = wrap.querySelector(".image-wrap .ld-media-inline");
           if (!holder) {
+            const imageWrap = wrap.querySelector(".image-wrap") || wrap;
             holder = document.createElement("div");
             holder.className = "ld-media-inline";
-            wrap.appendChild(holder);
+            imageWrap.appendChild(holder);
           }
           holder.innerHTML = svg;
         })
@@ -78,28 +82,40 @@
     };
 
     const clearInline = () => {
-      wrap.querySelector(".ld-media-inline")?.remove();
-      wrap.querySelector(".image-wrap")?.classList.remove("ld-hide");
+      wrap.querySelector(".image-wrap .ld-media-inline")?.remove();
+      const img = getImg();
+      if (img) img.classList.remove("ld-hide-img");
     };
 
     // первичная инициализация
-    const currentImg = wrap.querySelector(".image-wrap img");
+    const currentImg = getImg();
     if (currentImg && /\.svg(\?|#|$)/i.test(currentImg.src)) {
       renderInline(currentImg.src);
     }
 
-    // ловим изменения выбора/удаления
+    // ловим изменения выбора/удаления (после кликов по Edit/Remove/Add Image)
     document.addEventListener("click", (e) => {
       if (!wrap.contains(e.target)) return;
       setTimeout(() => {
-        const img = wrap.querySelector(".image-wrap img");
+        const img = getImg();
         if (img && /\.svg(\?|#|$)/i.test(img.src)) {
           renderInline(img.src);
         } else {
           clearInline();
         }
-      }, 50);
+      }, 80);
     });
+
+    // если ACF динамически перерисует DOM
+    const mo = new MutationObserver(() => {
+      const img = getImg();
+      if (img && /\.svg(\?|#|$)/i.test(img.src)) {
+        renderInline(img.src);
+      } else {
+        clearInline();
+      }
+    });
+    mo.observe(wrap, { subtree: true, childList: true, attributes: false });
   }
 
   function init() {
@@ -115,7 +131,7 @@
     // радио-переключалки
     wireSourceRadios();
 
-    // превью SVG из медиа
+    // превью SVG из медиа — без скрытия ACF-кнопок
     enhanceMediaSvgPreview();
   }
 
