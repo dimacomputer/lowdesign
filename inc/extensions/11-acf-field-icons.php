@@ -5,39 +5,19 @@ if (!defined("ABSPATH")) {
 
 /**
  * ACF Field Icons — per-field icon selector from multiple sources.
- *
- * Value stored: "group:slug"
- *
- * Catalog (via filter 'ld_field_icon_catalog'):
- * [
- *   'cpt' => [
- *     'label' => 'CPT',
- *     'mode'  => 'inline' | 'sprite',      // how to render the choice
- *     // inline mode:
- *     'dir'   => abs_path_to_svgs,         // /path/to/assets/icons/src/cpt
- *     'url'   => base_url_to_svgs,         // https://.../assets/icons/src/cpt
- *     // sprite mode:
- *     'sprite_map' => [ slug => symbol_id ] // optional; default symbol_id = slug
- *   ],
- *   'sprite' => [
- *     'label' => 'Theme Sprite',
- *     'mode'  => 'sprite',
- *     'sprite_map' => [ slug => symbol_id ] // например из ld_icon_library_options()
- *   ],
- *   ...
- * ]
- *
- * По умолчанию добавляем группы: cpt, ui, brand (inline из файлов) и sprite (из ld_icon_library_options()).
+ * Хранит значение: "group:slug".
+ * Показывает нативный select (без Select2) + маленькое превью в настройке.
+ * Иконки у лейблов полей в админке остаются (assets/admin/acf-field-icons.js).
  */
 
-// ---------- Catalog defaults & filters ----------
+/* ---------- Catalog defaults & filters ---------- */
 
 function ld_field_icon_catalog_default(): array
 {
     $base_dir = get_stylesheet_directory() . "/assets/icons/src";
     $base_url = get_stylesheet_directory_uri() . "/assets/icons/src";
 
-    // собрать sprite-опции из твоего набора темы (если есть)
+    // соберём спрайтовые опции из темы (если есть)
     $sprite_opts = apply_filters("ld_icon_library_options", []);
     $sprite_map = [];
     foreach ($sprite_opts as $slug => $label) {
@@ -73,7 +53,7 @@ function ld_field_icon_catalog_default(): array
         ],
     ];
 
-    // Дай возможность расширять/менять каталог
+    // можно расширить через фильтр
     $catalog = apply_filters("ld_field_icon_catalog", $catalog);
 
     // sanitize
@@ -98,7 +78,6 @@ function ld_field_icon_catalog_default(): array
     return $catalog;
 }
 
-// Сканирует каталог inline-иконок
 function ld_scan_inline_svgs(string $dir): array
 {
     $list = [];
@@ -111,7 +90,7 @@ function ld_scan_inline_svgs(string $dir): array
     return $list;
 }
 
-// Строит список choices c optgroups
+/** Построить choices c optgroup и префиксами group:slug */
 function ld_field_icon_choices(): array
 {
     $choices = [];
@@ -124,16 +103,10 @@ function ld_field_icon_choices(): array
         if ($cfg["mode"] === "inline") {
             $options = ld_scan_inline_svgs($cfg["dir"]); // slug => slug
         } else {
-            // sprite
-            $options = $cfg["sprite_map"]; // slug => symbol_id (мы покажем slug)
-            // превратим в slug => slug для UI
-            $options = array_combine(
-                array_keys($options),
-                array_keys($options),
-            );
+            $options = array_keys($cfg["sprite_map"]); // [slug, slug, ...]
+            $options = array_combine($options, $options); // slug => slug
         }
 
-        // optgroup: ключ — метка группы, значения — с префиксом group:
         if (!empty($options)) {
             $prefixed = [];
             foreach ($options as $slug => $disp) {
@@ -146,11 +119,10 @@ function ld_field_icon_choices(): array
     return $choices ?: ["—" => ["" => "— No icon —"]];
 }
 
-// ---------- Admin assets ----------
+/* ---------- Admin assets ---------- */
 
 add_action("admin_enqueue_scripts", function () {
-    // CSS уже у тебя: assets/admin/icon-preview.css
-    // Подключаем только JS, передаём конфиг каталога
+    // 1) Иконки у лейблов полей (оставляем включённым)
     wp_enqueue_script(
         "ld-acf-field-icons",
         get_stylesheet_directory_uri() . "/assets/admin/acf-field-icons.js",
@@ -159,7 +131,7 @@ add_action("admin_enqueue_scripts", function () {
         true,
     );
 
-    // Сконструируем runtime-конфиг для JS
+    // передаём конфиг источников
     $catalog = ld_field_icon_catalog_default();
     $runtime = [];
     foreach ($catalog as $group => $cfg) {
@@ -170,11 +142,27 @@ add_action("admin_enqueue_scripts", function () {
             "label" => $cfg["label"],
         ];
     }
-
     wp_localize_script("ld-acf-field-icons", "LD_FIELD_ICON_CATALOG", $runtime);
+
+    // 2) Превью справа от селекта в настройке ACF (только на экране Field Group)
+    if (function_exists("acf_is_screen") && acf_is_screen("field-group")) {
+        wp_enqueue_script(
+            "ld-acf-field-icon-setting-preview",
+            get_stylesheet_directory_uri() .
+                "/assets/admin/acf-field-icon-setting-preview.js",
+            ["jquery"],
+            null,
+            true,
+        );
+        wp_localize_script(
+            "ld-acf-field-icon-setting-preview",
+            "LD_FIELD_ICON_CATALOG",
+            $runtime,
+        );
+    }
 });
 
-// ---------- ACF setting & wrapper attr ----------
+/* ---------- ACF setting & wrapper attr ---------- */
 
 add_action(
     "acf/render_field_settings",
@@ -184,13 +172,14 @@ add_action(
             [
                 "label" => __("Field Icon", "lowdesign"),
                 "instructions" => __(
-                    "Choose an icon to display next to this field label.",
+                    "Choose an icon for this field. Grouped by source.",
                     "lowdesign",
                 ),
                 "type" => "select",
                 "name" => "ld_field_icon",
                 "choices" => ld_field_icon_choices(), // optgroups
-                "ui" => 1,
+                "ui" => 0, // нативный select (фикс «странного дропа»)
+                "ajax" => 0,
                 "allow_null" => 1,
             ],
             true,
@@ -203,10 +192,9 @@ add_filter(
     "acf/field_wrapper_attributes",
     function ($wrapper, $field) {
         if (!empty($field["ld_field_icon"])) {
-            // значение формата group:slug
             $wrapper["data-ld-field-icon"] = sanitize_text_field(
                 $field["ld_field_icon"],
-            );
+            ); // group:slug
         }
         return $wrapper;
     },
@@ -214,7 +202,7 @@ add_filter(
     2,
 );
 
-// ---------- Optional helpers (frontend) ----------
+/* ---------- Helpers (frontend) ---------- */
 
 /** @return array{group:string,slug:string}|null */
 function ld_parse_field_icon_value($val)
@@ -253,7 +241,6 @@ function ld_render_field_icon_svg($value, array $attrs = []): string
 
     $g = $info["group"];
     $slug = $info["slug"];
-
     if (!isset($catalog[$g])) {
         return "";
     }
@@ -268,7 +255,6 @@ function ld_render_field_icon_svg($value, array $attrs = []): string
             '"></use></svg>';
     }
 
-    // inline
     $file = trailingslashit($cfg["dir"]) . $slug . ".svg";
     if (!file_exists($file)) {
         return "";
