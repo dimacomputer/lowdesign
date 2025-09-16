@@ -1,37 +1,71 @@
-/* hide helper */
+/* ========== helpers ========== */
 .ld-hidden {
     display: none !important;
 }
+.ld-ml-1 {
+    margin-left: 0.25rem;
+} /* spacer-1 */
 
-/* превью возле select (sprite) и inline-SVG из медиа */
-.acf-field .ld-icon-preview,
-.acf-field .ld-media-inline {
-    display: inline-flex;
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
-    margin-left: 8px; /* spacer-1 */
-    line-height: 0;
-}
-.acf-field .ld-icon-preview svg,
-.acf-field .ld-media-inline svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
+/* ========== radio group (Icon source) ========== */
+.acf-field .ld-icon-scope fieldset {
+    border: none; /* убираем лишнюю рамку WP */
+    padding: 0; /* и внутренний отступ */
+    margin: 0 0 6px; /* небольшой отступ снизу */
 }
 
-/* корректно скрываем только IMG, оставляя кнопки ACF видимыми */
-.acf-image-uploader .ld-hide-img {
-    display: none !important;
-}
-
-/* доступный фокус: не убиваем его совсем, а показываем только когда он нужен */
+/* доступный фокус: показываем при клавиатурной навигации */
 .acf-field[data-name="content_icon_source"] input[type="radio"] {
-    accent-color: currentColor; /* управляем цветом чек/радио */
-    box-shadow: none; /* гасим синий WebKit-glow */
+    accent-color: currentColor; /* цвет радиокнопки наследуется */
+    box-shadow: none; /* без синего webkit-glow */
     outline: none;
 }
 .acf-field[data-name="content_icon_source"] input[type="radio"]:focus-visible {
     outline: 2px solid var(--wp-admin-theme-color, #2271b1);
     outline-offset: 2px;
+}
+
+/* ========== previews (sprite + media inline) ========== */
+.acf-field .ld-icon-preview,
+.acf-field .ld-media-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+
+    width: 24px;
+    height: 24px;
+    margin-left: 8px; /* отступ от select */
+    line-height: 0;
+
+    border: 1px solid #dcdcdc; /* аккуратная рамка */
+    border-radius: 4px;
+    background: #fff; /* чтобы не терялось на сером фоне */
+}
+
+/* уменьшаем саму пиктограмму для «визуального паддинга» внутри 24×24 */
+.acf-field .ld-icon-preview svg,
+.acf-field .ld-media-inline svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* ========== media uploader tweaks ========== */
+/* скрываем только IMG, оставляя .image-wrap и ACF-кнопки видимыми */
+.acf-image-uploader .ld-hide-img {
+    display: none !important;
+}
+
+/* (опционально) если где-то помечаешь секции как disabled */
+.ld-theme-select.is-disabled,
+.ld-icon-upload.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* описание под полями – чуть компактнее и ровнее */
+.ld-field-help {
+    margin: 0.25rem 0 0;
+    color: #666;
+    font-size: 12px;
 }
