@@ -1,0 +1,62 @@
+/* LowDesign — Global layer (all core blocks, gentle defaults) */
+
+:root {
+    --ld-radius: var(--bs-border-radius, 0.75rem);
+    --ld-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --ld-border: var(--bs-border-color, rgba(0, 0, 0, 0.12));
+    --ld-gap: var(--wp--style--block-gap, 1rem);
+}
+
+/* Base typography inside all blocks */
+:where([class^="wp-block-"]) {
+    color: var(--bs-body-color);
+    line-height: 1.5;
+}
+
+/* Containers spacing */
+:where(
+    .wp-block-group,
+    .wp-block-cover,
+    .wp-block-media-text,
+    .wp-block-columns
+) {
+    gap: var(--ld-gap);
+}
+
+/* Media rounding */
+:where(
+    .wp-block-image img,
+    .wp-block-gallery img,
+    .wp-block-cover,
+    .wp-block-media-text img
+) {
+    border-radius: var(--ld-radius);
+}
+
+/* Buttons */
+:where(.wp-block-button__link) {
+    border-radius: calc(var(--ld-radius) + 0px);
+    padding: 0.625rem 1rem;
+}
+:where(.wp-block-button__link):focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+}
+
+/* Tables */
+:where(.wp-block-table table) {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--ld-border);
+    border-radius: var(--ld-radius);
+}
+:where(.wp-block-table td, .wp-block-table th) {
+    border-bottom: 1px solid var(--ld-border);
+    padding: 0.625rem 0.75rem;
+}
+
+/* Focus ring for interactive */
+:where(a, button, [role="button"], input, textarea, select):focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+}
