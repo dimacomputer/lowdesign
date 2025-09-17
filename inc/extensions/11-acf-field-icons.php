@@ -178,7 +178,7 @@ add_action(
                 "type" => "select",
                 "name" => "ld_field_icon",
                 "choices" => ld_field_icon_choices(), // optgroups
-                "ui" => 0, // нативный select (фикс «странного дропа»)
+                "ui" => 1, // нативный select (фикс «странного дропа»)
                 "ajax" => 0,
                 "allow_null" => 1,
             ],
