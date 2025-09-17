@@ -1,15 +1,15 @@
 .icon {
-  width: 24px;
-  height: 24px;
-  display: inline-block;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
 }
 
 .wp-list-table .column-icon {
-  width: 28px;
+    width: 28px;
 }
 
 .wp-list-table td.column-icon {
-  padding-left: 4px;
-  padding-right: 0;
-  text-align: center;
+    padding-top: 4px;
+    padding-right: 0;
+    text-align: center;
 }
