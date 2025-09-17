@@ -9,7 +9,7 @@
 }
 
 .wp-list-table td.column-icon {
-    padding-top: 4px;
-    padding-right: 0;
+    padding-left: 2px;
+    padding-right: 2px;
     text-align: center;
 }

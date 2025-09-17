@@ -49,7 +49,7 @@
 
     width: 24px;
     height: 24px;
-    margin-left: 8px; /* аккуратный отступ от select/контрола */
+    margin-top: 8px; /* аккуратный отступ от select/контрола */
     line-height: 0;
 
     border: 1px solid #dcdcdc; /* единая тонкая рамка */
