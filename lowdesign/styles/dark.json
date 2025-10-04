@@ -1,0 +1,59 @@
+{
+  "title": "Dark",
+  "version": 2,
+
+  "settings": {
+    "appearanceTools": true,
+
+    "custom": {
+      "container": {
+        "contentSize": "1200px",
+        "wideSize": "1440px"
+      }
+    },
+
+    "layout": {
+      "contentSize": "var(--wp--custom--container--content-size)",
+      "wideSize": "var(--wp--custom--container--wide-size)"
+    },
+
+    "color": {
+      "custom": false,
+      "link": true,
+      "palette": [
+        { "slug": "primary",   "name": "Primary",   "color": "#66b2ff" },
+        { "slug": "secondary", "name": "Secondary", "color": "#a7b0b8" },
+        { "slug": "success",   "name": "Success",   "color": "#37c27a" },
+        { "slug": "info",      "name": "Info",      "color": "#4dd0e1" },
+        { "slug": "warning",   "name": "Warning",   "color": "#ffd369" },
+        { "slug": "danger",    "name": "Danger",    "color": "#ff6b6b" },
+        { "slug": "light",     "name": "Light",     "color": "#0f1113" },
+        { "slug": "dark",      "name": "Dark",      "color": "#e9ecef" }
+      ]
+    },
+
+    "typography": {
+      "fontFamilies": [
+        { "slug": "system", "name": "System UI", "fontFamily": "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol',sans-serif" }
+      ],
+      "fontSizes": [
+        { "slug": "xs", "name": "XS", "size": "12px" },
+        { "slug": "sm", "name": "SM", "size": "14px" },
+        { "slug": "base", "name": "Base", "size": "16px" },
+        { "slug": "lg", "name": "LG", "size": "20px" },
+        { "slug": "xl", "name": "XL", "size": "24px" },
+        { "slug": "xxl", "name": "XXL", "size": "32px" }
+      ]
+    }
+  },
+
+  "styles": {
+    "color": {
+      "background": "#0b0f14",
+      "text": "#e9ecef"
+    },
+    "elements": {
+      "link": { "color": { "text": "var(--wp--preset--color--primary)" } }
+    }
+  }
+}

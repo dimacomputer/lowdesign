@@ -1,0 +1,18 @@
+/* связываем bootstrap переменные с theme.json */
+$primary:   var(--wp--preset--color--primary);
+$secondary: var(--wp--preset--color--secondary);
+$success:   var(--wp--preset--color--success);
+$info:      var(--wp--preset--color--info);
+$warning:   var(--wp--preset--color--warning);
+$danger:    var(--wp--preset--color--danger);
+$light:     var(--wp--preset--color--light);
+$dark:      var(--wp--preset--color--dark);
+
+$body-color:        var(--wp--preset--color--dark);
+$body-bg:           var(--wp--preset--color--light);
+
+/* если используешь типографику из theme.json */
+$font-family-sans-serif: var(--wp--preset--font-family--system);
+
+/* можно пробросить размеры */
+$font-size-base: var(--wp--preset--font-size--base);

@@ -1,0 +1,21 @@
+{
+  "projectSlug": "lowdesign-margo",
+  "outDir": "../lowdesign-margo",
+  "includeTags": ["core","header","nav","supermenu","search","drawer","footer","acf"],
+  "includeGlobs": [
+    "screenshot.jpg",
+    "templates/**",
+    "inc/**",
+    "acf-json/**",
+    "assets/vendor/bootstrap/**",
+    "assets/src/js/**",
+    "assets/src/scss/**",
+    "build/**"
+  ],
+  "always": ["style.css","index.php","functions.php","header.php","footer.php","searchform.php"],
+  "renameTheme": {
+    "styleName": "Low Design — Margo",
+    "textDomain": "lowdesign-margo"
+  },
+  "stripUntagged": true
+}
