@@ -4,38 +4,38 @@ if (!defined("ABSPATH")) {
 }
 
 /**
- * LowDesign — Bootstrap Bridge
- * Включаем bootstrap.css + bootstrap.bundle.js из vendor, НО цвета берём из ld-* (см. 015-ld-bs-mapping.css).
- * Порядок: сначала bootstrap, потом наши 010…015.
+ * LowDesign — Bootstrap Bridge (подключение сетки и компонентов)
+ * Цвета переопределяются через 015-ld-bs-mapping.css.
  */
 add_action(
     "wp_enqueue_scripts",
     function () {
-        $base = get_stylesheet_directory();
-        $uri = get_stylesheet_directory_uri();
+        $theme_dir = get_stylesheet_directory();
+        $theme_uri = get_stylesheet_directory_uri();
 
-        // пути к Bootstrap из темы (у тебя есть vendor/bootstrap)
-        $bs_css = $base . "/vendor/bootstrap/dist/css/bootstrap.min.css";
-        $bs_js = $base . "/vendor/bootstrap/dist/js/bootstrap.bundle.min.js";
+        $css_path = $theme_dir . "/vendor/bootstrap/dist/css/bootstrap.min.css";
+        $js_path =
+            $theme_dir . "/vendor/bootstrap/dist/js/bootstrap.bundle.min.js";
 
-        if (file_exists($bs_css)) {
+        if (file_exists($css_path)) {
             wp_enqueue_style(
                 "bootstrap",
-                $uri . "/vendor/bootstrap/dist/css/bootstrap.min.css",
+                $theme_uri . "/vendor/bootstrap/dist/css/bootstrap.min.css",
                 [],
-                @filemtime($bs_css) ?: null,
+                filemtime($css_path),
             );
         }
 
-        if (file_exists($bs_js)) {
+        if (file_exists($js_path)) {
             wp_enqueue_script(
                 "bootstrap",
-                $uri . "/vendor/bootstrap/dist/js/bootstrap.bundle.min.js",
+                $theme_uri .
+                    "/vendor/bootstrap/dist/js/bootstrap.bundle.min.js",
                 [],
-                @filemtime($bs_js) ?: null,
+                filemtime($js_path),
                 true,
             );
         }
     },
-    10,
-); // раньше наших CSS
+    5,
+); // раньше твоих ld-css

@@ -4,17 +4,48 @@ if (!defined("ABSPATH")) {
 }
 
 /**
- * LowDesign — ACF: глобальные цвета (ld_site_config) + переопределения на страницах
- * Работает с ACF Free.
+ * LowDesign — ACF Theme Colors (Dropdowns)
+ * Все значения читаем из твоих CSS-токенов.
  */
-add_action("acf/init", function () {
+
+function ld_extract_tokens($file, $prefix)
+{
+    $path = get_stylesheet_directory() . "/assets/css/" . $file;
+    if (!file_exists($path)) {
+        return [];
+    }
+    $css = file_get_contents($path);
+    preg_match_all(
+        "/--" . preg_quote($prefix, "/") . "-([a-z0-9-]+)/i",
+        $css,
+        $matches,
+    );
+    $tokens = array_unique($matches[1] ?? []);
+    sort($tokens);
+    $out = [];
+    foreach ($tokens as $token) {
+        $out[$token] = ucfirst($token);
+    }
+    return $out;
+}
+
+// читаем из твоих файлов
+$chroma_choices = ld_extract_tokens("012-ld_chroma.css", "ld-chroma");
+$highlight_choices = ld_extract_tokens("013-ld_highlight.css", "ld-highlight");
+$color_choices = ld_extract_tokens("011-ld-color.css", "ld-color");
+
+add_action("acf/init", function () use (
+    $chroma_choices,
+    $highlight_choices,
+    $color_choices,
+) {
     if (!function_exists("acf_add_local_field_group")) {
         return;
     }
 
-    // Глобально в твоём CPT: ld_site_config
+    // --- глобальные (Site Config) ---
     acf_add_local_field_group([
-        "key" => "group_ld_theme_colors_global",
+        "key" => "group_ld_theme_global",
         "title" => "Theme Colors",
         "fields" => [
             [
@@ -23,11 +54,11 @@ add_action("acf/init", function () {
                 "name" => "theme_mode",
                 "type" => "select",
                 "choices" => [
+                    "auto" => "Auto (system)",
                     "light" => "Light",
                     "dark" => "Dark",
-                    "auto" => "Auto (system)",
                 ],
-                "default_value" => "light",
+                "default_value" => "auto",
                 "ui" => 1,
                 "wrapper" => ["width" => "33"],
             ],
@@ -35,23 +66,20 @@ add_action("acf/init", function () {
                 "key" => "field_ld_theme_chroma",
                 "label" => "Chroma (base)",
                 "name" => "theme_chroma",
-                "type" => "text",
-                "placeholder" => "blue / indigo / green / red / ...",
+                "type" => "select",
+                "choices" => $chroma_choices,
+                "ui" => 1,
+                "allow_null" => 0,
                 "wrapper" => ["width" => "33"],
             ],
             [
                 "key" => "field_ld_theme_highlight",
                 "label" => "Highlight",
                 "name" => "theme_highlight",
-                "type" => "text",
-                "placeholder" => "soft / vivid / muted / ...",
-                "wrapper" => ["width" => "33"],
-            ],
-            [
-                "key" => "field_ld_theme_color",
-                "label" => "Custom Color",
-                "name" => "theme_color",
-                "type" => "color_picker",
+                "type" => "select",
+                "choices" => $highlight_choices,
+                "ui" => 1,
+                "allow_null" => 0,
                 "wrapper" => ["width" => "33"],
             ],
         ],
@@ -60,18 +88,17 @@ add_action("acf/init", function () {
                 [
                     "param" => "post_type",
                     "operator" => "==",
-                    "value" => "ld_site_config",
+                    "value" => "site_config",
                 ],
             ],
         ],
-        "position" => "normal",
         "style" => "seamless",
         "active" => true,
     ]);
 
-    // На страницах (и постах/CPT при желании)
+    // --- страница (override) ---
     acf_add_local_field_group([
-        "key" => "group_ld_theme_colors_page",
+        "key" => "group_ld_theme_page",
         "title" => "Page Theme Colors",
         "fields" => [
             [
@@ -81,9 +108,9 @@ add_action("acf/init", function () {
                 "type" => "select",
                 "choices" => [
                     "inherit" => "Inherit",
+                    "auto" => "Auto (system)",
                     "light" => "Light",
                     "dark" => "Dark",
-                    "auto" => "Auto (system)",
                 ],
                 "default_value" => "inherit",
                 "ui" => 1,
@@ -93,30 +120,36 @@ add_action("acf/init", function () {
                 "key" => "field_ld_page_chroma",
                 "label" => "Chroma (base)",
                 "name" => "page_chroma",
-                "type" => "text",
-                "placeholder" => "blue / indigo / green / red / ...",
+                "type" => "select",
+                "choices" => $chroma_choices,
+                "ui" => 1,
+                "allow_null" => 1,
                 "wrapper" => ["width" => "25"],
             ],
             [
                 "key" => "field_ld_page_highlight",
                 "label" => "Highlight",
                 "name" => "page_highlight",
-                "type" => "text",
-                "placeholder" => "soft / vivid / muted / ...",
+                "type" => "select",
+                "choices" => $highlight_choices,
+                "ui" => 1,
+                "allow_null" => 1,
                 "wrapper" => ["width" => "25"],
             ],
             [
                 "key" => "field_ld_page_color",
-                "label" => "Custom Color",
+                "label" => "Color",
                 "name" => "page_color",
-                "type" => "color_picker",
+                "type" => "select",
+                "choices" => $color_choices,
+                "ui" => 1,
+                "allow_null" => 1,
                 "wrapper" => ["width" => "25"],
             ],
         ],
         "location" => [
             [["param" => "post_type", "operator" => "==", "value" => "page"]],
         ],
-        "position" => "side",
         "style" => "seamless",
         "active" => true,
     ]);
