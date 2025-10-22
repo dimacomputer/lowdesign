@@ -4,7 +4,7 @@ if (!defined("ABSPATH")) {
 }
 
 /**
- * LowDesign – ACF groups: Theme Colors (global site_config) + Page overrides
+ * LowDesign — ACF: глобальные цвета (ld_site_config) + переопределения на страницах
  * Работает с ACF Free.
  */
 add_action("acf/init", function () {
@@ -12,7 +12,7 @@ add_action("acf/init", function () {
         return;
     }
 
-    // ГЛОБАЛЬНО: вкладка Theme Colors в CPT site_config
+    // Глобально в твоём CPT: ld_site_config
     acf_add_local_field_group([
         "key" => "group_ld_theme_colors_global",
         "title" => "Theme Colors",
@@ -22,7 +22,11 @@ add_action("acf/init", function () {
                 "label" => "Theme Mode",
                 "name" => "theme_mode",
                 "type" => "select",
-                "choices" => ["light" => "Light", "dark" => "Dark"],
+                "choices" => [
+                    "light" => "Light",
+                    "dark" => "Dark",
+                    "auto" => "Auto (system)",
+                ],
                 "default_value" => "light",
                 "ui" => 1,
                 "wrapper" => ["width" => "33"],
@@ -32,7 +36,7 @@ add_action("acf/init", function () {
                 "label" => "Chroma (base)",
                 "name" => "theme_chroma",
                 "type" => "text",
-                "placeholder" => "blue / indigo / green / red ...",
+                "placeholder" => "blue / indigo / green / red / ...",
                 "wrapper" => ["width" => "33"],
             ],
             [
@@ -40,7 +44,7 @@ add_action("acf/init", function () {
                 "label" => "Highlight",
                 "name" => "theme_highlight",
                 "type" => "text",
-                "placeholder" => "soft / vivid / muted ...",
+                "placeholder" => "soft / vivid / muted / ...",
                 "wrapper" => ["width" => "33"],
             ],
             [
@@ -50,31 +54,22 @@ add_action("acf/init", function () {
                 "type" => "color_picker",
                 "wrapper" => ["width" => "33"],
             ],
-            [
-                "key" => "field_ld_theme_note",
-                "label" => "",
-                "name" => "theme_note",
-                "type" => "message",
-                "message" =>
-                    "Глобальные цвета сайта. На страницах можно переопределить.",
-            ],
         ],
         "location" => [
             [
                 [
                     "param" => "post_type",
                     "operator" => "==",
-                    "value" => "site_config",
+                    "value" => "ld_site_config",
                 ],
             ],
         ],
-        "menu_order" => 20,
         "position" => "normal",
         "style" => "seamless",
         "active" => true,
     ]);
 
-    // СТРАНИЦА: локальные переопределения
+    // На страницах (и постах/CPT при желании)
     acf_add_local_field_group([
         "key" => "group_ld_theme_colors_page",
         "title" => "Page Theme Colors",
@@ -85,42 +80,42 @@ add_action("acf/init", function () {
                 "name" => "page_theme_mode",
                 "type" => "select",
                 "choices" => [
-                    "inherit" => "Inherit (use global)",
+                    "inherit" => "Inherit",
                     "light" => "Light",
                     "dark" => "Dark",
+                    "auto" => "Auto (system)",
                 ],
                 "default_value" => "inherit",
                 "ui" => 1,
-                "wrapper" => ["width" => "33"],
+                "wrapper" => ["width" => "25"],
             ],
             [
                 "key" => "field_ld_page_chroma",
                 "label" => "Chroma (base)",
                 "name" => "page_chroma",
                 "type" => "text",
-                "placeholder" => "blue / indigo / green / red ...",
-                "wrapper" => ["width" => "33"],
+                "placeholder" => "blue / indigo / green / red / ...",
+                "wrapper" => ["width" => "25"],
             ],
             [
                 "key" => "field_ld_page_highlight",
                 "label" => "Highlight",
                 "name" => "page_highlight",
                 "type" => "text",
-                "placeholder" => "soft / vivid / muted ...",
-                "wrapper" => ["width" => "33"],
+                "placeholder" => "soft / vivid / muted / ...",
+                "wrapper" => ["width" => "25"],
             ],
             [
                 "key" => "field_ld_page_color",
                 "label" => "Custom Color",
                 "name" => "page_color",
                 "type" => "color_picker",
-                "wrapper" => ["width" => "33"],
+                "wrapper" => ["width" => "25"],
             ],
         ],
         "location" => [
             [["param" => "post_type", "operator" => "==", "value" => "page"]],
         ],
-        "menu_order" => 0,
         "position" => "side",
         "style" => "seamless",
         "active" => true,

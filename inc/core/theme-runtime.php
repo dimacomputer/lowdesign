@@ -4,19 +4,18 @@ if (!defined("ABSPATH")) {
 }
 
 /**
- * LowDesign – Theme Runtime (semantic only)
- * Берёт Site Config (CPT) как глобальные настройки.
- * Разрешает override на уровне страницы.
- * Назначает классы на <body> и прокидывает :root vars.
+ * LowDesign — Theme Runtime
+ * Источник глобальных настроек — последний опубликованный ld_site_config.
+ * На странице разрешаем override.
+ * Вешаем классы на <body> и пробрасываем :root переменные.
  */
 
-// найти последний опубликованный site_config (или site-config)
 function ld_get_site_config_post_id()
 {
     $q = new WP_Query([
-        "post_type" => ["site_config", "site-config"],
-        "posts_per_page" => 1,
+        "post_type" => ["ld_site_config", "site_config", "site-config"],
         "post_status" => "publish",
+        "posts_per_page" => 1,
         "orderby" => "date",
         "order" => "DESC",
         "no_found_rows" => true,
@@ -29,17 +28,16 @@ function ld_get_site_config_post_id()
     return $id;
 }
 
-// собрать итоговый контекст
 function ld_get_theme_context()
 {
     $sid = ld_get_site_config_post_id();
 
-    $g_mode = $sid ? get_field("theme_mode", $sid) : null;
+    $g_mode = $sid ? get_field("theme_mode", $sid) : null; // light|dark|auto
     $g_chroma = $sid ? get_field("theme_chroma", $sid) : null;
     $g_highlight = $sid ? get_field("theme_highlight", $sid) : null;
     $g_color = $sid ? get_field("theme_color", $sid) : null;
 
-    $p_mode = get_field("page_theme_mode"); // inherit|light|dark|null
+    $p_mode = get_field("page_theme_mode"); // inherit|light|dark|auto|null
 
     return [
         "mode" =>
@@ -51,19 +49,18 @@ function ld_get_theme_context()
     ];
 }
 
-// <body> classes
 add_filter(
     "body_class",
     function ($classes) {
         $t = ld_get_theme_context();
-        $classes[] = "ld-theme-" . sanitize_html_class($t["mode"]);
-        if (!empty($t["chroma"])) {
+        $classes[] = "ld-theme-" . sanitize_html_class($t["mode"]); // ld-theme-light|dark|auto
+        if ($t["chroma"]) {
             $classes[] = "ld-chroma-" . sanitize_html_class($t["chroma"]);
         }
-        if (!empty($t["highlight"])) {
+        if ($t["highlight"]) {
             $classes[] = "ld-highlight-" . sanitize_html_class($t["highlight"]);
         }
-        if (!empty($t["locked"])) {
+        if ($t["locked"]) {
             $classes[] = "ld-theme-locked";
         }
         return $classes;
@@ -71,13 +68,17 @@ add_filter(
     20,
 );
 
-// :root переменные
+/**
+ * :root variables
+ * - --ld-page-color (если задан custom color)
+ * - Хук на auto-режим делаем CSS-медиавыражением: .ld-theme-auto @media (prefers-color-scheme: dark) {...}
+ */
 add_action(
     "wp_head",
     function () {
         $t = ld_get_theme_context();
         $vars = [];
-        if (!empty($t["color"])) {
+        if ($t["color"]) {
             $vars[] = "--ld-page-color:" . esc_attr($t["color"]);
         }
         if ($vars) {

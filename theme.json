@@ -1,16 +1,8 @@
 {
   "version": 2,
   "settings": {
-    "color": {
-      "palette": [],
-      "defaultPalette": false,
-      "custom": true
-    },
-    "typography": {
-      "customFontSize": true
-    },
-    "layout": {},
-    "spacing": {}
+    "color": { "palette": [], "defaultPalette": false, "custom": true },
+    "typography": { "customFontSize": true }
   },
   "styles": {}
 }
