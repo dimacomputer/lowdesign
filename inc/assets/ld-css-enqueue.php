@@ -4,8 +4,8 @@ if (!defined("ABSPATH")) {
 }
 
 /**
- * LowDesign — подключение ВСЕХ .css из /assets/css по естественному порядку
- * 010-*, 011-*, 012-*, 013-*, 014-*, 015-* ...
+ * LowDesign — подключаем все .css из /assets/css по естественному порядку имён:
+ * 010-, 011-, 012-, 013-, 014-, 015- ...
  */
 add_action(
     "wp_enqueue_scripts",
@@ -22,7 +22,7 @@ add_action(
         }
 
         natsort($files);
-        $deps = [];
+        $deps = ["bootstrap"]; // идём после bootstrap (или bootstrap-cdn)
         foreach ($files as $path) {
             $name = basename($path);
             $handle = "ld-css-" . sanitize_title($name);
@@ -31,5 +31,5 @@ add_action(
             $deps[] = $handle; // соблюдаем порядок
         }
     },
-    30,
+    10,
 );

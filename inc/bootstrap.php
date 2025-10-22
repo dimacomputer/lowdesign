@@ -37,8 +37,8 @@ add_action(
         ld_require_once_safe("$inc/assets/ld-css-enqueue.php");
 
         // 5) Управление темой (ACF + runtime)
-        ld_require_once_safe("$inc/cpt/020-ld-site-theme.php");
-        ld_require_once_safe("$inc/core/theme-runtime.php");
+        ld_require_once_safe("$inc/cpt/020-ld-theme.php");
+        ld_require_once_safe("$inc/core/ld-theme-runtime.php");
 
         // Старые ассеты отключены:
         // ld_require_once_safe("$inc/assets/enqueue-frontend.php");
