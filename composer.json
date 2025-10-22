@@ -1,0 +1,14 @@
+{
+    "name": "litvinov/lowdesign",
+    "description": "WordPress theme development",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Dmitry Litvinov",
+            "email": "dimacomputer@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "php-stubs/wordpress-stubs": "^6.8"
+    }
+}
