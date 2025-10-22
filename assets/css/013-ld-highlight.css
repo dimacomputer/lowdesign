@@ -11,7 +11,7 @@
   --ld-highlight-925: var(--ld-gray-925);
 }
 
-[data-chroma="light"] {
+[data-chroma="default"] {
   --ld-highlight-125: var(--ld-gray-125);
   --ld-highlight-225: var(--ld-gray-225);
   --ld-highlight-325: var(--ld-gray-325);

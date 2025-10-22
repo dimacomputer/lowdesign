@@ -31,7 +31,7 @@
   --ld-color-950: var(--ld-gray-950);
 }
 
-[data-chroma="light"] {
+[data-chroma="default"] {
   --ld-white: var(--ld-white);
   --ld-black: var(--ld-black);
   --ld-color-100: var(--ld-gray-100);

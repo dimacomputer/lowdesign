@@ -11,7 +11,7 @@
   --ld-chroma-900-rgb: var(--ld-gray-900-rgb);
 }
 
-[data-chroma="light"] {
+[data-chroma="default"] {
   --ld-chroma-100-rgb: var(--ld-gray-100-rgb);
   --ld-chroma-200-rgb: var(--ld-gray-200-rgb);
   --ld-chroma-300-rgb: var(--ld-gray-300-rgb);

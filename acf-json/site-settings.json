@@ -1,133 +1,62 @@
 {
-  "active": 1,
-  "description": "Global site settings stored on a singleton CPT (works with ACF Free).",
-  "fields": [
-    {
-      "key": "field_tab_brand",
-      "label": "Brand",
-      "name": "",
-      "placement": "left",
-      "type": "tab"
-    },
-    {
-      "instructions": "Upload SVG logo (preferred). If empty, raster logo or Theme custom logo will be used.",
-      "key": "field_site_logo_svg",
-      "label": "Site Logo (SVG)",
-      "library": "all",
-      "name": "site_logo_svg",
-      "preview_size": "medium",
-      "required": 0,
-      "return_format": "id",
-      "type": "image"
-    },
-    {
-      "key": "field_site_logo_raster",
-      "label": "Site Logo (raster)",
-      "library": "all",
-      "name": "site_logo_raster",
-      "preview_size": "medium",
-      "return_format": "id",
-      "type": "image"
-    },
-    {
-      "key": "field_tab_contacts",
-      "label": "Contacts",
-      "name": "",
-      "placement": "left",
-      "type": "tab"
-    },
-    {
-      "key": "field_contacts_email",
-      "label": "Email",
-      "name": "contacts_email",
-      "type": "email"
-    },
-    {
-      "key": "field_contacts_phone",
-      "label": "Phone",
-      "name": "contacts_phone",
-      "type": "text"
-    },
-    {
-      "key": "field_tab_seo",
-      "label": "SEO Defaults",
-      "name": "",
-      "placement": "left",
-      "type": "tab"
-    },
-    {
-      "key": "field_default_meta_title",
-      "label": "Default Meta Title",
-      "name": "default_meta_title",
-      "type": "text"
-    },
-    {
-      "key": "field_default_meta_description",
-      "label": "Default Meta Description",
-      "name": "default_meta_description",
-      "type": "textarea"
-    },
-    {
-      "key": "field_tab_features",
-      "label": "Features",
-      "name": "",
-      "placement": "left",
-      "type": "tab"
-    },
-    {
-      "default_value": 1,
-      "key": "field_enable_categories_on_pages",
-      "label": "Enable Categories on Pages/CPT",
-      "name": "enable_categories_on_pages",
-      "type": "true_false",
-      "ui": 1
-    },
-    {
-      "default_value": 1,
-      "key": "field_enable_excerpt_on_pages",
-      "label": "Enable Excerpt on Pages",
-      "name": "enable_excerpt_on_pages",
-      "type": "true_false",
-      "ui": 1
-    },
-    {
-      "default_value": 1,
-      "key": "field_enable_template_loader",
-      "label": "Enable Template Loader",
-      "name": "enable_template_loader",
-      "type": "true_false",
-      "ui": 1
-    },
-    {
-      "key": "field_tab_footer",
-      "label": "Footer",
-      "name": "",
-      "placement": "left",
-      "type": "tab"
-    },
-    {
-      "instructions": "E.g. © {Y} Malati Lowe Design. You can use {Y} for current year.",
-      "key": "field_site_footer_copyright",
-      "label": "Footer Copyright",
-      "name": "site_footer_copyright",
-      "type": "text"
-    }
-  ],
-  "instruction_placement": "label",
-  "key": "ld_site_config",
-  "label_placement": "top",
-  "location": [
-    [
-      {
-        "operator": "==",
-        "param": "post_type",
-        "value": "ld_site_config"
-      }
-    ]
-  ],
-  "menu_order": 0,
-  "position": "normal",
-  "style": "default",
-  "title": "Site Settings",
-  "modified": 1757753322
+  "key": "field_tab_theme_colors",
+  "label": "Theme Colors",
+  "name": "",
+  "placement": "left",
+  "type": "tab"
+},
+{
+  "key": "field_theme_mode",
+  "label": "Theme Mode",
+  "name": "theme_mode",
+  "type": "select",
+  "choices": {
+    "auto": "Auto (system)",
+    "default": "Default (light)",
+    "dark": "Dark"
+  },
+  "default_value": "auto",
+  "ui": 1
+},
+{
+  "key": "field_theme_chroma",
+  "label": "Chroma (bg)",
+  "name": "theme_chroma",
+  "type": "select",
+  "choices": {
+    "blue": "blue",
+    "indigo": "indigo",
+    "purple": "purple",
+    "pink": "pink",
+    "red": "red",
+    "orange": "orange",
+    "yellow": "yellow",
+    "green": "green",
+    "teal": "teal",
+    "cyan": "cyan"
+  },
+  "ui": 1
+},
+{
+  "key": "field_theme_highlight",
+  "label": "Highlight (btn)",
+  "name": "theme_highlight",
+  "type": "select",
+  "choices": {
+    "soft": "soft",
+    "vivid": "vivid",
+    "muted": "muted"
+  },
+  "ui": 1
+},
+{
+  "key": "field_theme_color",
+  "label": "Color (fg/body)",
+  "name": "theme_color",
+  "type": "select",
+  "choices": {
+    "default": "default",
+    "dark": "dark"
+  },
+  "ui": 1
 }
