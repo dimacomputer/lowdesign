@@ -4,13 +4,18 @@ if (!defined("ABSPATH")) {
 }
 
 /**
- * LowDesign — ACF: Theme Controls (dropdowns only)
- * Источники значений: наши CSS-токены (011/012/013).
+ * LowDesign — ACF: Theme Controls (families, not shades)
+ * Берём списки из селекторов классов:
+ *  - 012-ld_chroma.css     → .ld-chroma-<family>    → Chroma (bg)
+ *  - 013-ld_highlight.css  → .ld-highlight-<family> → Highlight (btn)
+ *  - 011-ld-color.css      → .ld-color-<family>     → Color (fg/body)
+ *
+ * Никаких "custom color". Только семейства.
  */
 
-function ld_extract_tokens_from_css($file, $prefix)
+function ld_extract_families_from_css($file, $class_prefix)
 {
-    // поддержим оба варианта имён — если вдруг где-то "Id" вместо "ld"
+    // Поддержим "ld" / "Id" в именах файлов на всякий случай
     $candidates = [
         $file,
         str_replace("Id", "ld", $file),
@@ -27,28 +32,41 @@ function ld_extract_tokens_from_css($file, $prefix)
     if (!$path) {
         return [];
     }
+
     $css = file_get_contents($path);
-    preg_match_all(
-        "/--" . preg_quote($prefix, "/") . "-([a-z0-9-]+)/i",
-        $css,
-        $m,
-    );
-    $tokens = array_unique($m[1] ?? []);
-    sort($tokens);
-    $out = [];
-    foreach ($tokens as $t) {
-        $out[$t] = $t;
-    } // показываем ровно как в CSS
-    return $out;
+
+    // Ищем селекторы вида: .ld-chroma-blue { ... }  или  .ld-chroma-blue, .ld-chroma-indigo { ... }
+    // Берём только буквенно-дефисные имена семейств (без чисел/суффиксов -rgb)
+    $pattern =
+        "/\." . preg_quote($class_prefix, "/") . "-([a-z-]+)\b(?![0-9-])/i";
+    preg_match_all($pattern, $css, $m);
+
+    // Убираем очевидные уровни и служебные хвосты
+    $raw = array_unique($m[1] ?? []);
+    $families = [];
+    foreach ($raw as $name) {
+        $clean = strtolower($name);
+        // отфильтруем возможные хвосты вроде "-rgb" и случайные числа
+        $clean = preg_replace('/-?rgb$/', "", $clean);
+        if (preg_match("/\d/", $clean)) {
+            continue;
+        } // если всё же попалась цифра — пропускаем
+        $families[$clean] = $clean; // показываем как есть, чтобы 1:1 совпадало с классами
+    }
+    ksort($families);
+    return $families;
 }
 
-// списки значений
-$choices_chroma = ld_extract_tokens_from_css("012-ld_chroma.css", "ld-chroma"); // bg
-$choices_highlight = ld_extract_tokens_from_css(
+// Списки семейств
+$choices_chroma = ld_extract_families_from_css(
+    "012-ld_chroma.css",
+    "ld-chroma",
+); // bg
+$choices_highlight = ld_extract_families_from_css(
     "013-ld_highlight.css",
     "ld-highlight",
 ); // btn
-$choices_color = ld_extract_tokens_from_css("011-ld-color.css", "ld-color"); // fg/body
+$choices_color = ld_extract_families_from_css("011-ld-color.css", "ld-color"); // fg/body
 
 add_action("acf/init", function () use (
     $choices_chroma,
@@ -59,7 +77,7 @@ add_action("acf/init", function () use (
         return;
     }
 
-    // === Site Config (CPT: site_config) ===
+    // --- Site Config (CPT: site_config) ---
     acf_add_local_field_group([
         "key" => "group_ld_theme_global",
         "title" => "Theme Colors",
@@ -122,7 +140,7 @@ add_action("acf/init", function () use (
         "active" => true,
     ]);
 
-    // === Page override (post_type: page) ===
+    // --- Page override (post_type: page) ---
     acf_add_local_field_group([
         "key" => "group_ld_theme_page",
         "title" => "Page Theme Colors",
