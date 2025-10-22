@@ -59,11 +59,11 @@ function ld_extract_families_from_css($file, $class_prefix)
 
 // Списки семейств
 $choices_chroma = ld_extract_families_from_css(
-    "012-ld_chroma.css",
+    "012-ld-chroma.css",
     "ld-chroma",
 ); // bg
 $choices_highlight = ld_extract_families_from_css(
-    "013-ld_highlight.css",
+    "013-ld-highlight.css",
     "ld-highlight",
 ); // btn
 $choices_color = ld_extract_families_from_css("011-ld-color.css", "ld-color"); // fg/body
