@@ -56,6 +56,7 @@
       "name": "theme_chroma",
       "type": "select",
       "choices": {
+        "default": "default",
         "blue": "blue",
         "indigo": "indigo",
         "purple": "purple",
@@ -75,9 +76,17 @@
       "name": "theme_highlight",
       "type": "select",
       "choices": {
-        "soft": "soft",
-        "vivid": "vivid",
-        "muted": "muted"
+        "default": "default",
+        "blue": "blue",
+        "indigo": "indigo",
+        "purple": "purple",
+        "pink": "pink",
+        "red": "red",
+        "orange": "orange",
+        "yellow": "yellow",
+        "green": "green",
+        "teal": "teal",
+        "cyan": "cyan"
       },
       "ui": 1
     },
@@ -88,10 +97,20 @@
       "type": "select",
       "choices": {
         "default": "default",
-        "dark": "dark"
+        "blue": "blue",
+        "indigo": "indigo",
+        "purple": "purple",
+        "pink": "pink",
+        "red": "red",
+        "orange": "orange",
+        "yellow": "yellow",
+        "green": "green",
+        "teal": "teal",
+        "cyan": "cyan"
       },
       "ui": 1
     },
+
     {
       "key": "field_tab_contacts",
       "label": "Contacts",
@@ -111,6 +130,7 @@
       "name": "contacts_phone",
       "type": "text"
     },
+
     {
       "key": "field_tab_seo",
       "label": "SEO Defaults",
@@ -130,6 +150,7 @@
       "name": "default_meta_description",
       "type": "textarea"
     },
+
     {
       "key": "field_tab_features",
       "label": "Features",
@@ -161,6 +182,7 @@
       "type": "true_false",
       "ui": 1
     },
+
     {
       "key": "field_tab_footer",
       "label": "Footer",
@@ -169,7 +191,7 @@
       "type": "tab"
     },
     {
-      "instructions": "E.g. © {Y} Malati Lowe Design. You can use {Y} for current year.",
+      "instructions": "E.g. © {Y} Low Design. You can use {Y} for current year.",
       "key": "field_site_footer_copyright",
       "label": "Footer Copyright",
       "name": "site_footer_copyright",
@@ -180,17 +202,11 @@
   "key": "ld_site_config",
   "label_placement": "top",
   "location": [
-    [
-      {
-        "operator": "==",
-        "param": "post_type",
-        "value": "ld_site_config"
-      }
-    ]
+    [{ "operator": "==", "param": "post_type", "value": "ld_site_config" }]
   ],
   "menu_order": 0,
   "position": "normal",
   "style": "default",
   "title": "Site Settings",
-  "modified": 1757753322
+  "modified": 1757760000
 }

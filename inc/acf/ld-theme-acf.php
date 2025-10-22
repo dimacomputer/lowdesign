@@ -1,200 +1,166 @@
 <?php
+/**
+ * LowDesign — Theme ACF glue (global + per-page theme controls)
+ */
 if (!defined("ABSPATH")) {
     exit();
 }
 
 /**
- * LowDesign — ACF: Theme Controls (families, not shades)
- * Берём списки из селекторов классов:
- *  - 012-ld_chroma.css     → .ld-chroma-<family>    → Chroma (bg)
- *  - 013-ld_highlight.css  → .ld-highlight-<family> → Highlight (btn)
- *  - 011-ld-color.css      → .ld-color-<family>     → Color (fg/body)
- *
- * Никаких "custom color". Только семейства.
+ * Получить ID записи-конфига сайта (CPT: ld_site_config)
  */
-
-function ld_extract_families_from_css($file, $class_prefix)
+function ld_get_site_config_id(): ?int
 {
-    // Поддержим "ld" / "Id" в именах файлов на всякий случай
-    $candidates = [
-        $file,
-        str_replace("Id", "ld", $file),
-        str_replace("ld", "Id", $file),
-    ];
-    $path = "";
-    foreach ($candidates as $cand) {
-        $try = get_stylesheet_directory() . "/assets/css/" . $cand;
-        if (file_exists($try)) {
-            $path = $try;
-            break;
-        }
-    }
-    if (!$path) {
-        return [];
+    static $id = null;
+    if ($id !== null) {
+        return $id;
     }
 
-    $css = file_get_contents($path);
-
-    // Ищем селекторы вида: .ld-chroma-blue { ... }  или  .ld-chroma-blue, .ld-chroma-indigo { ... }
-    // Берём только буквенно-дефисные имена семейств (без чисел/суффиксов -rgb)
-    $pattern =
-        "/\." . preg_quote($class_prefix, "/") . "-([a-z-]+)\b(?![0-9-])/i";
-    preg_match_all($pattern, $css, $m);
-
-    // Убираем очевидные уровни и служебные хвосты
-    $raw = array_unique($m[1] ?? []);
-    $families = [];
-    foreach ($raw as $name) {
-        $clean = strtolower($name);
-        // отфильтруем возможные хвосты вроде "-rgb" и случайные числа
-        $clean = preg_replace('/-?rgb$/', "", $clean);
-        if (preg_match("/\d/", $clean)) {
-            continue;
-        } // если всё же попалась цифра — пропускаем
-        $families[$clean] = $clean; // показываем как есть, чтобы 1:1 совпадало с классами
-    }
-    ksort($families);
-    return $families;
+    $q = new WP_Query([
+        "post_type" => "ld_site_config",
+        "posts_per_page" => 1,
+        "post_status" => "publish",
+        "orderby" => "ID",
+        "order" => "ASC",
+        "fields" => "ids",
+    ]);
+    $id = $q->have_posts() ? intval($q->posts[0]) : null;
+    wp_reset_postdata();
+    return $id;
 }
 
-// Списки семейств
-$choices_chroma = ld_extract_families_from_css(
-    "012-ld-chroma.css",
-    "ld-chroma",
-); // bg
-$choices_highlight = ld_extract_families_from_css(
-    "013-ld-highlight.css",
-    "ld-highlight",
-); // btn
-$choices_color = ld_extract_families_from_css("011-ld-color.css", "ld-color"); // fg/body
+/**
+ * Прочитать глобальные настройки темы из Site Config
+ */
+function ld_get_global_theme_settings(): array
+{
+    $id = ld_get_site_config_id();
+    if (!$id) {
+        return [
+            "mode" => "auto", // auto|default|dark
+            "chroma" => "default", // см. 012-ld-chroma.css
+            "highlight" => "default", // см. 013-ld-highlight.css
+            "color" => "default", // см. 011-ld-color.css
+        ];
+    }
+    // поля в site-settings.json
+    $mode = get_field("theme_mode", $id) ?: "auto";
+    $chroma = get_field("theme_chroma", $id) ?: "default";
+    $highlight = get_field("theme_highlight", $id) ?: "default";
+    $color = get_field("theme_color", $id) ?: "default";
 
-add_action("acf/init", function () use (
-    $choices_chroma,
-    $choices_highlight,
-    $choices_color,
-) {
-    if (!function_exists("acf_add_local_field_group")) {
-        return;
+    return compact("mode", "chroma", "highlight", "color");
+}
+
+/**
+ * Перезапись из Page Color Settings (если есть)
+ * Ожидаемые имена полей в page-color-settings.json:
+ *   page_theme_mode, page_theme_chroma, page_theme_highlight, page_theme_color
+ * Если у тебя другие — поправь массив $page_keys.
+ */
+function ld_get_effective_theme_settings(?int $post_id = null): array
+{
+    $g = ld_get_global_theme_settings();
+
+    if (!$post_id) {
+        $post_id = get_queried_object_id();
+    }
+    if (!$post_id) {
+        return $g;
     }
 
-    // --- Site Config (CPT: site_config) ---
-    acf_add_local_field_group([
-        "key" => "group_ld_theme_global",
-        "title" => "Theme Colors",
-        "fields" => [
-            [
-                "key" => "field_ld_theme_mode",
-                "label" => "Theme Mode",
-                "name" => "theme_mode",
-                "type" => "select",
-                "choices" => [
-                    "auto" => "Auto (system)",
-                    "light" => "Light",
-                    "dark" => "Dark",
-                ],
-                "default_value" => "auto",
-                "ui" => 1,
-                "wrapper" => ["width" => "25"],
-            ],
-            [
-                "key" => "field_ld_theme_chroma",
-                "label" => "Chroma (bg)",
-                "name" => "theme_chroma",
-                "type" => "select",
-                "choices" => $choices_chroma,
-                "ui" => 1,
-                "allow_null" => 0,
-                "wrapper" => ["width" => "25"],
-            ],
-            [
-                "key" => "field_ld_theme_highlight",
-                "label" => "Highlight (btn)",
-                "name" => "theme_highlight",
-                "type" => "select",
-                "choices" => $choices_highlight,
-                "ui" => 1,
-                "allow_null" => 0,
-                "wrapper" => ["width" => "25"],
-            ],
-            [
-                "key" => "field_ld_theme_color",
-                "label" => "Color (fg/body)",
-                "name" => "theme_color",
-                "type" => "select",
-                "choices" => $choices_color,
-                "ui" => 1,
-                "allow_null" => 0,
-                "wrapper" => ["width" => "25"],
-            ],
-        ],
-        "location" => [
-            [
-                [
-                    "param" => "post_type",
-                    "operator" => "==",
-                    "value" => "site_config",
-                ],
-            ],
-        ],
-        "style" => "seamless",
-        "active" => true,
-    ]);
+    $page_keys = [
+        "mode" => "page_theme_mode",
+        "chroma" => "page_theme_chroma",
+        "highlight" => "page_theme_highlight",
+        "color" => "page_theme_color",
+    ];
 
-    // --- Page override (post_type: page) ---
-    acf_add_local_field_group([
-        "key" => "group_ld_theme_page",
-        "title" => "Page Theme Colors",
-        "fields" => [
-            [
-                "key" => "field_ld_page_theme_mode",
-                "label" => "Theme Mode",
-                "name" => "page_theme_mode",
-                "type" => "select",
-                "choices" => [
-                    "inherit" => "Inherit",
-                    "auto" => "Auto (system)",
-                    "light" => "Light",
-                    "dark" => "Dark",
-                ],
-                "default_value" => "inherit",
-                "ui" => 1,
-                "wrapper" => ["width" => "25"],
-            ],
-            [
-                "key" => "field_ld_page_chroma",
-                "label" => "Chroma (bg)",
-                "name" => "page_chroma",
-                "type" => "select",
-                "choices" => $choices_chroma,
-                "allow_null" => 1,
-                "ui" => 1,
-                "wrapper" => ["width" => "25"],
-            ],
-            [
-                "key" => "field_ld_page_highlight",
-                "label" => "Highlight (btn)",
-                "name" => "page_highlight",
-                "type" => "select",
-                "choices" => $choices_highlight,
-                "allow_null" => 1,
-                "ui" => 1,
-                "wrapper" => ["width" => "25"],
-            ],
-            [
-                "key" => "field_ld_page_color",
-                "label" => "Color (fg/body)",
-                "name" => "page_color",
-                "type" => "select",
-                "choices" => $choices_color,
-                "allow_null" => 1,
-                "ui" => 1,
-                "wrapper" => ["width" => "25"],
-            ],
-        ],
-        "location" => [
-            [["param" => "post_type", "operator" => "==", "value" => "page"]],
-        ],
-        "style" => "seamless",
-        "active" => true,
-    ]);
-});
+    foreach ($page_keys as $k => $field) {
+        $v = get_field($field, $post_id);
+        if ($v && $v !== "inherit") {
+            $g[$k] = $v;
+        }
+    }
+    return $g;
+}
+
+/**
+ * Выставляем data-* на <html> в фронтенде
+ */
+add_action(
+    "wp_head",
+    function () {
+        $t = ld_get_effective_theme_settings(); ?>
+  <script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        // mode: auto|default|dark
+        var mode = <?php echo json_encode($t["mode"]); ?>;
+        var chroma = <?php echo json_encode($t["chroma"]); ?>;
+        var highlight = <?php echo json_encode($t["highlight"]); ?>;
+        var color = <?php echo json_encode($t["color"]); ?>;
+
+        // auto → вычисляем по prefers-color-scheme
+        var themeVal = mode === 'auto'
+          ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default')
+          : mode;
+
+        root.setAttribute('data-theme', themeVal);
+        root.setAttribute('data-chroma', chroma);
+        root.setAttribute('data-highlight', highlight);
+        root.setAttribute('data-color', color);
+      } catch (e) {}
+    })();
+  </script>
+  <?php
+    },
+    1,
+);
+
+/**
+ * То же в редакторе (Gutenberg), чтобы предпросмотр совпадал
+ */
+add_action(
+    "admin_head",
+    function () {
+        if (!function_exists("get_current_screen")) {
+            return;
+        }
+        $screen = get_current_screen();
+        if (!$screen) {
+            return;
+        }
+
+        // Для редактора записей/страниц и кастомных CPT
+        if ($screen->base !== "post") {
+            return;
+        }
+
+        $post_id = isset($_GET["post"]) ? intval($_GET["post"]) : 0;
+        $t = ld_get_effective_theme_settings($post_id);
+        ?>
+  <script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var mode = <?php echo json_encode($t["mode"]); ?>;
+        var chroma = <?php echo json_encode($t["chroma"]); ?>;
+        var highlight = <?php echo json_encode($t["highlight"]); ?>;
+        var color = <?php echo json_encode($t["color"]); ?>;
+        var themeVal = mode === 'auto'
+          ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default')
+          : mode;
+
+        root.setAttribute('data-theme', themeVal);
+        root.setAttribute('data-chroma', chroma);
+        root.setAttribute('data-highlight', highlight);
+        root.setAttribute('data-color', color);
+      } catch (e) {}
+    })();
+  </script>
+  <?php
+    },
+    1,
+);
