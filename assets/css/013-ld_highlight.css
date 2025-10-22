@@ -1,0 +1,144 @@
+/* === LowDesign Highlight Tokens (accents / surfaces) === */
+:root {
+  --ld-highlight-125: var(--ld-gray-125);
+  --ld-highlight-225: var(--ld-gray-225);
+  --ld-highlight-325: var(--ld-gray-325);
+  --ld-highlight-425: var(--ld-gray-425);
+  --ld-highlight-525: var(--ld-gray-525);
+  --ld-highlight-625: var(--ld-gray-625);
+  --ld-highlight-725: var(--ld-gray-725);
+  --ld-highlight-825: var(--ld-gray-825);
+  --ld-highlight-925: var(--ld-gray-925);
+}
+
+[data-chroma="light"] {
+  --ld-highlight-125: var(--ld-gray-125);
+  --ld-highlight-225: var(--ld-gray-225);
+  --ld-highlight-325: var(--ld-gray-325);
+  --ld-highlight-425: var(--ld-gray-425);
+  --ld-highlight-525: var(--ld-gray-525);
+  --ld-highlight-625: var(--ld-gray-625);
+  --ld-highlight-725: var(--ld-gray-725);
+  --ld-highlight-825: var(--ld-gray-825);
+  --ld-highlight-925: var(--ld-gray-925);
+}
+
+[data-chroma="blue"] {
+  --ld-highlight-125: var(--ld-blue-125);
+  --ld-highlight-225: var(--ld-blue-225);
+  --ld-highlight-325: var(--ld-blue-325);
+  --ld-highlight-425: var(--ld-blue-425);
+  --ld-highlight-525: var(--ld-blue-525);
+  --ld-highlight-625: var(--ld-blue-625);
+  --ld-highlight-725: var(--ld-blue-725);
+  --ld-highlight-825: var(--ld-blue-825);
+  --ld-highlight-925: var(--ld-blue-925);
+}
+
+[data-chroma="indigo"] {
+  --ld-highlight-125: var(--ld-indigo-125);
+  --ld-highlight-225: var(--ld-indigo-225);
+  --ld-highlight-325: var(--ld-indigo-325);
+  --ld-highlight-425: var(--ld-indigo-425);
+  --ld-highlight-525: var(--ld-indigo-525);
+  --ld-highlight-625: var(--ld-indigo-625);
+  --ld-highlight-725: var(--ld-indigo-725);
+  --ld-highlight-825: var(--ld-indigo-825);
+  --ld-highlight-925: var(--ld-indigo-925);
+}
+
+[data-chroma="purple"] {
+  --ld-highlight-125: var(--ld-purple-125);
+  --ld-highlight-225: var(--ld-purple-225);
+  --ld-highlight-325: var(--ld-purple-325);
+  --ld-highlight-425: var(--ld-purple-425);
+  --ld-highlight-525: var(--ld-purple-525);
+  --ld-highlight-625: var(--ld-purple-625);
+  --ld-highlight-725: var(--ld-purple-725);
+  --ld-highlight-825: var(--ld-purple-825);
+  --ld-highlight-925: var(--ld-purple-925);
+}
+
+[data-chroma="pink"] {
+  --ld-highlight-125: var(--ld-pink-125);
+  --ld-highlight-225: var(--ld-pink-225);
+  --ld-highlight-325: var(--ld-pink-325);
+  --ld-highlight-425: var(--ld-pink-425);
+  --ld-highlight-525: var(--ld-pink-525);
+  --ld-highlight-625: var(--ld-pink-625);
+  --ld-highlight-725: var(--ld-pink-725);
+  --ld-highlight-825: var(--ld-pink-825);
+  --ld-highlight-925: var(--ld-pink-925);
+}
+
+[data-chroma="orange"] {
+  --ld-highlight-125: var(--ld-orange-125);
+  --ld-highlight-225: var(--ld-orange-225);
+  --ld-highlight-325: var(--ld-orange-325);
+  --ld-highlight-425: var(--ld-orange-425);
+  --ld-highlight-525: var(--ld-orange-525);
+  --ld-highlight-625: var(--ld-orange-625);
+  --ld-highlight-725: var(--ld-orange-725);
+  --ld-highlight-825: var(--ld-orange-825);
+  --ld-highlight-925: var(--ld-orange-925);
+}
+
+[data-chroma="yellow"] {
+  --ld-highlight-125: var(--ld-yellow-125);
+  --ld-highlight-225: var(--ld-yellow-225);
+  --ld-highlight-325: var(--ld-yellow-325);
+  --ld-highlight-425: var(--ld-yellow-425);
+  --ld-highlight-525: var(--ld-yellow-525);
+  --ld-highlight-625: var(--ld-yellow-625);
+  --ld-highlight-725: var(--ld-yellow-725);
+  --ld-highlight-825: var(--ld-yellow-825);
+  --ld-highlight-925: var(--ld-yellow-925);
+}
+
+[data-chroma="green"] {
+  --ld-highlight-125: var(--ld-green-125);
+  --ld-highlight-225: var(--ld-green-225);
+  --ld-highlight-325: var(--ld-green-325);
+  --ld-highlight-425: var(--ld-green-425);
+  --ld-highlight-525: var(--ld-green-525);
+  --ld-highlight-625: var(--ld-green-625);
+  --ld-highlight-725: var(--ld-green-725);
+  --ld-highlight-825: var(--ld-green-825);
+  --ld-highlight-925: var(--ld-green-925);
+}
+
+[data-chroma="teal"] {
+  --ld-highlight-125: var(--ld-teal-125);
+  --ld-highlight-225: var(--ld-teal-225);
+  --ld-highlight-325: var(--ld-teal-325);
+  --ld-highlight-425: var(--ld-teal-425);
+  --ld-highlight-525: var(--ld-teal-525);
+  --ld-highlight-625: var(--ld-teal-625);
+  --ld-highlight-725: var(--ld-teal-725);
+  --ld-highlight-825: var(--ld-teal-825);
+  --ld-highlight-925: var(--ld-teal-925);
+}
+
+[data-chroma="green"] {
+  --ld-highlight-125: var(--ld-green-125);
+  --ld-highlight-225: var(--ld-green-225);
+  --ld-highlight-325: var(--ld-green-325);
+  --ld-highlight-425: var(--ld-green-425);
+  --ld-highlight-525: var(--ld-green-525);
+  --ld-highlight-625: var(--ld-green-625);
+  --ld-highlight-725: var(--ld-green-725);
+  --ld-highlight-825: var(--ld-green-825);
+  --ld-highlight-925: var(--ld-green-925);
+}
+
+[data-chroma="cyan"] {
+  --ld-highlight-125: var(--ld-cyan-125);
+  --ld-highlight-225: var(--ld-cyan-225);
+  --ld-highlight-325: var(--ld-cyan-325);
+  --ld-highlight-425: var(--ld-cyan-425);
+  --ld-highlight-525: var(--ld-cyan-525);
+  --ld-highlight-625: var(--ld-cyan-625);
+  --ld-highlight-725: var(--ld-cyan-725);
+  --ld-highlight-825: var(--ld-cyan-825);
+  --ld-highlight-925: var(--ld-cyan-925);
+}
