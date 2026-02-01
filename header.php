@@ -4,7 +4,18 @@
 
 if (!defined('ABSPATH')) exit;
 ?><!doctype html>
-<html <?php language_attributes(); ?>>
+<?php
+  $ld_html_classes = [];
+  if (function_exists("ld_theme_context")) {
+    $t = ld_theme_context();
+    $ld_html_classes[] = "ld-theme-" . sanitize_html_class($t["mode"]); // auto|light|dark
+    if (!empty($t["chroma"])) $ld_html_classes[] = "ld-chroma-" . sanitize_html_class($t["chroma"]);
+    if (!empty($t["highlight"])) $ld_html_classes[] = "ld-highlight-" . sanitize_html_class($t["highlight"]);
+    if (!empty($t["color"])) $ld_html_classes[] = "ld-color-" . sanitize_html_class($t["color"]);
+    if (!empty($t["locked"])) $ld_html_classes[] = "ld-theme-locked";
+  }
+?>
+<html <?php language_attributes(); ?> class="<?php echo esc_attr(implode(' ', $ld_html_classes)); ?>">
 <head>
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
