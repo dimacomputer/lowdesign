@@ -1,0 +1,419 @@
+/* AUTO-GENERATED Bootstrap bridge (vars only) */
+
+:root[data-ld-theme="default"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="blue"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="blue-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="indigo"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="indigo-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="violet"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="violet-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="pink"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="pink-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="red"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="red-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="orange"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="orange-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="amber"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="amber-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="green"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="green-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="teal"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="teal-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="cyan"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}
+
+:root[data-ld-theme="cyan-dark"] {
+  --bs-body-bg: var(--ld-ref-body-bg);
+  --bs-body-color: var(--ld-ref-body-color);
+  --bs-emphasis-color: var(--ld-ref-emphasis-color);
+  --bs-secondary-color: var(--ld-ref-secondary-color);
+  --bs-secondary-bg: var(--ld-ref-secondary-bg);
+  --bs-tertiary-color: var(--ld-ref-tertiary-color);
+  --bs-tertiary-bg: var(--ld-ref-tertiary-bg);
+  --bs-heading-color: var(--ld-ref-heading-color);
+  --bs-link-color: var(--ld-ref-link-color);
+  --bs-link-hover-color: var(--ld-ref-link-hover-color);
+  --bs-border-color: var(--ld-ref-border-color);
+  --bs-border-color-translucent: var(--ld-ref-border-color-translucent);
+  --bs-form-valid-color: var(--ld-ref-form-valid-color);
+  --bs-form-valid-border-color: var(--ld-ref-form-valid-border-color);
+  --bs-form-invalid-color: var(--ld-ref-form-invalid-color);
+  --bs-form-invalid-border-color: var(--ld-ref-form-invalid-border-color);
+}

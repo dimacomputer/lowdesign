@@ -1,0 +1,386 @@
+/* AUTO-GENERATED from LD Interaction (motion layer) */
+
+:root {
+  --ld-motion-duration-instant: 0ms;
+  --ld-motion-duration-fast: 120ms;
+  --ld-motion-duration-base: 200ms;
+  --ld-motion-duration-slow: 320ms;
+  --ld-motion-duration-xslow: 500ms;
+  --ld-motion-ease-standard: cubic-bezier(0.2,0,0,1);
+  --ld-motion-ease-accelerate: cubic-bezier(0.4,0,1,1);
+  --ld-motion-ease-decelerate: cubic-bezier(0,0,0.2,1);
+  --ld-motion-ease-emphasized: cubic-bezier(0.2,0,0,1);
+  --ld-motion-distance-1: 0.125rem;
+  --ld-motion-distance-2: 0.25rem;
+  --ld-motion-scale-down: 0.99;
+  --ld-motion-scale-up: 1.01;
+  --ld-motion-opacity-disabled: 0.5;
+}
+
+/* base transition defaults */
+[data-ld-component='button'],
+[data-ld-component='link'],
+[data-ld-component='card'],
+[data-ld-component='chip'],
+[data-ld-component='tag'],
+[data-ld-component='tab'],
+[data-ld-component='tabs'],
+[data-ld-component='dropdown'],
+[data-ld-component='input'],
+[data-ld-component='textarea'],
+[data-ld-component='select'] {
+  transition-property: transform, opacity, box-shadow, filter, outline-color;
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+}
+
+/* component state rules */
+[data-ld-component='button']:hover {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  transform: translateY(calc(var(--ld-motion-distance-1) * -1));
+  box-shadow: var(--ld-shadow-2);
+}
+
+[data-ld-component='link']:hover {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  transform: translateY(calc(var(--ld-motion-distance-1) * -1));
+  box-shadow: var(--ld-shadow-2);
+}
+
+[data-ld-component='card']:hover {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  transform: translateY(calc(var(--ld-motion-distance-1) * -1));
+  box-shadow: var(--ld-shadow-2);
+}
+
+[data-ld-component='chip']:hover {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  transform: translateY(calc(var(--ld-motion-distance-1) * -1));
+  box-shadow: var(--ld-shadow-2);
+}
+
+[data-ld-component='tag']:hover {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  transform: translateY(calc(var(--ld-motion-distance-1) * -1));
+  box-shadow: var(--ld-shadow-2);
+}
+
+[data-ld-component='tab']:hover {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  transform: translateY(calc(var(--ld-motion-distance-1) * -1));
+  box-shadow: var(--ld-shadow-2);
+}
+
+[data-ld-component='tabs']:hover {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  transform: translateY(calc(var(--ld-motion-distance-1) * -1));
+  box-shadow: var(--ld-shadow-2);
+}
+
+[data-ld-component='dropdown']:hover {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  transform: translateY(calc(var(--ld-motion-distance-1) * -1));
+  box-shadow: var(--ld-shadow-2);
+}
+
+[data-ld-component='button']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='card']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='chip']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='tag']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='tab']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='tabs']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='dropdown']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='input']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='textarea']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='select']:focus-visible {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  outline: 2px solid var(--ld-color-focus);
+  outline-offset: 2px;
+}
+
+[data-ld-component='button'][data-state~='selected'], [data-ld-component='button'][aria-selected='true'] {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  box-shadow: var(--ld-shadow-3);
+}
+
+[data-ld-component='chip'][data-state~='selected'], [data-ld-component='chip'][aria-selected='true'] {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  box-shadow: var(--ld-shadow-3);
+}
+
+[data-ld-component='tag'][data-state~='selected'], [data-ld-component='tag'][aria-selected='true'] {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  box-shadow: var(--ld-shadow-3);
+}
+
+[data-ld-component='tab'][data-state~='selected'], [data-ld-component='tab'][aria-selected='true'] {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  box-shadow: var(--ld-shadow-3);
+}
+
+[data-ld-component='tabs'][data-state~='selected'], [data-ld-component='tabs'][aria-selected='true'] {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  box-shadow: var(--ld-shadow-3);
+}
+
+[data-ld-component='dropdown'][data-state~='selected'], [data-ld-component='dropdown'][aria-selected='true'] {
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  box-shadow: var(--ld-shadow-3);
+}
+
+[data-ld-component='button']:active {
+  transition-duration: var(--ld-motion-duration-fast);
+  transition-timing-function: var(--ld-motion-ease-accelerate);
+  transform: translateY(var(--ld-motion-distance-1)) scale(var(--ld-motion-scale-down));
+}
+
+[data-ld-component='card']:active {
+  transition-duration: var(--ld-motion-duration-fast);
+  transition-timing-function: var(--ld-motion-ease-accelerate);
+  transform: translateY(var(--ld-motion-distance-1)) scale(var(--ld-motion-scale-down));
+}
+
+[data-ld-component='chip']:active {
+  transition-duration: var(--ld-motion-duration-fast);
+  transition-timing-function: var(--ld-motion-ease-accelerate);
+  transform: translateY(var(--ld-motion-distance-1)) scale(var(--ld-motion-scale-down));
+}
+
+[data-ld-component='tag']:active {
+  transition-duration: var(--ld-motion-duration-fast);
+  transition-timing-function: var(--ld-motion-ease-accelerate);
+  transform: translateY(var(--ld-motion-distance-1)) scale(var(--ld-motion-scale-down));
+}
+
+[data-ld-component='tab']:active {
+  transition-duration: var(--ld-motion-duration-fast);
+  transition-timing-function: var(--ld-motion-ease-accelerate);
+  transform: translateY(var(--ld-motion-distance-1)) scale(var(--ld-motion-scale-down));
+}
+
+[data-ld-component='tabs']:active {
+  transition-duration: var(--ld-motion-duration-fast);
+  transition-timing-function: var(--ld-motion-ease-accelerate);
+  transform: translateY(var(--ld-motion-distance-1)) scale(var(--ld-motion-scale-down));
+}
+
+[data-ld-component='dropdown']:active {
+  transition-duration: var(--ld-motion-duration-fast);
+  transition-timing-function: var(--ld-motion-ease-accelerate);
+  transform: translateY(var(--ld-motion-distance-1)) scale(var(--ld-motion-scale-down));
+}
+
+[data-ld-component='button'][aria-disabled='true'], [data-ld-component='button']:disabled {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  opacity: var(--ld-motion-opacity-disabled);
+  filter: grayscale(20%);
+}
+
+[data-ld-component='link'][aria-disabled='true'], [data-ld-component='link']:disabled {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  opacity: var(--ld-motion-opacity-disabled);
+  filter: grayscale(20%);
+}
+
+[data-ld-component='chip'][aria-disabled='true'], [data-ld-component='chip']:disabled {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  opacity: var(--ld-motion-opacity-disabled);
+  filter: grayscale(20%);
+}
+
+[data-ld-component='tag'][aria-disabled='true'], [data-ld-component='tag']:disabled {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  opacity: var(--ld-motion-opacity-disabled);
+  filter: grayscale(20%);
+}
+
+[data-ld-component='tab'][aria-disabled='true'], [data-ld-component='tab']:disabled {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  opacity: var(--ld-motion-opacity-disabled);
+  filter: grayscale(20%);
+}
+
+[data-ld-component='tabs'][aria-disabled='true'], [data-ld-component='tabs']:disabled {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  opacity: var(--ld-motion-opacity-disabled);
+  filter: grayscale(20%);
+}
+
+[data-ld-component='dropdown'][aria-disabled='true'], [data-ld-component='dropdown']:disabled {
+  transition-duration: var(--ld-motion-duration-instant);
+  transition-timing-function: var(--ld-motion-ease-standard);
+  opacity: var(--ld-motion-opacity-disabled);
+  filter: grayscale(20%);
+}
+
+/* presence lifecycle rules */
+[data-presence-id="default-fade-up"][data-presence="entering"] {
+  opacity: 0;
+  transform: translateY(var(--ld-motion-distance-2));
+  transition-duration: var(--ld-motion-duration-slow);
+  transition-timing-function: var(--ld-motion-ease-decelerate);
+}
+
+[data-presence-id="default-fade-up"][data-presence="entered"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-presence-id="default-fade-up"][data-presence="present"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-presence-id="default-fade-up"][data-presence="exiting"] {
+  transition-duration: var(--ld-motion-duration-fast);
+  transition-timing-function: var(--ld-motion-ease-accelerate);
+  opacity: 0;
+  transform: translateY(var(--ld-motion-distance-2));
+}
+
+[data-presence-id="default-fade-up"][data-presence="exited"] {
+  opacity: 0;
+  transform: translateY(var(--ld-motion-distance-2));
+}
+
+/* presence_id: default-fade-up  (scope: data-presence-id; attr: data-presence) */
+
+[data-presence-id="list-item-stagger"][data-presence="entering"] {
+  opacity: 0;
+  transform: translateY(var(--ld-motion-distance-1));
+  transition-duration: var(--ld-motion-duration-base);
+  transition-timing-function: var(--ld-motion-ease-decelerate);
+}
+
+[data-presence-id="list-item-stagger"][data-presence="entered"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-presence-id="list-item-stagger"][data-presence="present"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-presence-id="list-item-stagger"][data-presence="exiting"] {
+  transition-duration: var(--ld-motion-duration-fast);
+  transition-timing-function: var(--ld-motion-ease-accelerate);
+  opacity: 0;
+  transform: translateY(var(--ld-motion-distance-2));
+}
+
+[data-presence-id="list-item-stagger"][data-presence="exited"] {
+  opacity: 0;
+  transform: translateY(var(--ld-motion-distance-2));
+}
+
+/* presence_id: list-item-stagger  (scope: data-presence-id; attr: data-presence) */
+
+/* stagger rules (requires --ld-stagger-index per item) */
+[data-stagger='list-compact'] [data-stagger-item] {
+  transition-delay: calc(0ms + (var(--ld-stagger-index, 0) * 24ms));
+}
+
+[data-stagger='grid-cards'] [data-stagger-item] {
+  transition-delay: calc(0ms + (var(--ld-stagger-index, 0) * 30ms));
+}
+
+[data-stagger='toast-stack'] [data-stagger-item] {
+  transition-delay: calc(0ms + (var(--ld-stagger-index, 0) * 80ms));
+}
+
+[data-stagger='offcanvas-items'] [data-stagger-item] {
+  transition-delay: calc(40ms + (var(--ld-stagger-index, 0) * 18ms));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ld-motion-duration-fast: 1ms;
+    --ld-motion-duration-base: 1ms;
+    --ld-motion-duration-slow: 1ms;
+    --ld-motion-duration-xslow: 1ms;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+  *, *::before, *::after {
+    transition-duration: 1ms !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}

@@ -1,0 +1,31 @@
+/* LowDesign — FSE block styles (core/button) */
+
+.wp-block-button.is-style-ld-primary .wp-block-button__link{
+  background: var(--ld-ref-primary);
+  border: 1px solid var(--ld-ref-primary);
+  color: var(--ld-ref-light);
+  border-radius: var(--bs-border-radius, 0.5rem);
+  padding: 0.65em 1.1em;
+  text-decoration: none;
+}
+
+.wp-block-button.is-style-ld-primary .wp-block-button__link:hover{
+  background: color-mix(in oklab, var(--ld-ref-primary), black 12%);
+  border-color: color-mix(in oklab, var(--ld-ref-primary), black 12%);
+  color: var(--ld-ref-light);
+}
+
+.wp-block-button.is-style-ld-outline .wp-block-button__link{
+  background: transparent;
+  border: 1px solid var(--ld-ref-primary);
+  color: var(--ld-ref-primary);
+  border-radius: var(--bs-border-radius, 0.5rem);
+  padding: 0.65em 1.1em;
+  text-decoration: none;
+}
+
+.wp-block-button.is-style-ld-outline .wp-block-button__link:hover{
+  background: var(--ld-ref-primary);
+  border-color: var(--ld-ref-primary);
+  color: var(--ld-ref-light);
+}

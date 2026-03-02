@@ -1,8 +1,155 @@
 {
   "version": 2,
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
   "settings": {
-    "color": { "palette": [], "defaultPalette": false, "custom": true },
-    "typography": { "customFontSize": true }
+    "color": {
+      "custom": true,
+      "palette": [
+        {
+          "name": "Primary",
+          "slug": "primary",
+          "color": "var(--ld-ref-primary)"
+        },
+        {
+          "name": "Secondary",
+          "slug": "secondary",
+          "color": "var(--ld-ref-secondary)"
+        },
+        {
+          "name": "Success",
+          "slug": "success",
+          "color": "var(--ld-ref-success)"
+        },
+        {
+          "name": "Info",
+          "slug": "info",
+          "color": "var(--ld-ref-info)"
+        },
+        {
+          "name": "Warning",
+          "slug": "warning",
+          "color": "var(--ld-ref-warning)"
+        },
+        {
+          "name": "Danger",
+          "slug": "danger",
+          "color": "var(--ld-ref-danger)"
+        },
+        {
+          "name": "Light",
+          "slug": "light",
+          "color": "var(--ld-ref-light)"
+        },
+        {
+          "name": "Dark",
+          "slug": "dark",
+          "color": "var(--ld-ref-dark)"
+        },
+        {
+          "name": "Body Bg",
+          "slug": "body-bg",
+          "color": "var(--ld-ref-body-bg)"
+        },
+        {
+          "name": "Body Color",
+          "slug": "body-color",
+          "color": "var(--ld-ref-body-color)"
+        },
+        {
+          "name": "Emphasis Color",
+          "slug": "emphasis-color",
+          "color": "var(--ld-ref-emphasis-color)"
+        },
+        {
+          "name": "Secondary Color",
+          "slug": "secondary-color",
+          "color": "var(--ld-ref-secondary-color)"
+        },
+        {
+          "name": "Tertiary Color",
+          "slug": "tertiary-color",
+          "color": "var(--ld-ref-tertiary-color)"
+        },
+        {
+          "name": "Secondary Bg",
+          "slug": "secondary-bg",
+          "color": "var(--ld-ref-secondary-bg)"
+        },
+        {
+          "name": "Tertiary Bg",
+          "slug": "tertiary-bg",
+          "color": "var(--ld-ref-tertiary-bg)"
+        },
+        {
+          "name": "Heading Color",
+          "slug": "heading-color",
+          "color": "var(--ld-ref-heading-color)"
+        },
+        {
+          "name": "Link Color",
+          "slug": "link-color",
+          "color": "var(--ld-ref-link-color)"
+        },
+        {
+          "name": "Link Hover Color",
+          "slug": "link-hover-color",
+          "color": "var(--ld-ref-link-hover-color)"
+        },
+        {
+          "name": "Code Color",
+          "slug": "code-color",
+          "color": "var(--ld-ref-code-color)"
+        },
+        {
+          "name": "Highlight Color",
+          "slug": "highlight-color",
+          "color": "var(--ld-ref-highlight-color)"
+        },
+        {
+          "name": "Highlight Bg",
+          "slug": "highlight-bg",
+          "color": "var(--ld-ref-highlight-bg)"
+        },
+        {
+          "name": "Border Color",
+          "slug": "border-color",
+          "color": "var(--ld-ref-border-color)"
+        },
+        {
+          "name": "Border Color Translucent",
+          "slug": "border-color-translucent",
+          "color": "var(--ld-ref-border-color-translucent)"
+        },
+        {
+          "name": "Form Valid Color",
+          "slug": "form-valid-color",
+          "color": "var(--ld-ref-form-valid-color)"
+        },
+        {
+          "name": "Form Valid Border Color",
+          "slug": "form-valid-border-color",
+          "color": "var(--ld-ref-form-valid-border-color)"
+        },
+        {
+          "name": "Form Invalid Color",
+          "slug": "form-invalid-color",
+          "color": "var(--ld-ref-form-invalid-color)"
+        },
+        {
+          "name": "Form Invalid Border Color",
+          "slug": "form-invalid-border-color",
+          "color": "var(--ld-ref-form-invalid-border-color)"
+        }
+      ],
+      "defaultPalette": false
+    },
+    "typography": {
+      "customFontSize": true
+    },
+    "layout": {
+      "contentSize": "860px",
+      "wideSize": "1200px"
+    }
   },
   "styles": {}
 }

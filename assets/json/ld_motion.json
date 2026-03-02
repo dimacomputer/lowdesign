@@ -1,0 +1,655 @@
+{
+  "motion_spec": [
+    {
+      "token": "duration-instant",
+      "type": "duration",
+      "value": 0,
+      "unit": "ms",
+      "scope": "global",
+      "notes": "Use for disabled / no-motion transitions"
+    },
+    {
+      "token": "duration-fast",
+      "type": "duration",
+      "value": 120,
+      "unit": "ms",
+      "scope": "global",
+      "notes": "Hover/press micro interactions"
+    },
+    {
+      "token": "duration-base",
+      "type": "duration",
+      "value": 200,
+      "unit": "ms",
+      "scope": "global",
+      "notes": "Default UI transitions"
+    },
+    {
+      "token": "duration-slow",
+      "type": "duration",
+      "value": 320,
+      "unit": "ms",
+      "scope": "global",
+      "notes": "Panels/modals enter/exit"
+    },
+    {
+      "token": "duration-xslow",
+      "type": "duration",
+      "value": 500,
+      "unit": "ms",
+      "scope": "global",
+      "notes": "Large surfaces / choreographed motion"
+    },
+    {
+      "token": "ease-standard",
+      "type": "easing",
+      "value": "cubic-bezier(0.2,0,0,1)",
+      "unit": "",
+      "scope": "global",
+      "notes": "Default"
+    },
+    {
+      "token": "ease-accelerate",
+      "type": "easing",
+      "value": "cubic-bezier(0.4,0,1,1)",
+      "unit": "",
+      "scope": "global",
+      "notes": "Press / accelerate out"
+    },
+    {
+      "token": "ease-decelerate",
+      "type": "easing",
+      "value": "cubic-bezier(0,0,0.2,1)",
+      "unit": "",
+      "scope": "global",
+      "notes": "Enter / settle"
+    },
+    {
+      "token": "ease-emphasized",
+      "type": "easing",
+      "value": "cubic-bezier(0.2,0,0,1)",
+      "unit": "",
+      "scope": "global",
+      "notes": "Optional; keep same until you prove need"
+    },
+    {
+      "token": "distance-1",
+      "type": "distance",
+      "value": 0.125,
+      "unit": "rem",
+      "scope": "global",
+      "notes": "Micro lift/press"
+    },
+    {
+      "token": "distance-2",
+      "type": "distance",
+      "value": 0.25,
+      "unit": "rem",
+      "scope": "global",
+      "notes": "Enter/exit slide"
+    },
+    {
+      "token": "scale-down",
+      "type": "scale",
+      "value": 0.99,
+      "unit": "",
+      "scope": "global",
+      "notes": "Press feedback"
+    },
+    {
+      "token": "scale-up",
+      "type": "scale",
+      "value": 1.01,
+      "unit": "",
+      "scope": "global",
+      "notes": "Hover emphasis (rare; use carefully)"
+    },
+    {
+      "token": "opacity-disabled",
+      "type": "opacity",
+      "value": 0.5,
+      "unit": "",
+      "scope": "global",
+      "notes": "Disabled state baseline"
+    }
+  ],
+  "motion_presets": [
+    {
+      "preset_id": "hover-lift-1",
+      "category": "interactive",
+      "transition_duration_token": "duration-base",
+      "transition_ease_token": "ease-standard",
+      "transition_delay_token": "",
+      "properties": "transform|box-shadow",
+      "values": "translateY(calc(var(--ld-motion-distance-1) * -1))|var(--ld-shadow-2)",
+      "notes": "Lift + shadow up (shadow token comes from form layer)"
+    },
+    {
+      "preset_id": "press-1",
+      "category": "interactive",
+      "transition_duration_token": "duration-fast",
+      "transition_ease_token": "ease-accelerate",
+      "transition_delay_token": "",
+      "properties": "transform",
+      "values": "translateY(var(--ld-motion-distance-1)) scale(var(--ld-motion-scale-down))",
+      "notes": "Press down + slight scale"
+    },
+    {
+      "preset_id": "focus-ring-1",
+      "category": "interactive",
+      "transition_duration_token": "duration-instant",
+      "transition_ease_token": "ease-standard",
+      "transition_delay_token": "",
+      "properties": "outline|outline-offset",
+      "values": "2px solid var(--ld-color-focus)|2px",
+      "notes": "Prefer outline for accessibility"
+    },
+    {
+      "preset_id": "disabled-1",
+      "category": "system",
+      "transition_duration_token": "duration-instant",
+      "transition_ease_token": "ease-standard",
+      "transition_delay_token": "",
+      "properties": "opacity|filter",
+      "values": "var(--ld-motion-opacity-disabled)|grayscale(20%)",
+      "notes": "Keep subtle; avoid heavy filters"
+    },
+    {
+      "preset_id": "selected-1",
+      "category": "interactive",
+      "transition_duration_token": "duration-base",
+      "transition_ease_token": "ease-standard",
+      "transition_delay_token": "",
+      "properties": "box-shadow",
+      "values": "var(--ld-shadow-3)",
+      "notes": "Selected emphasis without movement"
+    },
+    {
+      "preset_id": "enter-fade-up-1",
+      "category": "presence",
+      "transition_duration_token": "duration-slow",
+      "transition_ease_token": "ease-decelerate",
+      "transition_delay_token": "",
+      "properties": "opacity|transform",
+      "values": "1|translateY(0)",
+      "notes": "Enter end-state (used with presence rules)"
+    },
+    {
+      "preset_id": "exit-fade-down-1",
+      "category": "presence",
+      "transition_duration_token": "duration-fast",
+      "transition_ease_token": "ease-accelerate",
+      "transition_delay_token": "",
+      "properties": "opacity|transform",
+      "values": "0|translateY(var(--ld-motion-distance-2))",
+      "notes": "Exit end-state"
+    }
+  ],
+  "interaction_rules": [
+    {
+      "state": "disabled",
+      "priority": 100,
+      "is_persistent": true,
+      "selector_css": "[aria-disabled='true'], :disabled",
+      "applies_to": "all",
+      "notes": "Disabled overrides everything"
+    },
+    {
+      "state": "pressed",
+      "priority": 80,
+      "is_persistent": false,
+      "selector_css": ":active",
+      "applies_to": "interactive",
+      "notes": "Pressed overrides hover/focus for pointer"
+    },
+    {
+      "state": "hover",
+      "priority": 60,
+      "is_persistent": false,
+      "selector_css": ":hover",
+      "applies_to": "interactive",
+      "notes": "Hover base"
+    },
+    {
+      "state": "focus",
+      "priority": 70,
+      "is_persistent": false,
+      "selector_css": ":focus-visible",
+      "applies_to": "interactive",
+      "notes": "Focus should be strong; priority between hover and pressed (adjust if needed)"
+    },
+    {
+      "state": "selected",
+      "priority": 75,
+      "is_persistent": true,
+      "selector_css": "[data-state~='selected'], [aria-selected='true']",
+      "applies_to": "interactive",
+      "notes": "Persistent selection"
+    },
+    {
+      "state": "open",
+      "priority": 76,
+      "is_persistent": true,
+      "selector_css": "[data-state~='open'], [aria-expanded='true']",
+      "applies_to": "containers",
+      "notes": "For disclosure components"
+    }
+  ],
+  "component_motion_map": [
+    {
+      "component": "button",
+      "slot": "*",
+      "state": "hover",
+      "preset_id": "hover-lift-1",
+      "selector_hint": "[data-ld-component='button']",
+      "notes": "baseline"
+    },
+    {
+      "component": "button",
+      "slot": "*",
+      "state": "pressed",
+      "preset_id": "press-1",
+      "selector_hint": "[data-ld-component='button']",
+      "notes": "baseline"
+    },
+    {
+      "component": "button",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='button']",
+      "notes": "baseline"
+    },
+    {
+      "component": "button",
+      "slot": "*",
+      "state": "disabled",
+      "preset_id": "disabled-1",
+      "selector_hint": "[data-ld-component='button']",
+      "notes": "baseline"
+    },
+    {
+      "component": "button",
+      "slot": "*",
+      "state": "selected",
+      "preset_id": "selected-1",
+      "selector_hint": "[data-ld-component='button']",
+      "notes": "baseline"
+    },
+    {
+      "component": "link",
+      "slot": "*",
+      "state": "hover",
+      "preset_id": "hover-lift-1",
+      "selector_hint": "[data-ld-component='link']",
+      "notes": "baseline"
+    },
+    {
+      "component": "link",
+      "slot": "*",
+      "state": "disabled",
+      "preset_id": "disabled-1",
+      "selector_hint": "[data-ld-component='link']",
+      "notes": "baseline"
+    },
+    {
+      "component": "card",
+      "slot": "*",
+      "state": "hover",
+      "preset_id": "hover-lift-1",
+      "selector_hint": "[data-ld-component='card']",
+      "notes": "baseline"
+    },
+    {
+      "component": "card",
+      "slot": "*",
+      "state": "pressed",
+      "preset_id": "press-1",
+      "selector_hint": "[data-ld-component='card']",
+      "notes": "baseline"
+    },
+    {
+      "component": "card",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='card']",
+      "notes": "baseline"
+    },
+    {
+      "component": "chip",
+      "slot": "*",
+      "state": "hover",
+      "preset_id": "hover-lift-1",
+      "selector_hint": "[data-ld-component='chip']",
+      "notes": "baseline"
+    },
+    {
+      "component": "chip",
+      "slot": "*",
+      "state": "pressed",
+      "preset_id": "press-1",
+      "selector_hint": "[data-ld-component='chip']",
+      "notes": "baseline"
+    },
+    {
+      "component": "chip",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='chip']",
+      "notes": "baseline"
+    },
+    {
+      "component": "chip",
+      "slot": "*",
+      "state": "disabled",
+      "preset_id": "disabled-1",
+      "selector_hint": "[data-ld-component='chip']",
+      "notes": "baseline"
+    },
+    {
+      "component": "chip",
+      "slot": "*",
+      "state": "selected",
+      "preset_id": "selected-1",
+      "selector_hint": "[data-ld-component='chip']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tag",
+      "slot": "*",
+      "state": "hover",
+      "preset_id": "hover-lift-1",
+      "selector_hint": "[data-ld-component='tag']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tag",
+      "slot": "*",
+      "state": "pressed",
+      "preset_id": "press-1",
+      "selector_hint": "[data-ld-component='tag']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tag",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='tag']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tag",
+      "slot": "*",
+      "state": "disabled",
+      "preset_id": "disabled-1",
+      "selector_hint": "[data-ld-component='tag']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tag",
+      "slot": "*",
+      "state": "selected",
+      "preset_id": "selected-1",
+      "selector_hint": "[data-ld-component='tag']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tab",
+      "slot": "*",
+      "state": "hover",
+      "preset_id": "hover-lift-1",
+      "selector_hint": "[data-ld-component='tab']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tab",
+      "slot": "*",
+      "state": "pressed",
+      "preset_id": "press-1",
+      "selector_hint": "[data-ld-component='tab']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tab",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='tab']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tab",
+      "slot": "*",
+      "state": "disabled",
+      "preset_id": "disabled-1",
+      "selector_hint": "[data-ld-component='tab']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tab",
+      "slot": "*",
+      "state": "selected",
+      "preset_id": "selected-1",
+      "selector_hint": "[data-ld-component='tab']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tabs",
+      "slot": "*",
+      "state": "hover",
+      "preset_id": "hover-lift-1",
+      "selector_hint": "[data-ld-component='tabs']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tabs",
+      "slot": "*",
+      "state": "pressed",
+      "preset_id": "press-1",
+      "selector_hint": "[data-ld-component='tabs']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tabs",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='tabs']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tabs",
+      "slot": "*",
+      "state": "disabled",
+      "preset_id": "disabled-1",
+      "selector_hint": "[data-ld-component='tabs']",
+      "notes": "baseline"
+    },
+    {
+      "component": "tabs",
+      "slot": "*",
+      "state": "selected",
+      "preset_id": "selected-1",
+      "selector_hint": "[data-ld-component='tabs']",
+      "notes": "baseline"
+    },
+    {
+      "component": "dropdown",
+      "slot": "*",
+      "state": "hover",
+      "preset_id": "hover-lift-1",
+      "selector_hint": "[data-ld-component='dropdown']",
+      "notes": "baseline"
+    },
+    {
+      "component": "dropdown",
+      "slot": "*",
+      "state": "pressed",
+      "preset_id": "press-1",
+      "selector_hint": "[data-ld-component='dropdown']",
+      "notes": "baseline"
+    },
+    {
+      "component": "dropdown",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='dropdown']",
+      "notes": "baseline"
+    },
+    {
+      "component": "dropdown",
+      "slot": "*",
+      "state": "disabled",
+      "preset_id": "disabled-1",
+      "selector_hint": "[data-ld-component='dropdown']",
+      "notes": "baseline"
+    },
+    {
+      "component": "dropdown",
+      "slot": "*",
+      "state": "selected",
+      "preset_id": "selected-1",
+      "selector_hint": "[data-ld-component='dropdown']",
+      "notes": "baseline"
+    },
+    {
+      "component": "input",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='input']",
+      "notes": "baseline"
+    },
+    {
+      "component": "textarea",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='textarea']",
+      "notes": "baseline"
+    },
+    {
+      "component": "select",
+      "slot": "*",
+      "state": "focus",
+      "preset_id": "focus-ring-1",
+      "selector_hint": "[data-ld-component='select']",
+      "notes": "baseline"
+    }
+  ],
+  "presence_rules": [
+    {
+      "presence_id": "default-fade-up",
+      "presence_id_attr": "data-presence-id",
+      "presence_attr": "data-presence",
+      "enter_start_opacity": 0,
+      "enter_start_transform": "translateY(var(--ld-motion-distance-2))",
+      "enter_end_preset": "enter-fade-up-1",
+      "exit_end_preset": "exit-fade-down-1",
+      "enter_duration_token": "duration-slow",
+      "exit_duration_token": "duration-fast",
+      "enter_ease_token": "ease-decelerate",
+      "exit_ease_token": "ease-accelerate",
+      "notes": "Default for modals/toasts/drawers"
+    },
+    {
+      "presence_id": "list-item-stagger",
+      "presence_id_attr": "data-presence-id",
+      "presence_attr": "data-presence",
+      "enter_start_opacity": 0,
+      "enter_start_transform": "translateY(var(--ld-motion-distance-1))",
+      "enter_end_preset": "enter-fade-up-1",
+      "exit_end_preset": "exit-fade-down-1",
+      "enter_duration_token": "duration-base",
+      "exit_duration_token": "duration-fast",
+      "enter_ease_token": "ease-decelerate",
+      "exit_ease_token": "ease-accelerate",
+      "notes": "Use with stagger (optional)"
+    }
+  ],
+  "stagger_map": [
+    {
+      "stagger_id": "list-compact",
+      "applies_to": "lists",
+      "container_selector_hint": "[data-stagger='list-compact']",
+      "item_selector_hint": "[data-stagger-item]",
+      "index_source": "js-var",
+      "base_delay_ms": 0,
+      "step_ms": 24,
+      "max_items": 50,
+      "enter_duration_token": "duration-base",
+      "enter_ease_token": "ease-decelerate",
+      "exit_duration_token": "duration-fast",
+      "exit_ease_token": "ease-accelerate",
+      "notes": "For short lists and menus"
+    },
+    {
+      "stagger_id": "grid-cards",
+      "applies_to": "grids",
+      "container_selector_hint": "[data-stagger='grid-cards']",
+      "item_selector_hint": "[data-stagger-item]",
+      "index_source": "js-var",
+      "base_delay_ms": 0,
+      "step_ms": 30,
+      "max_items": 80,
+      "enter_duration_token": "duration-slow",
+      "enter_ease_token": "ease-decelerate",
+      "exit_duration_token": "duration-fast",
+      "exit_ease_token": "ease-accelerate",
+      "notes": "For card grids / masonry entrance"
+    },
+    {
+      "stagger_id": "toast-stack",
+      "applies_to": "overlays",
+      "container_selector_hint": "[data-stagger='toast-stack']",
+      "item_selector_hint": "[data-stagger-item]",
+      "index_source": "js-var",
+      "base_delay_ms": 0,
+      "step_ms": 80,
+      "max_items": 10,
+      "enter_duration_token": "duration-base",
+      "enter_ease_token": "ease-decelerate",
+      "exit_duration_token": "duration-fast",
+      "exit_ease_token": "ease-accelerate",
+      "notes": "Toasts should be clearly sequential"
+    },
+    {
+      "stagger_id": "offcanvas-items",
+      "applies_to": "menus",
+      "container_selector_hint": "[data-stagger='offcanvas-items']",
+      "item_selector_hint": "[data-stagger-item]",
+      "index_source": "js-var",
+      "base_delay_ms": 40,
+      "step_ms": 18,
+      "max_items": 60,
+      "enter_duration_token": "duration-slow",
+      "enter_ease_token": "ease-decelerate",
+      "exit_duration_token": "duration-fast",
+      "exit_ease_token": "ease-accelerate",
+      "notes": "Menu item cascade inside offcanvas"
+    }
+  ],
+  "reduced_motion_policy": [
+    {
+      "policy_id": "reduce-motion",
+      "media_query": "(prefers-reduced-motion: reduce)",
+      "strategy": "clamp",
+      "duration_override_ms": 1,
+      "transform_allowed": false,
+      "opacity_allowed": true,
+      "notes": "Keep opacity changes"
+    }
+  ],
+  "js_contract": [
+    {
+      "domain": "presence",
+      "key": "presence_state",
+      "allowed_values": "entering|entered|exiting|exited|present",
+      "notes": "present = alias for entered"
+    }
+  ]
+}
