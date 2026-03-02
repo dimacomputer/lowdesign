@@ -36,6 +36,9 @@ add_action(
         // 4) Наши CSS (010…015)
         ld_require_once_safe("$inc/assets/ld-css-enqueue.php");
 
+        // 4b) Vite build assets (main.js + optional main/editor/admin CSS)
+        ld_require_once_safe("$inc/assets/ld-vite-enqueue.php");
+
         // 5) Управление темой (ACF + runtime)
         ld_require_once_safe("$inc/acf/ld-theme-acf.php");
         ld_require_once_safe("$inc/core/ld-theme-runtime.php");

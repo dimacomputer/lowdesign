@@ -1,0 +1,30 @@
+/* LowDesign — Base layer for WP core blocks (v20 minimal)
+   Purpose: make default Gutenberg output immediately use LD semantic refs.
+*/
+:root{
+  --ld-body-bg: var(--ld-ref-body-bg);
+  --ld-body-color: var(--ld-ref-body-color);
+}
+
+body{
+  background: var(--ld-body-bg);
+  color: var(--ld-body-color);
+}
+
+a{
+  color: var(--ld-ref-link-color);
+  text-underline-offset: 0.18em;
+}
+a:hover{
+  color: var(--ld-ref-link-hover-color);
+}
+
+h1,h2,h3,h4,h5,h6{
+  color: var(--ld-ref-heading-color);
+}
+
+/* Make WP default layout less "empty" */
+.wp-site-blocks{
+  padding-left: var(--ld-space-4);
+  padding-right: var(--ld-space-4);
+}

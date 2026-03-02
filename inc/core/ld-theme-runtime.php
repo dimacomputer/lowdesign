@@ -48,6 +48,29 @@ function ld_theme_to_bs_theme(string $ld_theme): string
     return "light";
 }
 
+
+function ld_get_active_density_key(): string
+{
+    // Defaults
+    $density = "comfort";
+
+    // Site config (ACF options)
+    if (function_exists("get_field")) {
+        $opt = get_field("ld_density_default", "option");
+        if (is_string($opt) && $opt !== "") {
+            $density = $opt;
+        }
+
+        // Per-page override
+        $override = get_field("ld_density_override");
+        if (is_string($override) && $override !== "") {
+            $density = $override;
+        }
+    }
+
+    return sanitize_key($density);
+}
+
 add_filter("language_attributes", function ($output) {
     $ld_theme = ld_get_active_theme_key();
     $bs_theme = ld_theme_to_bs_theme($ld_theme);
@@ -55,9 +78,13 @@ add_filter("language_attributes", function ($output) {
     // Ensure we don't duplicate attributes if another filter adds them.
     $output = preg_replace('/\sdata-ld-theme="[^"]*"/', "", $output);
     $output = preg_replace('/\sdata-bs-theme="[^"]*"/', "", $output);
+    $output = preg_replace('/\sdata-ld-density="[^"]*"/', "", $output);
 
     $output .= ' data-ld-theme="' . esc_attr($ld_theme) . '"';
+    $density = ld_get_active_density_key();
+
     $output .= ' data-bs-theme="' . esc_attr($bs_theme) . '"';
+    $output .= ' data-ld-density="' . esc_attr($density) . '"';
 
     return $output;
 }, 20);

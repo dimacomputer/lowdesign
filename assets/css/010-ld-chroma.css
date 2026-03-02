@@ -1,6 +1,6 @@
 /* AUTO-GENERATED from LD Chroma (atoms=hex, refs+semantic=var()) */
 
-:root[data-ld-theme="default"] {
+:root[data-ld-theme="default"], [data-ld-theme="default"] {
   color-scheme: light;
   --ld-amber-100: #f9f7ec;
   --ld-amber-100-rgb: 249 247 236;
@@ -848,7 +848,7 @@
   --ld-default-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="dark"] {
+:root[data-ld-theme="dark"], [data-ld-theme="dark"] {
   color-scheme: dark;
   --ld-amber-100: #f9f7ec;
   --ld-amber-100-rgb: 249 247 236;
@@ -1696,7 +1696,7 @@
   --ld-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="blue"] {
+:root[data-ld-theme="blue"], [data-ld-theme="blue"] {
   color-scheme: light;
   --ld-amber-100: #f8f7ed;
   --ld-amber-100-rgb: 248 247 237;
@@ -2966,7 +2966,7 @@
   --ld-blue-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="blue-dark"] {
+:root[data-ld-theme="blue-dark"], [data-ld-theme="blue-dark"] {
   color-scheme: dark;
   --ld-amber-100: #f8f7ed;
   --ld-amber-100-rgb: 248 247 237;
@@ -3816,7 +3816,7 @@
   --ld-blue-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="indigo"] {
+:root[data-ld-theme="indigo"], [data-ld-theme="indigo"] {
   color-scheme: light;
   --ld-amber-100: #f8f6ed;
   --ld-amber-100-rgb: 248 246 237;
@@ -5086,7 +5086,7 @@
   --ld-indigo-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="indigo-dark"] {
+:root[data-ld-theme="indigo-dark"], [data-ld-theme="indigo-dark"] {
   color-scheme: dark;
   --ld-amber-100: #f8f6ed;
   --ld-amber-100-rgb: 248 246 237;
@@ -5936,7 +5936,7 @@
   --ld-indigo-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="violet"] {
+:root[data-ld-theme="violet"], [data-ld-theme="violet"] {
   color-scheme: light;
   --ld-amber-100: #f9f6ed;
   --ld-amber-100-rgb: 249 246 237;
@@ -7206,7 +7206,7 @@
   --ld-violet-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="violet-dark"] {
+:root[data-ld-theme="violet-dark"], [data-ld-theme="violet-dark"] {
   color-scheme: dark;
   --ld-amber-100: #f9f6ed;
   --ld-amber-100-rgb: 249 246 237;
@@ -8056,7 +8056,7 @@
   --ld-violet-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="pink"] {
+:root[data-ld-theme="pink"], [data-ld-theme="pink"] {
   color-scheme: light;
   --ld-amber-100: #faf6eb;
   --ld-amber-100-rgb: 250 246 235;
@@ -9326,7 +9326,7 @@
   --ld-pink-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="pink-dark"] {
+:root[data-ld-theme="pink-dark"], [data-ld-theme="pink-dark"] {
   color-scheme: dark;
   --ld-amber-100: #faf6eb;
   --ld-amber-100-rgb: 250 246 235;
@@ -10176,7 +10176,7 @@
   --ld-pink-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="red"] {
+:root[data-ld-theme="red"], [data-ld-theme="red"] {
   color-scheme: light;
   --ld-amber-100: #faf6ea;
   --ld-amber-100-rgb: 250 246 234;
@@ -11446,7 +11446,7 @@
   --ld-red-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="red-dark"] {
+:root[data-ld-theme="red-dark"], [data-ld-theme="red-dark"] {
   color-scheme: dark;
   --ld-amber-100: #faf6ea;
   --ld-amber-100-rgb: 250 246 234;
@@ -12296,7 +12296,7 @@
   --ld-red-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="orange"] {
+:root[data-ld-theme="orange"], [data-ld-theme="orange"] {
   color-scheme: light;
   --ld-amber-100: #faf7e9;
   --ld-amber-100-rgb: 250 247 233;
@@ -13566,7 +13566,7 @@
   --ld-orange-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="orange-dark"] {
+:root[data-ld-theme="orange-dark"], [data-ld-theme="orange-dark"] {
   color-scheme: dark;
   --ld-amber-100: #faf7e9;
   --ld-amber-100-rgb: 250 247 233;
@@ -14416,7 +14416,7 @@
   --ld-orange-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="amber"] {
+:root[data-ld-theme="amber"], [data-ld-theme="amber"] {
   color-scheme: light;
   --ld-amber-100: #faf8e9;
   --ld-amber-100-rgb: 250 248 233;
@@ -15686,7 +15686,7 @@
   --ld-amber-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="amber-dark"] {
+:root[data-ld-theme="amber-dark"], [data-ld-theme="amber-dark"] {
   color-scheme: dark;
   --ld-amber-100: #faf8e9;
   --ld-amber-100-rgb: 250 248 233;
@@ -16536,7 +16536,7 @@
   --ld-amber-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="green"] {
+:root[data-ld-theme="green"], [data-ld-theme="green"] {
   color-scheme: light;
   --ld-amber-100: #f8f8ea;
   --ld-amber-100-rgb: 248 248 234;
@@ -17806,7 +17806,7 @@
   --ld-green-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="green-dark"] {
+:root[data-ld-theme="green-dark"], [data-ld-theme="green-dark"] {
   color-scheme: dark;
   --ld-amber-100: #f8f8ea;
   --ld-amber-100-rgb: 248 248 234;
@@ -18656,7 +18656,7 @@
   --ld-green-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="teal"] {
+:root[data-ld-theme="teal"], [data-ld-theme="teal"] {
   color-scheme: light;
   --ld-amber-100: #f8f9eb;
   --ld-amber-100-rgb: 248 249 235;
@@ -19926,7 +19926,7 @@
   --ld-teal-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="teal-dark"] {
+:root[data-ld-theme="teal-dark"], [data-ld-theme="teal-dark"] {
   color-scheme: dark;
   --ld-amber-100: #f8f9eb;
   --ld-amber-100-rgb: 248 249 235;
@@ -20776,7 +20776,7 @@
   --ld-teal-dark-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-450);
 }
 
-:root[data-ld-theme="cyan"] {
+:root[data-ld-theme="cyan"], [data-ld-theme="cyan"] {
   color-scheme: light;
   --ld-amber-100: #f8f9ed;
   --ld-amber-100-rgb: 248 249 237;
@@ -22046,7 +22046,7 @@
   --ld-cyan-ld-text-utility-toast-indicator-warning-p1: var(--ld-amber-550);
 }
 
-:root[data-ld-theme="cyan-dark"] {
+:root[data-ld-theme="cyan-dark"], [data-ld-theme="cyan-dark"] {
   color-scheme: dark;
   --ld-amber-100: #f8f9ed;
   --ld-amber-100-rgb: 248 249 237;

@@ -1,0 +1,19 @@
+/* LowDesign — Density scale (compact / comfort / spacious)
+   - Global switch: <html data-ld-density="...">
+   - Uses CSS variables so components can scale consistently.
+*/
+:root { --ld-density: 1; }
+
+:root[data-ld-density="compact"]  { --ld-density: 0.85; }
+:root[data-ld-density="comfort"]  { --ld-density: 1; }
+:root[data-ld-density="spacious"] { --ld-density: 1.15; }
+
+/* Optional: base spacing tokens (v0). Expand later from LD Form/Spacing layer. */
+:root{
+  --ld-space-1: calc(4px  * var(--ld-density));
+  --ld-space-2: calc(8px  * var(--ld-density));
+  --ld-space-3: calc(12px * var(--ld-density));
+  --ld-space-4: calc(16px * var(--ld-density));
+  --ld-space-5: calc(24px * var(--ld-density));
+  --ld-space-6: calc(32px * var(--ld-density));
+}

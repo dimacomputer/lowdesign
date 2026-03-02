@@ -26,6 +26,16 @@ add_action('init', function () {
   }
 
   if (function_exists('register_block_style')) {
+
+  // Group (section) — theme scope styles -> becomes data-ld-theme via render filter
+  $ld_themes = ["amber", "amber-dark", "blue", "blue-dark", "cyan", "cyan-dark", "dark", "default", "green", "green-dark", "indigo", "indigo-dark", "orange", "orange-dark", "pink", "pink-dark", "red", "red-dark", "teal", "teal-dark", "violet", "violet-dark"];
+  foreach ($ld_themes as $k) {
+    register_block_style('core/group', [
+      'name'  => 'ld-theme-' . $k,
+      'label' => 'LD Theme: ' . strtoupper($k),
+    ]);
+  }
+
     register_block_style('core/button', [
       'name'  => 'ld-primary',
       'label' => __('LD Primary', 'lowdesign-platform'),
